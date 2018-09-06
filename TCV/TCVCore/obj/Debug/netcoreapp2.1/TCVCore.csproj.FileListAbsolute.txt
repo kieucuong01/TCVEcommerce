@@ -1,0 +1,14 @@
+D:\Demo\TCV\TCVCore\bin\Debug\netcoreapp2.1\TCVCore.deps.json
+D:\Demo\TCV\TCVCore\bin\Debug\netcoreapp2.1\TCVCore.runtimeconfig.json
+D:\Demo\TCV\TCVCore\bin\Debug\netcoreapp2.1\TCVCore.runtimeconfig.dev.json
+D:\Demo\TCV\TCVCore\bin\Debug\netcoreapp2.1\TCVCore.dll
+D:\Demo\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.csproj.CoreCompileInputs.cache
+D:\Demo\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.RazorAssemblyInfo.cache
+D:\Demo\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.RazorAssemblyInfo.cs
+D:\Demo\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.AssemblyInfoInputs.cache
+D:\Demo\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.AssemblyInfo.cs
+D:\Demo\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.RazorTargetAssemblyInfo.cache
+D:\Demo\TCV\TCVCore\bin\Debug\netcoreapp2.1\TCVCore.pdb
+D:\Demo\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.csprojAssemblyReference.cache
+D:\Demo\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.dll
+D:\Demo\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.pdb
