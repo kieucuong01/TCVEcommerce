@@ -88,4 +88,36 @@ namespace TCVShared.Data
         [Display(Name = "Đặc biệt")]
         Special,
     }
+    public enum PaymentStatus
+    {
+        [Display(Name = "Chưa có")]
+        None,
+
+        [Display(Name = "Một phần")]
+        Partly,
+
+        [Display(Name = "Hoàn toàn")]
+        Fully,
+
+        [Display(Name = "Đã hoàn tiền")]
+        Refunded,
+    }
+
+    public enum OrderStatus
+    {
+        [Display(Name = "Đang treo")]
+        Pending,
+
+        [Display(Name = "Đang xử lý")]
+        Processing,
+
+        [Display(Name = "Đang giao hàng")]
+        Delivering,
+
+        [Display(Name = "Đã giao hàng")]
+        Delivered,
+
+        [Display(Name = "Đã hủy bỏ")]
+        Canceled,
+    }
 }

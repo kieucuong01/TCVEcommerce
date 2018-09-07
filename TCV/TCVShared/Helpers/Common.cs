@@ -7,7 +7,6 @@ using System.Configuration;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
-using System.Data.Entity.Spatial;
 
 namespace TCVShared.Helpers
 {

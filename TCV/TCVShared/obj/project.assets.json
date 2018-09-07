@@ -2,15 +2,6 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.1": {
-      "GeoJSON4EntityFramework/2.2.0": {
-        "type": "package",
-        "compile": {
-          "lib/net45/GeoJSON4EntityFramework.dll": {}
-        },
-        "runtime": {
-          "lib/net45/GeoJSON4EntityFramework.dll": {}
-        }
-      },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
         "type": "package",
         "dependencies": {
@@ -2628,7 +2619,7 @@
           }
         }
       },
-      "MySqlConnector/0.42.1": {
+      "MySqlConnector/0.44.1": {
         "type": "package",
         "compile": {
           "lib/netcoreapp2.1/MySqlConnector.dll": {}
@@ -2674,14 +2665,12 @@
           "lib/netstandard1.3/Newtonsoft.Json.Bson.dll": {}
         }
       },
-      "Pomelo.EntityFrameworkCore.MySql/2.1.1": {
+      "Pomelo.EntityFrameworkCore.MySql/2.1.2": {
         "type": "package",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Design": "2.1.1",
-          "Microsoft.EntityFrameworkCore.Relational": "2.1.1",
-          "Microsoft.Extensions.Logging.Console": "2.1.1",
-          "MySqlConnector": "0.42.1",
-          "Pomelo.JsonObject": "1.1.1"
+          "Microsoft.EntityFrameworkCore.Relational": "2.1.2",
+          "MySqlConnector": "0.44.1",
+          "Pomelo.JsonObject": "2.0.0"
         },
         "compile": {
           "lib/netstandard2.0/Pomelo.EntityFrameworkCore.MySql.dll": {}
@@ -2690,17 +2679,17 @@
           "lib/netstandard2.0/Pomelo.EntityFrameworkCore.MySql.dll": {}
         }
       },
-      "Pomelo.JsonObject/1.1.1": {
+      "Pomelo.JsonObject/2.0.0": {
         "type": "package",
         "dependencies": {
-          "NETStandard.Library": "1.6.1",
-          "Newtonsoft.Json": "9.0.1"
+          "Microsoft.CSharp": "4.5.0",
+          "Newtonsoft.Json": "11.0.2"
         },
         "compile": {
-          "lib/netstandard1.3/Pomelo.JsonObject.dll": {}
+          "lib/netstandard2.0/Pomelo.JsonObject.dll": {}
         },
         "runtime": {
-          "lib/netstandard1.3/Pomelo.JsonObject.dll": {}
+          "lib/netstandard2.0/Pomelo.JsonObject.dll": {}
         }
       },
       "Remotion.Linq/2.2.0": {
@@ -4453,17 +4442,6 @@
     }
   },
   "libraries": {
-    "GeoJSON4EntityFramework/2.2.0": {
-      "sha512": "zxDSvxldsMRlKVFCiEHh0tajPPApgr7iYv8fUXpZgzeT9BKAq+ftrBzv+j6VkpyrksuZzJksv53XaqBv1H3hRg==",
-      "type": "package",
-      "path": "geojson4entityframework/2.2.0",
-      "files": [
-        "geojson4entityframework.2.2.0.nupkg.sha512",
-        "geojson4entityframework.nuspec",
-        "lib/net45/GeoJSON4EntityFramework.dll",
-        "lib/net45/GeoJSON4EntityFramework.pdb"
-      ]
-    },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "sha512": "rMDlyePoxggkmN/qgha1+BR2Uy+dOr38xKCQOPfVNKGY07R2nYJGMTKJFE1XFgwD70RYUNazf2fqutjJF18XgQ==",
       "type": "package",
@@ -6913,17 +6891,18 @@
         "version.txt"
       ]
     },
-    "MySqlConnector/0.42.1": {
-      "sha512": "7jS8P+XOw+vS/reuwEEGhtAKvagiOEtOsu5/46Bnuiw+DgOjAFgMSojkiVaZi9DHcatP8jgmjY67iDGVZByQng==",
+    "MySqlConnector/0.44.1": {
+      "sha512": "AdVMqv8KVA878+AF8EkXqjac3ih1tsOzBchYHasoW69vn2Ldez0ucbzB43dmLVkmTa1sQtLtoDbk3n9S34tZyg==",
       "type": "package",
-      "path": "mysqlconnector/0.42.1",
+      "path": "mysqlconnector/0.44.1",
       "files": [
+        ".signature.p7s",
         "lib/net45/MySqlConnector.dll",
         "lib/net461/MySqlConnector.dll",
         "lib/netcoreapp2.1/MySqlConnector.dll",
         "lib/netstandard1.3/MySqlConnector.dll",
         "lib/netstandard2.0/MySqlConnector.dll",
-        "mysqlconnector.0.42.1.nupkg.sha512",
+        "mysqlconnector.0.44.1.nupkg.sha512",
         "mysqlconnector.nuspec"
       ]
     },
@@ -7095,24 +7074,24 @@
         "newtonsoft.json.bson.nuspec"
       ]
     },
-    "Pomelo.EntityFrameworkCore.MySql/2.1.1": {
-      "sha512": "V/W72zl2iWUWdSvj0c9chzssv9OUdSbEiEeOmP3D5Co5CbAtOiyyFwov0hVN+D/VNGhUQGszUltIWuoYEjTHhQ==",
+    "Pomelo.EntityFrameworkCore.MySql/2.1.2": {
+      "sha512": "LyM3NFH3Tj1ppHZ9QdGoMxA8Ga+kouC7r7QwgPFxWwzsMOsns8Y935u6YQjDBNaPlClTDJSm1V7aOnidxtAMPw==",
       "type": "package",
-      "path": "pomelo.entityframeworkcore.mysql/2.1.1",
+      "path": "pomelo.entityframeworkcore.mysql/2.1.2",
       "files": [
+        ".signature.p7s",
         "lib/netstandard2.0/Pomelo.EntityFrameworkCore.MySql.dll",
-        "pomelo.entityframeworkcore.mysql.2.1.1.nupkg.sha512",
+        "pomelo.entityframeworkcore.mysql.2.1.2.nupkg.sha512",
         "pomelo.entityframeworkcore.mysql.nuspec"
       ]
     },
-    "Pomelo.JsonObject/1.1.1": {
-      "sha512": "erkYG/OW1LloSwDFGeS9MvVjy1FLmaV3k8GK/GMR8D3sSDEylZogoLdLiaOFc92+zTen92rG6XGiioNacSlg0A==",
+    "Pomelo.JsonObject/2.0.0": {
+      "sha512": "5udTrGULDbHLx3Xb2DAqeeMTPxPu9TmeS6RAanMeRXOKZn3FRrBVd+Vg8TeTB0QIk1Q0su8mgsmN39O4iYca1Q==",
       "type": "package",
-      "path": "pomelo.jsonobject/1.1.1",
+      "path": "pomelo.jsonobject/2.0.0",
       "files": [
-        "lib/net451/Pomelo.JsonObject.dll",
-        "lib/netstandard1.3/Pomelo.JsonObject.dll",
-        "pomelo.jsonobject.1.1.1.nupkg.sha512",
+        "lib/netstandard2.0/Pomelo.JsonObject.dll",
+        "pomelo.jsonobject.2.0.0.nupkg.sha512",
         "pomelo.jsonobject.nuspec"
       ]
     },
@@ -11768,10 +11747,9 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "GeoJSON4EntityFramework >= 2.2.0",
       "Microsoft.AspNetCore.App >= 2.1.3",
       "Microsoft.NETCore.App >= 2.1.0",
-      "Pomelo.EntityFrameworkCore.MySql >= 2.1.1",
+      "Pomelo.EntityFrameworkCore.MySql >= 2.1.2",
       "System.Configuration.ConfigurationManager >= 4.5.0",
       "System.Drawing.Common >= 4.5.0",
       "System.Text.Encoding.CodePages >= 4.5.0"
@@ -11784,11 +11762,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Demo\\TCV\\TCVShared\\TCVShared.csproj",
+      "projectUniqueName": "D:\\works\\TCVEcommerce\\TCV\\TCVShared\\TCVShared.csproj",
       "projectName": "TCVShared",
-      "projectPath": "D:\\Demo\\TCV\\TCVShared\\TCVShared.csproj",
+      "projectPath": "D:\\works\\TCVEcommerce\\TCV\\TCVShared\\TCVShared.csproj",
       "packagesPath": "C:\\Users\\HungVuong\\.nuget\\packages\\",
-      "outputPath": "D:\\Demo\\TCV\\TCVShared\\obj\\",
+      "outputPath": "D:\\works\\TCVEcommerce\\TCV\\TCVShared\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -11818,10 +11796,6 @@
     "frameworks": {
       "netcoreapp2.1": {
         "dependencies": {
-          "GeoJSON4EntityFramework": {
-            "target": "Package",
-            "version": "[2.2.0, )"
-          },
           "Microsoft.AspNetCore.App": {
             "target": "Package",
             "version": "[2.1.3, )"
@@ -11834,7 +11808,7 @@
           },
           "Pomelo.EntityFrameworkCore.MySql": {
             "target": "Package",
-            "version": "[2.1.1, )"
+            "version": "[2.1.2, )"
           },
           "System.Configuration.ConfigurationManager": {
             "target": "Package",
@@ -11856,17 +11830,5 @@
         "warn": true
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'GeoJSON4EntityFramework 2.2.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
-      "libraryId": "GeoJSON4EntityFramework",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v2.1"
-      ]
-    }
-  ]
+  }
 }

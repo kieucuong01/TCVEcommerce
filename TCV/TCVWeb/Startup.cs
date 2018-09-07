@@ -9,9 +9,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TCVWeb.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TCVShared.Data;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace TCVWeb
 {
@@ -27,6 +28,9 @@ namespace TCVWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AppDBContext>(options =>
+                options.UseMySql(Configuration.GetConnectionString("MySQLConnection"), b => b.MigrationsAssembly("TCVWeb")));
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -34,11 +38,44 @@ namespace TCVWeb
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddIdentity<AppUser, AppRole>(config =>
+            {
+                config.User.RequireUniqueEmail = false;
+                config.Password.RequireDigit = false;
+                config.Password.RequireLowercase = false;
+                config.Password.RequireUppercase = false;
+                config.Password.RequiredUniqueChars = 0;
+                config.Password.RequireNonAlphanumeric = false;
+            }).AddEntityFrameworkStores<AppDBContext>().AddDefaultTokenProviders();
+
+            services.AddAuthentication().AddFacebook(options =>
+            {
+                options.AppId = Configuration["Authentication:Facebook:AppId"];
+                options.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                options.SaveTokens = true;
+            });
+
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                options.ClientId = Configuration["Authentication:Google:ClientId"];
+                options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                options.SaveTokens = true;
+            });
+
+            //services.AddAuthMessageSender(options =>
+            //{
+            //    options.SpeedSmsToken = Configuration["AuthMessage:SpeedSmsToken"];
+            //    options.SendGridApiKey = Configuration["AuthMessage:SendGridApiKey"];
+            //    options.SendGridSenderName = Configuration["AuthMessage:SendGridSenderName"];
+            //    options.SendGridSenderEmail = Configuration["AuthMessage:SendGridSenderEmail"];
+            //});
+
+            services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.IdleTimeout = TimeSpan.FromMinutes(5);
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -57,14 +94,27 @@ namespace TCVWeb
                 app.UseHsts();
             }
 
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
             app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                      name: "areas",
+                      template: "{area:exists}/{controller=HomeAdmin}/{action=Index}/{id?}"
+                    );
+                //routes.MapRoute(
+                //    name: "areaRoute",
+                //    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

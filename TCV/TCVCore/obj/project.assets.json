@@ -11580,11 +11580,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Demo\\TCV\\TCVCore\\TCVCore.csproj",
+      "projectUniqueName": "D:\\works\\TCVEcommerce\\TCV\\TCVCore\\TCVCore.csproj",
       "projectName": "TCVCore",
-      "projectPath": "D:\\Demo\\TCV\\TCVCore\\TCVCore.csproj",
+      "projectPath": "D:\\works\\TCVEcommerce\\TCV\\TCVCore\\TCVCore.csproj",
       "packagesPath": "C:\\Users\\HungVuong\\.nuget\\packages\\",
-      "outputPath": "D:\\Demo\\TCV\\TCVCore\\obj\\",
+      "outputPath": "D:\\works\\TCVEcommerce\\TCV\\TCVCore\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
