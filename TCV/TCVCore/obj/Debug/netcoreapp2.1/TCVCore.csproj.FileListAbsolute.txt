@@ -26,3 +26,17 @@ D:\works\TCVEcommerce\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.AssemblyInfo.c
 D:\works\TCVEcommerce\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.RazorTargetAssemblyInfo.cache
 D:\works\TCVEcommerce\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.dll
 D:\works\TCVEcommerce\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.pdb
+D:\VUONG\project\TCVEcommerce\TCV\TCVCore\bin\Debug\netcoreapp2.1\TCVCore.deps.json
+D:\VUONG\project\TCVEcommerce\TCV\TCVCore\bin\Debug\netcoreapp2.1\TCVCore.runtimeconfig.json
+D:\VUONG\project\TCVEcommerce\TCV\TCVCore\bin\Debug\netcoreapp2.1\TCVCore.runtimeconfig.dev.json
+D:\VUONG\project\TCVEcommerce\TCV\TCVCore\bin\Debug\netcoreapp2.1\TCVCore.dll
+D:\VUONG\project\TCVEcommerce\TCV\TCVCore\bin\Debug\netcoreapp2.1\TCVCore.pdb
+D:\VUONG\project\TCVEcommerce\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.csprojAssemblyReference.cache
+D:\VUONG\project\TCVEcommerce\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.csproj.CoreCompileInputs.cache
+D:\VUONG\project\TCVEcommerce\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.RazorAssemblyInfo.cache
+D:\VUONG\project\TCVEcommerce\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.RazorAssemblyInfo.cs
+D:\VUONG\project\TCVEcommerce\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.AssemblyInfoInputs.cache
+D:\VUONG\project\TCVEcommerce\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.AssemblyInfo.cs
+D:\VUONG\project\TCVEcommerce\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.RazorTargetAssemblyInfo.cache
+D:\VUONG\project\TCVEcommerce\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.dll
+D:\VUONG\project\TCVEcommerce\TCV\TCVCore\obj\Debug\netcoreapp2.1\TCVCore.pdb

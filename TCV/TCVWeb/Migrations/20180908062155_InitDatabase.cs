@@ -115,6 +115,7 @@ namespace TCVWeb.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     MsgCount = table.Column<int>(nullable: false),
+                    TotalRating = table.Column<float>(nullable: false),
                     CreateTime = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
@@ -275,7 +276,7 @@ namespace TCVWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShopAddress",
+                name: "Shippings",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -290,9 +291,9 @@ namespace TCVWeb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShopAddress", x => x.Id);
+                    table.PrimaryKey("PK_Shippings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ShopAddress_AspNetUsers_UserId",
+                        name: "FK_Shippings_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -338,6 +339,71 @@ namespace TCVWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Deliver",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<int>(nullable: true),
+                    ThreadId = table.Column<int>(nullable: true),
+                    Phone = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(maxLength: 256, nullable: true),
+                    City = table.Column<string>(maxLength: 64, nullable: true),
+                    State = table.Column<string>(maxLength: 64, nullable: true),
+                    Country = table.Column<string>(maxLength: 64, nullable: true),
+                    ZipCode = table.Column<string>(maxLength: 32, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Deliver", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Deliver_UserThreads_ThreadId",
+                        column: x => x.ThreadId,
+                        principalTable: "UserThreads",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Deliver_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Suppliers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<int>(nullable: true),
+                    ThreadId = table.Column<int>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(maxLength: 256, nullable: true),
+                    City = table.Column<string>(maxLength: 64, nullable: true),
+                    State = table.Column<string>(maxLength: 64, nullable: true),
+                    Country = table.Column<string>(maxLength: 64, nullable: true),
+                    ZipCode = table.Column<string>(maxLength: 32, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Suppliers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Suppliers_UserThreads_ThreadId",
+                        column: x => x.ThreadId,
+                        principalTable: "UserThreads",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Suppliers_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserMessages",
                 columns: table => new
                 {
@@ -348,6 +414,7 @@ namespace TCVWeb.Migrations
                     ParentId = table.Column<int>(nullable: true),
                     Content = table.Column<string>(nullable: true),
                     Rating = table.Column<int>(nullable: false),
+                    Like = table.Column<int>(nullable: false),
                     CreateTime = table.Column<DateTime>(nullable: true),
                     Status = table.Column<int>(nullable: false)
                 },
@@ -479,7 +546,7 @@ namespace TCVWeb.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<int>(nullable: true),
-                    BillingId = table.Column<int>(nullable: true),
+                    DeliverId = table.Column<int>(nullable: true),
                     ShippingId = table.Column<int>(nullable: true),
                     AdjustPrice = table.Column<double>(nullable: false),
                     ShippingFee = table.Column<double>(nullable: false),
@@ -495,15 +562,15 @@ namespace TCVWeb.Migrations
                 {
                     table.PrimaryKey("PK_ShopOrders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ShopOrders_ShopAddress_BillingId",
-                        column: x => x.BillingId,
-                        principalTable: "ShopAddress",
+                        name: "FK_ShopOrders_Deliver_DeliverId",
+                        column: x => x.DeliverId,
+                        principalTable: "Deliver",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ShopOrders_ShopAddress_ShippingId",
+                        name: "FK_ShopOrders_Shippings_ShippingId",
                         column: x => x.ShippingId,
-                        principalTable: "ShopAddress",
+                        principalTable: "Shippings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -755,6 +822,16 @@ namespace TCVWeb.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Deliver_ThreadId",
+                table: "Deliver",
+                column: "ThreadId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Deliver_UserId",
+                table: "Deliver",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MediaAlbums_UserId",
                 table: "MediaAlbums",
                 column: "UserId");
@@ -765,8 +842,8 @@ namespace TCVWeb.Migrations
                 column: "AlbumId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShopAddress_UserId",
-                table: "ShopAddress",
+                name: "IX_Shippings_UserId",
+                table: "Shippings",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -836,9 +913,9 @@ namespace TCVWeb.Migrations
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShopOrders_BillingId",
+                name: "IX_ShopOrders_DeliverId",
                 table: "ShopOrders",
-                column: "BillingId");
+                column: "DeliverId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShopOrders_ShippingId",
@@ -864,6 +941,16 @@ namespace TCVWeb.Migrations
                 name: "IX_ShopWishItems_WishId",
                 table: "ShopWishItems",
                 column: "WishId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Suppliers_ThreadId",
+                table: "Suppliers",
+                column: "ThreadId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Suppliers_UserId",
+                table: "Suppliers",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Taxonomies_ParentId",
@@ -936,6 +1023,9 @@ namespace TCVWeb.Migrations
                 name: "ShopWishItems");
 
             migrationBuilder.DropTable(
+                name: "Suppliers");
+
+            migrationBuilder.DropTable(
                 name: "UserMessages");
 
             migrationBuilder.DropTable(
@@ -963,7 +1053,10 @@ namespace TCVWeb.Migrations
                 name: "ShopWishes");
 
             migrationBuilder.DropTable(
-                name: "ShopAddress");
+                name: "Deliver");
+
+            migrationBuilder.DropTable(
+                name: "Shippings");
 
             migrationBuilder.DropTable(
                 name: "MediaAlbums");

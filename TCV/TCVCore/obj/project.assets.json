@@ -11574,23 +11574,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\HungVuong\\.nuget\\packages\\": {},
+    "C:\\Users\\HungVuongTran\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\works\\TCVEcommerce\\TCV\\TCVCore\\TCVCore.csproj",
+      "projectUniqueName": "D:\\VUONG\\project\\TCVEcommerce\\TCV\\TCVCore\\TCVCore.csproj",
       "projectName": "TCVCore",
-      "projectPath": "D:\\works\\TCVEcommerce\\TCV\\TCVCore\\TCVCore.csproj",
-      "packagesPath": "C:\\Users\\HungVuong\\.nuget\\packages\\",
-      "outputPath": "D:\\works\\TCVEcommerce\\TCV\\TCVCore\\obj\\",
+      "projectPath": "D:\\VUONG\\project\\TCVEcommerce\\TCV\\TCVCore\\TCVCore.csproj",
+      "packagesPath": "C:\\Users\\HungVuongTran\\.nuget\\packages\\",
+      "outputPath": "D:\\VUONG\\project\\TCVEcommerce\\TCV\\TCVCore\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\HungVuong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\HungVuongTran\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

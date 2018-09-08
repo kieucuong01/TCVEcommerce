@@ -12,6 +12,8 @@ namespace TCVShared.Data
 
         public int MsgCount { get; set; }
 
+        public float TotalRating { get; set; }
+
         public DateTime? CreateTime { get; set; }
 
         public virtual ICollection<UserMessage> Children { get; set; }
@@ -35,6 +37,9 @@ namespace TCVShared.Data
 
         [Display(Name = "Đánh giá")]
         public int Rating { get; set; }
+
+        [Display(Name = "Like")]
+        public int Like { get; set; }
 
         [Display(Name = "Ngày tạo")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]

@@ -17,3 +17,14 @@ D:\works\TCVEcommerce\TCV\TCVShared\bin\Debug\netcoreapp2.1\TCVShared.dll
 D:\works\TCVEcommerce\TCV\TCVShared\bin\Debug\netcoreapp2.1\TCVShared.pdb
 D:\works\TCVEcommerce\TCV\TCVShared\obj\Debug\netcoreapp2.1\TCVShared.dll
 D:\works\TCVEcommerce\TCV\TCVShared\obj\Debug\netcoreapp2.1\TCVShared.pdb
+D:\VUONG\project\TCVEcommerce\TCV\TCVShared\bin\Debug\netcoreapp2.1\TCVShared.deps.json
+D:\VUONG\project\TCVEcommerce\TCV\TCVShared\bin\Debug\netcoreapp2.1\TCVShared.runtimeconfig.json
+D:\VUONG\project\TCVEcommerce\TCV\TCVShared\bin\Debug\netcoreapp2.1\TCVShared.runtimeconfig.dev.json
+D:\VUONG\project\TCVEcommerce\TCV\TCVShared\bin\Debug\netcoreapp2.1\TCVShared.dll
+D:\VUONG\project\TCVEcommerce\TCV\TCVShared\bin\Debug\netcoreapp2.1\TCVShared.pdb
+D:\VUONG\project\TCVEcommerce\TCV\TCVShared\obj\Debug\netcoreapp2.1\TCVShared.csprojAssemblyReference.cache
+D:\VUONG\project\TCVEcommerce\TCV\TCVShared\obj\Debug\netcoreapp2.1\TCVShared.csproj.CoreCompileInputs.cache
+D:\VUONG\project\TCVEcommerce\TCV\TCVShared\obj\Debug\netcoreapp2.1\TCVShared.AssemblyInfoInputs.cache
+D:\VUONG\project\TCVEcommerce\TCV\TCVShared\obj\Debug\netcoreapp2.1\TCVShared.AssemblyInfo.cs
+D:\VUONG\project\TCVEcommerce\TCV\TCVShared\obj\Debug\netcoreapp2.1\TCVShared.dll
+D:\VUONG\project\TCVEcommerce\TCV\TCVShared\obj\Debug\netcoreapp2.1\TCVShared.pdb

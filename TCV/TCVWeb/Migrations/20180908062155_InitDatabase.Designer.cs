@@ -9,7 +9,7 @@ using TCVShared.Data;
 namespace TCVWeb.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20180907090951_InitDatabase")]
+    [Migration("20180908062155_InitDatabase")]
     partial class InitDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -332,6 +332,41 @@ namespace TCVWeb.Migrations
                     b.ToTable("ShopCartItems");
                 });
 
+            modelBuilder.Entity("TCVShared.Data.Deliver", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("City")
+                        .HasMaxLength(64);
+
+                    b.Property<string>("Country")
+                        .HasMaxLength(64);
+
+                    b.Property<string>("Phone");
+
+                    b.Property<string>("State")
+                        .HasMaxLength(64);
+
+                    b.Property<int?>("ThreadId");
+
+                    b.Property<int?>("UserId");
+
+                    b.Property<string>("ZipCode")
+                        .HasMaxLength(32);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ThreadId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Deliver");
+                });
+
             modelBuilder.Entity("TCVShared.Data.MediaAlbum", b =>
                 {
                     b.Property<int>("Id")
@@ -405,7 +440,7 @@ namespace TCVWeb.Migrations
                     b.ToTable("ShopOrderItems");
                 });
 
-            modelBuilder.Entity("TCVShared.Data.ShopAddress", b =>
+            modelBuilder.Entity("TCVShared.Data.Shipping", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -433,7 +468,7 @@ namespace TCVWeb.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ShopAddress");
+                    b.ToTable("Shippings");
                 });
 
             modelBuilder.Entity("TCVShared.Data.ShopAttrib", b =>
@@ -565,9 +600,9 @@ namespace TCVWeb.Migrations
 
                     b.Property<double>("AdjustPrice");
 
-                    b.Property<int?>("BillingId");
-
                     b.Property<DateTime?>("CreateTime");
+
+                    b.Property<int?>("DeliverId");
 
                     b.Property<DateTime?>("DeliveryTime");
 
@@ -590,7 +625,7 @@ namespace TCVWeb.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BillingId");
+                    b.HasIndex("DeliverId");
 
                     b.HasIndex("ShippingId");
 
@@ -611,6 +646,43 @@ namespace TCVWeb.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("ShopWishes");
+                });
+
+            modelBuilder.Entity("TCVShared.Data.Supplier", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("City")
+                        .HasMaxLength(64);
+
+                    b.Property<string>("Country")
+                        .HasMaxLength(64);
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Phone");
+
+                    b.Property<string>("State")
+                        .HasMaxLength(64);
+
+                    b.Property<int?>("ThreadId");
+
+                    b.Property<int?>("UserId");
+
+                    b.Property<string>("ZipCode")
+                        .HasMaxLength(32);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ThreadId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Suppliers");
                 });
 
             modelBuilder.Entity("TCVShared.Data.Taxonomy", b =>
@@ -644,6 +716,8 @@ namespace TCVWeb.Migrations
 
                     b.Property<DateTime?>("CreateTime");
 
+                    b.Property<int>("Like");
+
                     b.Property<int?>("ParentId");
 
                     b.Property<int>("Rating");
@@ -673,6 +747,8 @@ namespace TCVWeb.Migrations
                     b.Property<DateTime?>("CreateTime");
 
                     b.Property<int>("MsgCount");
+
+                    b.Property<float>("TotalRating");
 
                     b.HasKey("Id");
 
@@ -787,6 +863,17 @@ namespace TCVWeb.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("TCVShared.Data.Deliver", b =>
+                {
+                    b.HasOne("TCVShared.Data.UserThread", "Thread")
+                        .WithMany()
+                        .HasForeignKey("ThreadId");
+
+                    b.HasOne("TCVShared.Data.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("TCVShared.Data.MediaAlbum", b =>
                 {
                     b.HasOne("TCVShared.Data.AppUser", "AppUser")
@@ -815,7 +902,7 @@ namespace TCVWeb.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TCVShared.Data.ShopAddress", b =>
+            modelBuilder.Entity("TCVShared.Data.Shipping", b =>
                 {
                     b.HasOne("TCVShared.Data.AppUser", "AppUser")
                         .WithMany()
@@ -868,11 +955,11 @@ namespace TCVWeb.Migrations
 
             modelBuilder.Entity("TCVShared.Data.ShopOrder", b =>
                 {
-                    b.HasOne("TCVShared.Data.ShopAddress", "Billing")
+                    b.HasOne("TCVShared.Data.Deliver", "Deliver")
                         .WithMany()
-                        .HasForeignKey("BillingId");
+                        .HasForeignKey("DeliverId");
 
-                    b.HasOne("TCVShared.Data.ShopAddress", "Shipping")
+                    b.HasOne("TCVShared.Data.Shipping", "ShippingAddress")
                         .WithMany()
                         .HasForeignKey("ShippingId");
 
@@ -883,6 +970,17 @@ namespace TCVWeb.Migrations
 
             modelBuilder.Entity("TCVShared.Data.ShopWish", b =>
                 {
+                    b.HasOne("TCVShared.Data.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("TCVShared.Data.Supplier", b =>
+                {
+                    b.HasOne("TCVShared.Data.UserThread", "Thread")
+                        .WithMany()
+                        .HasForeignKey("ThreadId");
+
                     b.HasOne("TCVShared.Data.AppUser", "AppUser")
                         .WithMany()
                         .HasForeignKey("UserId");
