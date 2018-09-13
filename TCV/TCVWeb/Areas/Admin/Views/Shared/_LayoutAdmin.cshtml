@@ -1,54 +1,68 @@
 ﻿<!DOCTYPE html>
-<html>
+<html class="fixed">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-        @ViewData["Title"] - TCV - TraiCayViet
-    </title>
-    <link rel="stylesheet" href="~/vendor/bootstrap3/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/vendor/font-awesome/css/all.min.css" />
+    <title>TCV - Trai Cay Viet</title>
+    <link href="https://fonts.googleapis.com/css?family=300,400,600,700,800|Shadows+Into+Light&amp;subset=latin-ext,vietnamese" rel="stylesheet">
+    <link rel="stylesheet" href="~/vendor/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/vendor/animate/animate.min.css">
+    <link rel="stylesheet" href="~/vendor/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/vendor/magnific-popup/magnific-popup.min.css" />
+    @RenderSection("VendorStyles", false)
     <environment include="Development">
-        <link rel="stylesheet" href="~/css/homeapp.css" />
-        <link rel="stylesheet" href="~/css/animations.css" />
-        <link rel="stylesheet" href="~/css/custom.css" />
-        <link rel="stylesheet" href="~/css/skins/red.css" />
+        <link rel="stylesheet" href="~/css/adminapp.css" />
+        <link rel="stylesheet" href="~/css/adminskin.css" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="~/css/homeapp.min.css" />
+        <link rel="stylesheet" href="~/css/adminapp.min.css" asp-append-version="true" />
     </environment>
-    <script src="~/js/modernizr.js"></script>
-    @RenderSection("Styles", false)
+    @RenderSection("ExtraStyles", false)
+    <script src="~/vendor/modernizr/modernizr.js"></script>
+    <script src="~/vendor/jquery/jquery.min.js"></script>
 </head>
 <body>
-    <div class="scrollToTop">
-        <i class="fas fa-arrow-up"></i>
-    </div>
-    <partial name="_PartialTopBar" />
-    <partial name="_PartialModals" />
-    <div class="page-wrapper">
-        <partial name="_PartialMenuBar" />
-        <div class="main-container">
-            <div class="container" style="margin-top: 20px">
-                <div class="row">
-                    <div class="main object-non-visible" data-animation-effect="fadeInDownSmall" data-effect-delay="300">
-                        @RenderBody()
-                    </div>
-                </div>
-            </div>
+    <partial name="_PartialModal" />
+    <section class="body">
+        <partial name="_PartialHeader" />
+        <div class="inner-wrapper">
+            <partial name="_PartialLeftBar" />
+            @RenderBody()
         </div>
-    </div>
-    <partial name="_PartialFooter" />
-    <script src="~/vendor/jquery/jquery.min.js"></script>
-    <script src="~/vendor/bootstrap3/js/bootstrap.min.js"></script>
-    <script src="~/vendor/jquery.appear/jquery.appear.min.js"></script>
+        <partial name="_PartialRightBar" />
+    </section>
+    <script src="~/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+    <script src="~/vendor/popper/umd/popper.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/vendor/nanoscroller/nanoscroller.js"></script>
+    <script src="~/vendor/magnific-popup/jquery.magnific-popup.js"></script>
+    <script src="~/vendor/jquery-placeholder/jquery-placeholder.js"></script>
+    <script src="~/vendor/intercooler-js/intercooler-js.js"></script>
+    <script src="~/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="~/vendor/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        (function ($) {
+            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-toggle="popover"]').popover();
+        })(jQuery);
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $(this).parents('.nav-tabs').find('.active').removeClass('active');
+            $(this).parents('.nav-pills').find('.active').removeClass('active');
+            $(this).addClass('active').parent().addClass('active');
+        });
+        if (typeof ($.fn.datepicker) !== 'undefined') {
+            $.fn.bootstrapDP = $.fn.datepicker.noConflict();
+        }
+    </script>
+    @RenderSection("VendorScripts", false)
     <environment include="Development">
-        <script src="~/js/homeapp.js" asp-append-version="true"></script>
+        <script src="~/js/adminapp.js"></script>
+        <script src="~/js/admininit.js"></script>
+        <script src="~/js/adminmodal.js"></script>
     </environment>
     <environment exclude="Development">
-        <script src="~/js/homeapp.min.js" asp-append-version="true"></script>
+        <script src="~/js/adminapp.min.js" asp-append-version="true"></script>
     </environment>
-    @RenderSection("Scripts", required: false)
+    @RenderSection("ExtraScripts", false)
 </body>
 </html>

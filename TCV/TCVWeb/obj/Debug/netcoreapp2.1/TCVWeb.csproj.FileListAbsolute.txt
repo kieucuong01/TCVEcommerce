@@ -100,8 +100,6 @@ D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\Razor\Areas\Adm
 D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\Razor\Areas\Admin\Views\Shared\_LayoutAdmin.g.cshtml.cs
 D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\Razor\Areas\Admin\Views\Shared\_PartialFooter.g.cshtml.cs
 D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\Razor\Areas\Admin\Views\Shared\_PartialMenuBar.g.cshtml.cs
-D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\Razor\Areas\Admin\Views\Shared\_PartialModals.g.cshtml.cs
-D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\Razor\Areas\Admin\Views\Shared\_PartialTopBar.g.cshtml.cs
 D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\Razor\Areas\Admin\Views\_ViewStart.g.cshtml.cs
 D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\Razor\Views\Home\About.g.cshtml.cs
 D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\Razor\Views\Home\Contact.g.cshtml.cs
@@ -121,3 +119,9 @@ D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\TCVWeb.Views.pd
 D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\TCVWeb.csproj.CopyComplete
 D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\TCVWeb.dll
 D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\TCVWeb.pdb
+D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\Razor\Areas\Admin\Views\Shared\_PartialHeader.g.cshtml.cs
+D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\Razor\Areas\Admin\Views\Shared\_PartialLeftBar.g.cshtml.cs
+D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\Razor\Areas\Admin\Views\Shared\_PartialModal.g.cshtml.cs
+D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\Razor\Areas\Admin\Views\Shared\_PartialNavBar.g.cshtml.cs
+D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\Razor\Areas\Admin\Views\Shared\_PartialRightBar.g.cshtml.cs
+D:\VUONG\project\TCVEcommerce\TCV\TCVWeb\obj\Debug\netcoreapp2.1\Razor\Areas\Admin\Views\_ViewImports.g.cshtml.cs
