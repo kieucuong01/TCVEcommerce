@@ -1,0 +1,32 @@
+﻿<div class="tab-navigation collapse">
+    <nav>
+        <ul class="nav nav-pills">
+            <li class="@(Html.IsActive("Home") ? "nav-expanded" : "")">
+                <a class="nav-link" href="@Url.Action("Index", "Home")">
+                    <i class="fas fa-home" aria-hidden="true"></i>Dashboard
+                </a>
+            </li>
+            <li class="@(Html.IsActive("Member", "Index") ? "nav-expanded" : "")">
+                <a class="nav-link" href="@Url.Action("Index", "Member")"><i class="fas fa-users" aria-hidden="true"></i> Thành viên</a>
+            </li>
+            <li class="@(Html.IsActive("CashCharge") ? "nav-expanded" : "")">
+                <a class="nav-link" href="@Url.Action("Index", "CashCharge")"><i class="fas fa-dollar-sign" aria-hidden="true"></i> Nạp thẻ</a>
+            </li>
+            <li class="@(Html.IsActive("Message") ? "nav-expanded" : "")">
+                <a class="nav-link" href="@Url.Action("Index", "Message")"><i class="fas fa-comments" aria-hidden="true"></i> Tin nhắn</a>
+            </li>
+            <li class="@(Html.IsActive("GameIssue", "Index") ? "nav-expanded" : "")">
+                <a class="nav-link" href="@Url.Action("Index", "GameIssue")"><i class="fas fa-tasks" aria-hidden="true"></i> Công việc</a>
+            </li>
+            <li class="@(Html.IsActive("GameItem", "Index") ? "nav-expanded" : "")">
+                <a class="nav-link" href="@Url.Action("Index", "GameItem")"><i class="fas fa-cubes" aria-hidden="true"></i> Vật phẩm</a>
+            </li>
+            <li class="@(Html.IsActive("GameZone", "Index") ? "nav-expanded" : "")">
+                <a class="nav-link" href="@Url.Action("Index", "GameZone")"><i class="fas fa-server" aria-hidden="true"></i> Máy chủ</a>
+            </li>
+            <li class="@(Html.IsActive("GiftCode", "Index") ? "nav-expanded" : "")">
+                <a class="nav-link" href="@Url.Action("Index", "GiftCode")"><i class="fas fa-gift" aria-hidden="true"></i> Quà tặng</a>
+            </li>
+        </ul>
+    </nav>
+</div>
