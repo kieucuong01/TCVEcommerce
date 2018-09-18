@@ -1,0 +1,18 @@
+﻿<Properties StartupConfiguration="{A327297E-32B6-4027-ADDB-00F5FF62FF46}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TCVWeb/Views/Home/Blog.cshtml">
+    <Files>
+      <File FileName="TCVWeb/Views/Product/Category.cshtml" Line="28" Column="27" />
+      <File FileName="TCVWeb/Views/Shared/_Layout.cshtml" Line="37" Column="22" />
+      <File FileName="TCVWeb/Views/Home/Blog.cshtml" Line="50" Column="26" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/mac/Downloads/project/TCVEcommerce/TCV/TCVWeb/Areas/Admin/Controllers/HomeAdminController.cs" relfile="TCVWeb/Areas/Admin/Controllers/HomeAdminController.cs" line="17" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.TCVWeb PreferredExecutionTarget="MonoDevelop.Default" />
+  <MultiItemStartupConfigurations />
+</Properties>

@@ -38,6 +38,26 @@ namespace TCVWeb.Controllers
             return View();
         }
 
+        public IActionResult Blog()
+        {
+            return View();
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        public IActionResult Cart()
+        {
+            return View();
+        }
+
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
