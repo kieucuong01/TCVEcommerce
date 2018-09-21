@@ -1,4 +1,6 @@
-﻿    <div class="body">
+﻿@addTagHelper *,TCV.Shared
+@model PagedList<ShopItem>
+    <div class="body">
         <div role="main" class="main">
             <div class="container">
                 <div class="slider-container rev_slider_wrapper" style="height: 521px;">
@@ -143,44 +145,57 @@
                         <div class="col-md-9 col-lg-9 col-md-push-3 col-lg-push-3">
                             <h2 class="slider-title">SẢN PHẨM NỔI BẬT</h2>
                             <ul class="products-grid columns4">
-                                <li>
-                                    <div class="product">
-                                        <figure class="product-image-area">
-                                            <a href="@Url.Action("Index","Product")" title="Product Name" class="product-image">
-                                                <img src="/img/demos/shop/products/product1.jpg" alt="Product Name">
-                                                <img src="/img/demos/shop/products/product1-2.jpg" alt="Product Name" class="product-hover-image">
+                                @foreach (var item in Model.Content)
+                                {
+
+                            <li>
+                                <div class="product">
+                                    <figure class="product-image-area">
+                                        <a href="@Url.Action("Detail","Product",new { id = item.Id })" title="@item.Name" class="product-image">
+                                            <img src="@item.Image" alt="Product Name" style="width:200px; height:200px">
+                                            <img src="@item.Preview" alt="Product Name" class="product-hover-image" style="width:200px; height:200px">
+                                        </a>
+                                        <a href="#" class="product-quickview">
+                                            <i class="fa fa-share-square-o"></i>
+                                            <span>Quick View</span>
+                                        </a>
+
+                                        @if (item.SalePrice != item.RegularPrice) {
+                                        <div class="product-label"><span class="discount">-10%</span></div>
+                                        }
+                                        @if (item.NewProduct)
+                                        {
+                                            <div class="product-label"><span class="new">New</span></div>
+                                        }
+
+
+                                        <div class="product-actions">
+                                            <a href="#" class="addtowishlist" title="Add to Wishlist">
+                                                <i class="fa fa-heart"></i>
                                             </a>
-                                            <a href="#" class="product-quickview">
-                                                <i class="fa fa-share-square-o"></i>
-                                                <span>Quick View</span>
+                                            <a href="#" class="addtocart" title="Add to Cart">
+                                                <i class="fa fa-shopping-cart"></i>
                                             </a>
-                                            <div class="product-actions">
-                                                <a href="#" class="addtowishlist" title="Add to Wishlist">
-                                                    <i class="fa fa-heart"></i>
-                                                </a>
-                                                <a href="#" class="addtocart" title="Add to Cart">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </a>
-                                                <a href="#" class="comparelink" title="Add to Compare">
-                                                    <i class="glyphicon glyphicon-signal"></i>
-                                                </a>
-                                            </div>
-                                        </figure>
-                                        <div class="product-details-area">
-                                            <h2 class="product-name"><a href="demo-shop-14-product-details.html" title="Product Name">Noa Sheer Blouse</a></h2>
-                                            <div class="product-ratings">
-                                                <div class="ratings-box">
-                                                    <div class="rating" style="width:60%"></div>
-                                                </div>
-                                            </div>
-                                            <div class="product-price-box">
-                                                <span class="old-price">$99.00</span>
-                                                <span class="product-price">$89.00</span>
+                                        </div>
+                                    </figure>
+                                    <div class="product-details-area">
+                                        <h2 class="product-name"><a href="@Url.Action("Detail","Product",new { id = item.Id })" title="@item.Name">@item.Name</a></h2>
+                                        <div class="product-ratings">
+                                            <div class="ratings-box">
+                                                <div class="rating" style="width:60%"></div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
+                                        <div class="product-price-box">
+                                            @if (item.SalePrice != item.RegularPrice) {
+                                            <span class="old-price">@item.RegularPrice</span>
+                                            }
 
+                                            <span class="product-price">@item.CurrentPrice</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                                }
                             </ul>
                         </div>
                         <aside class="col-md-3 col-lg-3 col-md-pull-9 col-lg-pull-9 sidebar home-sidebar shop-sidebar">
@@ -267,12 +282,12 @@
                                 <p>
                                     Tham khảo chính sách vận chuyển của chúng tôi để được trợ giúp về đơn đặt hàng.
                                 </p>
-                                <a href="#">Chính sách vận chuyển></a>
+                                <a href="@Url.Action("Privacy","Home")">Chính sách vận chuyển></a>
                             </div>
                             <div class="side-block side-feature">
                                 <h4><i class="fa fa-reply"></i>ĐỔI TRẢ MIỄN PHÍ</h4>
                                 <p>Chúng tôi đứng đằng sau hàng hóa và dịch vụ của chúng tôi và muốn bạn hài lòng với họ.</p>
-                                <a href="#">Chính sách đổi trả ></a>
+                                <a href="@Url.Action("Privacy","Home")">Chính sách đổi trả ></a>
                             </div>
                         </aside>
                     </div>
@@ -313,206 +328,35 @@
                     <span class="line"></span>
                 </h2>
                 <div class="owl-carousel owl-theme manual new-products-carousel hide-addtolinks">
-                    <div class="product">
-                        <figure class="product-image-area">
-                            <a href="demo-shop-14-product-details.html" title="Product Name" class="product-image">
-                                <img src="/img/demos/shop/products/shop14/product1.jpg" alt="Product Name">
-                            </a>
-                            <a href="#" class="product-quickview">
-                                <i class="fa fa-share-square-o"></i>
-                                <span>Quick View</span>
-                            </a>
-                        </figure>
-                        <div class="product-details-area">
-                            <h2 class="product-name"><a href="demo-shop-14-product-details.html" title="Product Name">Cellphone</a></h2>
-                            <div class="product-ratings">
-                                <div class="ratings-box">
-                                    <div class="rating" style="width:60%"></div>
-                                </div>
-                            </div>
-                            <div class="product-price-box">
-                                <span class="product-price">$100.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <figure class="product-image-area">
-                            <a href="demo-shop-14-product-details.html" title="Product Name" class="product-image">
-                                <img src="/img/demos/shop/products/shop14/product2.jpg" alt="Product Name">
-                            </a>
-                            <a href="#" class="product-quickview">
-                                <i class="fa fa-share-square-o"></i>
-                                <span>Quick View</span>
-                            </a>
-                        </figure>
-                        <div class="product-details-area">
-                            <h2 class="product-name"><a href="demo-shop-14-product-details.html" title="Product Name">Sports Set</a></h2>
-                            <div class="product-ratings">
-                                <div class="ratings-box">
-                                    <div class="rating" style="width:0%"></div>
-                                </div>
-                            </div>
-                            <div class="product-price-box">
-                                <span class="old-price">$120.00</span>
-                                <span class="product-price">$90.00</span>
+                    @foreach (var item in Model.Content)
+                    {
+
+                <div class="product">
+                    <figure class="product-image-area">
+                        <a href="@Url.Action("Detail","Product",new { id = item.Id })" title="@item.Name" class="product-image">
+                            <img src="@item.Image" alt="Product Name" style="width:200px; height:230px">
+                        </a>
+                        <a href="#" class="product-quickview">
+                            <i class="fa fa-share-square-o"></i>
+                            <span>Quick View</span>
+                        </a>
+                        <div class="product-label"><span class="new">New</span></div>
+
+                    </figure>
+                    <div class="product-details-area">
+                        <h2 class="product-name"><a href="@Url.Action("Detail","Product",new { id = item.Id })" title="@item.Name">@item.Name</a></h2>
+                        <div class="product-ratings">
+                            <div class="ratings-box">
+                                <div class="rating" style="width:60%"></div>
                             </div>
                         </div>
-                    </div>
-                    <div class="product">
-                        <figure class="product-image-area">
-                            <a href="demo-shop-14-product-details.html" title="Product Name" class="product-image">
-                                <img src="/img/demos/shop/products/shop14/product3.jpg" alt="Product Name">
-                            </a>
-                            <a href="#" class="product-quickview">
-                                <i class="fa fa-share-square-o"></i>
-                                <span>Quick View</span>
-                            </a>
-                        </figure>
-                        <div class="product-details-area">
-                            <h2 class="product-name"><a href="demo-shop-14-product-details.html" title="Product Name">White Bag</a></h2>
-                            <div class="product-ratings">
-                                <div class="ratings-box">
-                                    <div class="rating" style="width:60%"></div>
-                                </div>
-                            </div>
-                            <div class="product-price-box">
-                                <span class="product-price">$100.00</span>
-                            </div>
+                        <div class="product-price-box">
+                            <span class="product-price">@item.CurrentPrice</span>
                         </div>
                     </div>
-                    <div class="product">
-                        <figure class="product-image-area">
-                            <a href="demo-shop-14-product-details.html" title="Product Name" class="product-image">
-                                <img src="/img/demos/shop/products/shop14/product4.jpg" alt="Product Name">
-                            </a>
-                            <a href="#" class="product-quickview">
-                                <i class="fa fa-share-square-o"></i>
-                                <span>Quick View</span>
-                            </a>
-                        </figure>
-                        <div class="product-details-area">
-                            <h2 class="product-name"><a href="demo-shop-14-product-details.html" title="Product Name">Women Bag</a></h2>
-                            <div class="product-ratings">
-                                <div class="ratings-box">
-                                    <div class="rating" style="width:60%"></div>
-                                </div>
-                            </div>
-                            <div class="product-price-box">
-                                <span class="product-price">$70.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <figure class="product-image-area">
-                            <a href="demo-shop-14-product-details.html" title="Product Name" class="product-image">
-                                <img src="/img/demos/shop/products/shop14/product5.jpg" alt="Product Name">
-                            </a>
-                            <a href="#" class="product-quickview">
-                                <i class="fa fa-share-square-o"></i>
-                                <span>Quick View</span>
-                            </a>
-                        </figure>
-                        <div class="product-details-area">
-                            <h2 class="product-name"><a href="demo-shop-14-product-details.html" title="Product Name">Sports Cap</a></h2>
-                            <div class="product-ratings">
-                                <div class="ratings-box">
-                                    <div class="rating" style="width:80%"></div>
-                                </div>
-                            </div>
-                            <div class="product-price-box">
-                                <span class="old-price">$100.00</span>
-                                <span class="product-price">$90.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <figure class="product-image-area">
-                            <a href="demo-shop-14-product-details.html" title="Product Name" class="product-image">
-                                <img src="/img/demos/shop/products/shop14/product6.jpg" alt="Product Name">
-                            </a>
-                            <a href="#" class="product-quickview">
-                                <i class="fa fa-share-square-o"></i>
-                                <span>Quick View</span>
-                            </a>
-                        </figure>
-                        <div class="product-details-area">
-                            <h2 class="product-name"><a href="demo-shop-14-product-details.html" title="Product Name">Fashion Bag</a></h2>
-                            <div class="product-ratings">
-                                <div class="ratings-box">
-                                    <div class="rating" style="width:0%"></div>
-                                </div>
-                            </div>
-                            <div class="product-price-box">
-                                <span class="product-price">$70.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <figure class="product-image-area">
-                            <a href="demo-shop-14-product-details.html" title="Product Name" class="product-image">
-                                <img src="/img/demos/shop/products/shop14/product7.jpg" alt="Product Name">
-                            </a>
-                            <a href="#" class="product-quickview">
-                                <i class="fa fa-share-square-o"></i>
-                                <span>Quick View</span>
-                            </a>
-                        </figure>
-                        <div class="product-details-area">
-                            <h2 class="product-name"><a href="demo-shop-14-product-details.html" title="Product Name">Women Bag</a></h2>
-                            <div class="product-ratings">
-                                <div class="ratings-box">
-                                    <div class="rating" style="width:80%"></div>
-                                </div>
-                            </div>
-                            <div class="product-price-box">
-                                <span class="product-price">$80.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <figure class="product-image-area">
-                            <a href="demo-shop-14-product-details.html" title="Product Name" class="product-image">
-                                <img src="/img/demos/shop/products/shop14/product8.jpg" alt="Product Name">
-                            </a>
-                            <a href="#" class="product-quickview">
-                                <i class="fa fa-share-square-o"></i>
-                                <span>Quick View</span>
-                            </a>
-                        </figure>
-                        <div class="product-details-area">
-                            <h2 class="product-name"><a href="demo-shop-14-product-details.html" title="Product Name">Backpack</a></h2>
-                            <div class="product-ratings">
-                                <div class="ratings-box">
-                                    <div class="rating" style="width:80%"></div>
-                                </div>
-                            </div>
-                            <div class="product-price-box">
-                                <span class="product-price">$80.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <figure class="product-image-area">
-                            <a href="demo-shop-14-product-details.html" title="Product Name" class="product-image">
-                                <img src="/img/demos/shop/products/shop14/product9.jpg" alt="Product Name">
-                            </a>
-                            <a href="#" class="product-quickview">
-                                <i class="fa fa-share-square-o"></i>
-                                <span>Quick View</span>
-                            </a>
-                        </figure>
-                        <div class="product-details-area">
-                            <h2 class="product-name"><a href="demo-shop-14-product-details.html" title="Product Name">Fashion Sunglasses</a></h2>
-                            <div class="product-ratings">
-                                <div class="ratings-box">
-                                    <div class="rating" style="width:80%"></div>
-                                </div>
-                            </div>
-                            <div class="product-price-box">
-                                <span class="product-price">$80.00</span>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+                    }
+
                 </div>
             </div>
 

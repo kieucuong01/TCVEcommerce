@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 
 namespace TCVShared.Data
 {
@@ -59,6 +60,32 @@ namespace TCVShared.Data
                 b.HasIndex(e => e.Name);
             });
         }
+
+        public virtual IQueryable<BlogPost> CurrentPosts
+        {
+            get { return BlogPosts.Where(x => x.Status >= PostStatus.Normal && x.PublishTime <= DateTime.Now); }
+        }
+
+        public virtual IQueryable<BlogPost> NormalPosts
+        {
+            get { return BlogPosts.Where(x => x.Status == PostStatus.Normal && x.PublishTime <= DateTime.Now); }
+        }
+
+        public virtual IQueryable<BlogPost> SpecialPosts
+        {
+            get { return BlogPosts.Where(x => x.Status == PostStatus.Special && x.PublishTime <= DateTime.Now); }
+        }
+
+        public virtual IQueryable<Taxonomy> PostCats
+        {
+            get { return Taxonomies.Where(x => x.Type == TaxoType.PostCat); }
+        }
+
+        public virtual IQueryable<Taxonomy> PostTags
+        {
+            get { return Taxonomies.Where(x => x.Type == TaxoType.PostTag); }
+        }
+
     }
 }
 

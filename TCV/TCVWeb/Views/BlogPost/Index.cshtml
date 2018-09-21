@@ -1,0 +1,140 @@
+﻿@addTagHelper *,TCV.Shared
+@model PagedList<BlogPost>
+@{
+    ViewBag.Icon = "fas fa-archive";
+    ViewBag.Title = "Bài Viết";
+}
+
+@*@Html.DetailsLink("Details", new { id = item.Id })
+    @Html.UpdateLink("Update", new { id = item.Id }, true)
+    @Html.DeleteLink("Delete", new { id = item.Id }, true)*@
+<div role="main" class="main">
+    <section class="page-header">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="#">Home</a></li>
+
+                <li class="active">Blog</li>
+            </ul>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="toolbar">
+                    <div class="sorter">
+                        <div class="sort-by">
+                            <label>Sort by:</label>
+                            <select>
+                                <option value="Created At">Created At</option>
+                                <option value="Added By">Added By</option>
+                            </select>
+                            <a href="#" title="Set Desc Direction">
+                                <img src="../img/demos/shop/i_desc_arrow.gif" alt="Set Desc Direction">
+                            </a>
+                        </div>
+
+                        <div class="limiter">
+                            <label>Show:</label>
+                            <select>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-posts">
+                    @foreach (var item in Model.Content)
+                    {
+                        <article class="post post-large">
+                            @if (item.Format == PostFormat.Gallery)
+                            {
+                                @*foreach (var mediaFile in item.MediaAlbum.MediaFiles)
+                                {*@
+                                    <div class="post-image">
+                                        <div class="owl-carousel owl-theme" data-plugin-options="{'items':1}">
+                                            <div>
+                                                <div class="img-thumbnail">
+                                                    <img class="img-responsive" src="../img/demos/shop/blog/blog-shop-4.jpg" alt="Post">
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="img-thumbnail">
+                                                    <img class="img-responsive" src="@item.Image" alt="Post">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                @*}*@
+                            }
+                            else if (item.Format == PostFormat.Video)
+                            {
+                                <div class="post-video">
+                                    <iframe src="@item.ExtLink" width="1280" height="720"></iframe>
+                                </div>
+                            }
+
+                            <div class="post-date">
+                                <span class="day">@item.CreateTime.Value.Day.ToString()</span>
+                                <span class="month">Tháng @item.CreateTime.Value.Month.ToString()</span>
+                            </div>
+
+                            <div class="post-content">
+
+                                <h2><a href="@Url.Action("Details","BlogPost",new { id = item.Id })">@Html.DisplayFor(m => item.Title)</a></h2>
+                                <p>@Html.DisplayFor(m => item.Preview)</p>
+
+                                <a href="@Url.Action("Details","BlogPost",new { id = item.Id })" class="btn btn-xs btn-link">Read more</a>
+
+                                <div class="post-meta">
+                                    <span><i class="fa fa-calendar"></i>@Html.DisplayFor(m => item.CreateTime) </span>
+                                    <span><i class="fa fa-user"></i> By <a href="#">@Html.DisplayFor(m => item.CreateUser)</a> </span>
+                                    <span><i class="fa fa-tag"></i> <a href="#">News</a> </span>
+                                </div>
+
+                            </div>
+                        </article>
+                    }
+                </div>
+
+                <div class="toolbar">
+                    <div class="sorter">
+                        <div class="sort-by">
+                            <label>Sort by:</label>
+                            <select>
+                                <option value="Created At">Created At</option>
+                                <option value="Added By">Added By</option>
+                            </select>
+                            <a href="#" title="Set Desc Direction">
+                                <img src="../img/demos/shop/i_desc_arrow.gif" alt="Set Desc Direction">
+                            </a>
+                        </div>
+
+                        <ul class="pagination">
+                            <li class="active"><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#"><i class="fa fa-caret-right"></i></a></li>
+                        </ul>
+
+                        <div class="limiter">
+                            <label>Show:</label>
+                            <select>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <partial name="_PartialRightBlog" />
+
+        </div>
+    </div>
+
+</div>
+
