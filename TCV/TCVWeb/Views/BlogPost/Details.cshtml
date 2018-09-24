@@ -43,7 +43,7 @@
                         else if (Model.Format == PostFormat.Video)
                         {
                             <div class="post-video">
-                                <iframe src="@Model.ExtLink" width="1280" height="720"></iframe>
+                                @Html.Raw(Model.ExtLink)
                             </div>
                         }
 
@@ -62,7 +62,7 @@
                                 @*<span><i class="fa fa-comments"></i> <a href="#">12 Comments</a></span>*@
                             </div>
 
-                            <p>@Model.Content</p>
+                            @Html.Raw(Model.Content)
 
 
                             <div class="post-block post-share">
@@ -70,15 +70,15 @@
 
                                 <!-- AddThis Button BEGIN -->
                                 <div class="addthis_toolbox addthis_default_style ">
-                                    <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-                                    <a class="addthis_button_tweet"></a>
                                     <a class="addthis_button_pinterest_pinit"></a>
                                     <a class="addthis_counter addthis_pill_style"></a>
+                                    <div class="fb-like" data-href="https://localhost:5001/BlogPost/Details/@Model.Id" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="false"></div>
                                 </div>
+
                                 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=xa-50faf75173aadc53"></script>
                                 <!-- AddThis Button END -->
-
                             </div>
+                            <div class="fb-comments" data-href="https://localhost:5001/BlogPost/Details/@Model.Id" data-width="100%" data-numposts="5"></div>
 
                         </div>
                     </article>

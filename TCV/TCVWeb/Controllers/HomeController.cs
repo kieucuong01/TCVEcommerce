@@ -36,6 +36,31 @@ namespace TCVWeb.Controllers
             model.TotalRows = filterQuery.Count();
             model.Content = selectQuery.ToList();
 
+            ViewData["categories"] = new String[] { "Hạt", "Rau củ", "Cây giống", "Trái Cây"  };
+
+            var supplier = new Supplier();
+            supplier.Name = "Kinh Do";
+            supplier.Address = "https://i.doanhnhansaigon.vn/2015/07/16/mondelez-kinh-o-doanhnhans-1508412719.jpg";
+
+            var supplier1 = new Supplier();
+            supplier1.Name = "Kinh Do";
+            supplier1.Address = "http://tonghoinn.vn/vnt_upload/news/07_2017/341111.jpg";
+
+            var supplier2 = new Supplier();
+            supplier2.Name = "Kinh Do";
+            supplier2.Address = "http://snnptnt.binhthuan.gov.vn/wps/wcm/connect/a9cf2c0040d3c4bba3e5e30556390f18/logoKhuyennong-Khuyenngu.jpg?MOD=AJPERES&CACHEID=a9cf2c0040d3c4bba3e5e30556390f18";
+
+            var supplier3 = new Supplier();
+            supplier3.Name = "Kinh Do";
+            supplier3.Address = "http://logodep.vn/wp-content/uploads/2017/01/thiet-ke-logo-cong-ty-hoi-nhap-_1292835984.jpg";
+
+            var supplier4 = new Supplier();
+            supplier4.Name = "Kinh Do";
+            supplier4.Address = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSstGYeLddZ4B5W6AKFFq-GUBFyobEcvrnBTht5TD7IQ0-kPdqn";
+
+
+            ViewData["brands"] = new Supplier[] { supplier, supplier1, supplier2, supplier3, supplier4, supplier, supplier3, supplier4 };
+
             return View(model);
         }
 

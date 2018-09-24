@@ -183,11 +183,7 @@ D:/VUONG/project/TCVEcommerce/TCV/TCVWeb/obj/Debug/netcoreapp2.1/Razor/Areas/Adm
 /Users/mac/Downloads/project/TCVEcommerce/TCV/TCVWeb/obj/Debug/netcoreapp2.1/Razor/Views/Home/Register.g.cshtml.cs
 /Users/mac/Downloads/project/TCVEcommerce/TCV/TCVWeb/obj/Debug/netcoreapp2.1/Razor/Views/Home/Help.g.cshtml.cs
 /Users/mac/Downloads/project/TCVEcommerce/TCV/TCVWeb/obj/Debug/netcoreapp2.1/Razor/Views/BlogPost/Category.g.cshtml.cs
-/Users/mac/Downloads/project/TCVEcommerce/TCV/TCVWeb/obj/Debug/netcoreapp2.1/Razor/Views/BlogPost/Create.g.cshtml.cs
-/Users/mac/Downloads/project/TCVEcommerce/TCV/TCVWeb/obj/Debug/netcoreapp2.1/Razor/Views/BlogPost/Delete.g.cshtml.cs
 /Users/mac/Downloads/project/TCVEcommerce/TCV/TCVWeb/obj/Debug/netcoreapp2.1/Razor/Views/BlogPost/Details.g.cshtml.cs
 /Users/mac/Downloads/project/TCVEcommerce/TCV/TCVWeb/obj/Debug/netcoreapp2.1/Razor/Views/BlogPost/Index.g.cshtml.cs
-/Users/mac/Downloads/project/TCVEcommerce/TCV/TCVWeb/obj/Debug/netcoreapp2.1/Razor/Views/BlogPost/Update.g.cshtml.cs
-/Users/mac/Downloads/project/TCVEcommerce/TCV/TCVWeb/obj/Debug/netcoreapp2.1/Razor/Views/BlogPost/_PartialForm.g.cshtml.cs
 /Users/mac/Downloads/project/TCVEcommerce/TCV/TCVWeb/obj/Debug/netcoreapp2.1/Razor/Views/Shared/_PartialRightBlog.g.cshtml.cs
 /Users/mac/Downloads/project/TCVEcommerce/TCV/TCVWeb/obj/Debug/netcoreapp2.1/Razor/Views/Product/Detail.g.cshtml.cs

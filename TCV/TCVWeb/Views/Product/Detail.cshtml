@@ -1,7 +1,8 @@
-﻿@addTagHelper *,TCV.Shared
-@model ShopItem
-@{
-    ViewData["Title"] = "Shop item";
+﻿@{
+    var currentProduct = ViewData["currentProduct"] as ShopItem;
+    var nextProduct = ViewData["nextProduct"] as ShopItem;
+    var previousProduct = ViewData["previousProduct"] as ShopItem;
+    var suggestionProduct = ViewData["suggestedProduct"] as ShopItem[];
 }
 
 <div role="main" class="main">
@@ -23,7 +24,7 @@
                             <div class="product-img-box col-sm-5">
                                 <div class="product-img-box-wrapper">
                                     <div class="product-img-wrapper">
-                                        <img id="product-zoom" src="@Model.Image" data-zoom-image="@Model.Image" alt="Product main image">
+                                        <img id="product-zoom" src="@currentProduct.Image" data-zoom-image="@currentProduct.Image" alt="Product main image">
                                     </div>
                                     <a href="#" class="product-img-zoom" title="Zoom">
                                         <span class="glyphicon glyphicon-search"></span>
@@ -31,13 +32,13 @@
                                 </div>
                                 <div class="owl-carousel manual" id="productGalleryThumbs">
                                     <div class="product-img-wrapper">
-                                        <a href="#" data-image="@Model.Image" data-zoom-image="@Model.Image" class="product-gallery-item">
-                                            <img src="@Model.Image" alt="product">
+                                        <a href="#" data-image="@currentProduct.Image" data-zoom-image="@currentProduct.Image" class="product-gallery-item">
+                                            <img src="@currentProduct.Image" alt="product">
                                         </a>
                                     </div>
                                     <div class="product-img-wrapper">
-                                        <a href="#" data-image="@Model.Preview" data-zoom-image="@Model.Preview" class="product-gallery-item">
-                                            <img src="@Model.Preview" alt="product">
+                                        <a href="#" data-image="@currentProduct.Preview" data-zoom-image="@currentProduct.Preview" class="product-gallery-item">
+                                            <img src="@currentProduct.Preview" alt="product">
                                         </a>
                                     </div>
                                     <div class="product-img-wrapper">
@@ -60,26 +61,26 @@
                             <div class="product-details-box col-sm-7">
                                 <div class="product-nav-container">
                                     <div class="product-nav product-nav-prev">
-                                        <a href="#" title="Previous Product">
+                                        <a href="@Url.Action("Detail","Product",new { id = previousProduct.Id })" title="Previous Product">
                                             <i class="fa fa-chevron-left"></i>
                                         </a>
                                         <div class="product-nav-dropdown">
-                                            <img src="~/img/demos/shop/products/product1.jpg" alt="Product">
-                                            <h4>Blue Denim Dress</h4>
+                                            <img src="@previousProduct.Image" alt="Product">
+                                            <h4>@previousProduct.Name</h4>
                                         </div>
                                     </div>
                                     <div class="product-nav product-nav-next">
-                                        <a href="#" title="Next Product">
+                                        <a href="@Url.Action("Detail","Product",new { id = nextProduct.Id })" title="Next Product">
                                             <i class="fa fa-chevron-right"></i>
                                         </a>
                                         <div class="product-nav-dropdown">
-                                            <img src="~/img/demos/shop/products/product2.jpg" alt="Product">
-                                            <h4>Black Woman Shirt</h4>
+                                            <img src="@nextProduct.Image" alt="Product">
+                                            <h4>@nextProduct.Name</h4>
                                         </div>
                                     </div>
                                 </div>
                                 <h1 class="product-name">
-                                    @Model.Name
+                                    @currentProduct.Name
                                 </h1>
                                 <div class="product-rating-container">
                                     <div class="product-ratings">
@@ -93,13 +94,13 @@
                                     </div>
                                 </div>
                                 <div class="product-short-desc">
-                                    <p>@Model.Content</p>
-                                   
+                                    @Html.Raw(currentProduct.Content)
+
                                 </div>
                                 <div class="product-detail-info">
                                     <div class="product-price-box">
-                                        <span class="old-price">@Model.RegularPrice</span>
-                                        <span class="product-price">@Model.SalePrice</span>
+                                        <span class="old-price">@currentProduct.RegularPrice</span>
+                                        <span class="product-price">@currentProduct.SalePrice</span>
                                     </div>
                                     <p class="availability">
                                         <span class="font-weight-semibold">Availability:</span>
@@ -142,7 +143,7 @@
                         <div class="tab-content">
                             <div id="product-desc" class="tab-pane active">
                                 <div class="product-desc-area">
-                                    <p> @Model.Specifications </p>
+                                    @Html.Raw(currentProduct.Specifications)
                                 </div>
                             </div>
                             <div id="product-add" class="tab-pane">
@@ -256,193 +257,53 @@
                                     </form>
                                 </div>
                             </div>
+                            <div class="fb-comments" data-href="https://localhost:5001/Product/Detail/@currentProduct.Id" data-width="100%" data-numposts="5"></div>
                         </div>
                     </div>
                 </div>
+
                 <h2 class="slider-title">
                     <span class="inline-title">Also Purchased</span>
                     <span class="line"></span>
                 </h2>
                 <div class="owl-carousel owl-theme" data-plugin-options="{'items':4, 'margin':20, 'nav':true, 'dots': false, 'loop': false}">
-                    <div class="product">
-                        <figure class="product-image-area">
-                            <a href="#" title="Product Name" class="product-image">
-                                <img src="~/img/demos/shop/products/product1.jpg" alt="Product Name">
-                                <img src="~/img/demos/shop/products/product1-2.jpg" alt="Product Name" class="product-hover-image">
-                            </a>
-                            <a href="#" class="product-quickview">
-                                <i class="fa fa-share-square-o"></i>
-                                <span>Quick View</span>
-                            </a>
-                            <div class="product-label"><span class="discount">-10%</span></div>
-                            <div class="product-label"><span class="new">New</span></div>
-                        </figure>
-                        <div class="product-details-area">
-                            <h2 class="product-name"><a href="#" title="Product Name">Noa Sheer Blouse</a></h2>
-                            <div class="product-ratings">
-                                <div class="ratings-box">
-                                    <div class="rating" style="width:60%"></div>
+                    @foreach (var item in suggestionProduct)
+                    {
+                        <div class="product">
+                            <figure class="product-image-area">
+                                <a href="@Url.Action("Detail","Product",new { id = item.Id })" title="@item.Name" class="product-image">
+                                    <img src="@item.Image" alt="@item.Name" style="height:250px">
+                                </a>
+                                <a href="#" class="product-quickview">
+                                    <i class="fa fa-share-square-o"></i>
+                                    <span>Quick View</span>
+                                </a>
+                            </figure>
+                            <div class="product-details-area">
+                                <h2 class="product-name"><a href="@Url.Action("Detail","Product",new { id = item.Id })" title="@item.Name">@item.Name</a></h2>
+                                <div class="product-ratings">
+                                    <div class="ratings-box">
+                                        <div class="rating" style="width:0%"></div>
+                                    </div>
+                                </div>
+                                <div class="product-price-box">
+                                    <span class="product-price">@item.CurrentPrice</span>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#" class="addtowishlist" title="Add to Wishlist">
+                                        <i class="fa fa-heart"></i>
+                                    </a>
+                                    <a href="#" class="addtocart" title="Add to Cart">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        <span>Add to Cart</span>
+                                    </a>
+                                    <a href="#" class="comparelink" title="Add to Compare">
+                                        <i class="glyphicon glyphicon-signal"></i>
+                                    </a>
                                 </div>
                             </div>
-                            <div class="product-price-box">
-                                <span class="old-price">$99.00</span>
-                                <span class="product-price">$89.00</span>
-                            </div>
-                            <div class="product-actions">
-                                <a href="#" class="addtowishlist" title="Add to Wishlist">
-                                    <i class="fa fa-heart"></i>
-                                </a>
-                                <a href="#" class="addtocart" title="Add to Cart">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    <span>Add to Cart</span>
-                                </a>
-                                <a href="#" class="comparelink" title="Add to Compare">
-                                    <i class="glyphicon glyphicon-signal"></i>
-                                </a>
-                            </div>
                         </div>
-                    </div>
-                    <div class="product">
-                        <figure class="product-image-area">
-                            <a href="#" title="Product Name" class="product-image">
-                                <img src="~/img/demos/shop/products/product2.jpg" alt="Product Name">
-                                <img src="~/img/demos/shop/products/product2-2.jpg" alt="Product Name" class="product-hover-image">
-                            </a>
-                            <a href="#" class="product-quickview">
-                                <i class="fa fa-share-square-o"></i>
-                                <span>Quick View</span>
-                            </a>
-                            <div class="product-label"><span class="discount">-25%</span></div>
-                        </figure>
-                        <div class="product-details-area">
-                            <h2 class="product-name"><a href="#" title="Product Name">Women Fashion Blouse</a></h2>
-                            <div class="product-ratings">
-                                <div class="ratings-box">
-                                    <div class="rating" style="width:0%"></div>
-                                </div>
-                            </div>
-                            <div class="product-price-box">
-                                <span class="old-price">$120.00</span>
-                                <span class="product-price">$90.00</span>
-                            </div>
-                            <div class="product-actions">
-                                <a href="#" class="addtowishlist" title="Add to Wishlist">
-                                    <i class="fa fa-heart"></i>
-                                </a>
-                                <a href="#" class="addtocart" title="Add to Cart">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    <span>Add to Cart</span>
-                                </a>
-                                <a href="#" class="comparelink" title="Add to Compare">
-                                    <i class="glyphicon glyphicon-signal"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <figure class="product-image-area">
-                            <a href="#" title="Product Name" class="product-image">
-                                <img src="~/img/demos/shop/products/product3.jpg" alt="Product Name">
-                            </a>
-                            <a href="#" class="product-quickview">
-                                <i class="fa fa-share-square-o"></i>
-                                <span>Quick View</span>
-                            </a>
-                        </figure>
-                        <div class="product-details-area">
-                            <h2 class="product-name"><a href="#" title="Product Name">Fashion Dress</a></h2>
-                            <div class="product-ratings">
-                                <div class="ratings-box">
-                                    <div class="rating" style="width:60%"></div>
-                                </div>
-                            </div>
-                            <div class="product-price-box">
-                                <span class="product-price">$70.00</span>
-                            </div>
-                            <div class="product-actions">
-                                <a href="#" class="addtowishlist" title="Add to Wishlist">
-                                    <i class="fa fa-heart"></i>
-                                </a>
-                                <a href="#" class="addtocart" title="Add to Cart">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    <span>Add to Cart</span>
-                                </a>
-                                <a href="#" class="comparelink" title="Add to Compare">
-                                    <i class="glyphicon glyphicon-signal"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <figure class="product-image-area">
-                            <a href="#" title="Product Name" class="product-image">
-                                <img src="~/img/demos/shop/products/product4.jpg" alt="Product Name">
-                            </a>
-                            <a href="#" class="product-quickview">
-                                <i class="fa fa-share-square-o"></i>
-                                <span>Quick View</span>
-                            </a>
-                            <div class="product-label"><span class="discount">-20%</span></div>
-                        </figure>
-                        <div class="product-details-area">
-                            <h2 class="product-name"><a href="#" title="Product Name">Fashion Sweater</a></h2>
-                            <div class="product-ratings">
-                                <div class="ratings-box">
-                                    <div class="rating" style="width:80%"></div>
-                                </div>
-                            </div>
-                            <div class="product-price-box">
-                                <span class="old-price">$100.00</span>
-                                <span class="product-price">$90.00</span>
-                            </div>
-                            <div class="product-actions">
-                                <a href="#" class="addtowishlist" title="Add to Wishlist">
-                                    <i class="fa fa-heart"></i>
-                                </a>
-                                <a href="#" class="addtocart" title="Add to Cart">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    <span>Add to Cart</span>
-                                </a>
-                                <a href="#" class="comparelink" title="Add to Compare">
-                                    <i class="glyphicon glyphicon-signal"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <figure class="product-image-area">
-                            <a href="#" title="Product Name" class="product-image">
-                                <img src="~/img/demos/shop/products/product11.jpg" alt="Product Name">
-                            </a>
-                            <a href="#" class="product-quickview">
-                                <i class="fa fa-share-square-o"></i>
-                                <span>Quick View</span>
-                            </a>
-                        </figure>
-                        <div class="product-details-area">
-                            <h2 class="product-name"><a href="#" title="Product Name">Woman Shee Blouse</a></h2>
-                            <div class="product-ratings">
-                                <div class="ratings-box">
-                                    <div class="rating" style="width:0%"></div>
-                                </div>
-                            </div>
-                            <div class="product-price-box">
-                                <span class="product-price">$70.00</span>
-                            </div>
-                            <div class="product-actions">
-                                <a href="#" class="addtowishlist" title="Add to Wishlist">
-                                    <i class="fa fa-heart"></i>
-                                </a>
-                                <a href="#" class="addtocart" title="Add to Cart">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    <span>Add to Cart</span>
-                                </a>
-                                <a href="#" class="comparelink" title="Add to Compare">
-                                    <i class="glyphicon glyphicon-signal"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
             <aside class="col-md-3 sidebar product-sidebar">

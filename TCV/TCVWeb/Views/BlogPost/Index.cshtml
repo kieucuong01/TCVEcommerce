@@ -73,9 +73,9 @@
                             }
                             else if (item.Format == PostFormat.Video)
                             {
-                                <div class="post-video">
-                                    <iframe src="@item.ExtLink" width="1280" height="720"></iframe>
-                                </div>
+                                    <div class="post-video">
+                                        @Html.Raw(item.ExtLink)
+                                    </div>
                             }
 
                             <div class="post-date">

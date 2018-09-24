@@ -1,5 +1,9 @@
 ﻿@addTagHelper *,TCV.Shared
 @model PagedList<ShopItem>
+@{ 
+    var categories = ViewData["categories"] as String[];
+    var brands = ViewData["brands"] as Supplier[];
+}
     <div class="body">
         <div role="main" class="main">
             <div class="container">
@@ -202,79 +206,19 @@
                             <div class="side-block">
                                 <h4><i class="fa fa-bars"></i>DANH MỤC SẢN PHẨM</h4>
                                 <ul class="category-list">
+                                    @foreach (var category in categories)
+                                    {
                                     <li>
-                                        <a href="#">Fashion</a>
-                                        <a href="#" class="plus"></a>
-                                        <ul>
-                                            <li>
-                                                <a href="#">Women</a>
-                                                <a href="#" class="plus"></a>
-                                                <ul>
-                                                    <li><a href="#">Tops &amp; Blouses</a></li>
-                                                    <li><a href="#">Accessories</a></li>
-                                                    <li><a href="#">Dresses &amp; Skirts</a></li>
-                                                    <li><a href="#">Shoes &amp; Boots</a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="#">Men</a>
-                                                <a href="#" class="plus"></a>
-                                                <ul>
-                                                    <li><a href="#">Accessories</a></li>
-                                                    <li><a href="#">Watch Fashion</a></li>
-                                                    <li><a href="#">Tees, Knits &amp; Polos</a></li>
-                                                    <li><a href="#">Pants &amp; Denim</a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="#">Kids Fashion</a>
-                                                <a href="#" class="plus"></a>
-                                                <ul>
-                                                    <li><a href="#">Casual Shoes</a></li>
-                                                    <li><a href="#">Spring &amp; Autumn</a></li>
-                                                    <li><a href="#">Winter Sneakers</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#">Specials</a></li>
-                                            <li><a href="#">Featured</a></li>
-                                            <li><a href="#">Just Arrived</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#">Electronics</a>
-                                        <a href="#" class="plus"></a>
+                                        <a href="@Url.Action("Category","Product")">@category</a>
+                                        @*<a href="#" class="plus"></a>
                                         <ul>
                                             <li><a href="#">Smart TVs</a></li>
                                             <li><a href="#">Cameras</a></li>
                                             <li><a href="#">Games</a></li>
                                             <li><a href="#">Phones</a></li>
-                                        </ul>
+                                        </ul>*@
                                     </li>
-                                    <li><a href="#">Gifts</a></li>
-                                    <li><a href="#">Home &amp; Garden</a></li>
-                                    <li><a href="#">Music</a></li>
-                                    <li>
-                                        <a href="#">Motors</a>
-                                        <a href="#" class="plus"></a>
-                                        <ul>
-                                            <li><a href="#">Accessories</a></li>
-                                            <li><a href="#">Cars and Trucks</a></li>
-                                            <li><a href="#">Motorcycles &amp; Powersports</a></li>
-                                            <li><a href="#">Parts &amp; Accessories</a></li>
-                                            <li><a href="#">Boats</a></li>
-                                            <li><a href="#">Auto Tools &amp; Supplies</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#">Clothes</a>
-                                        <a href="#" class="plus"></a>
-                                        <ul>
-                                            <li><a href="#">Men</a></li>
-                                            <li><a href="#">Women</a></li>
-                                            <li><a href="#">Kids</a></li>
-                                            <li><a href="#">Fashion</a></li>
-                                        </ul>
-                                    </li>
+                                    }
                                 </ul>
                             </div>
                             <div class="side-block side-feature">
@@ -299,27 +243,12 @@
                     <span class="line"></span>
                 </h2>
                 <div class="owl-carousel owl-theme manual clients-carousel">
-                    <a href="#" title="Brand Name" class="client">
-                        <img class="img-responsive" src="/img/demos/shop/brands/square/brand1.jpg" alt="Brand">
-                    </a>
-                    <a href="#" title="Brand Name" class="client">
-                        <img class="img-responsive" src="/img/demos/shop/brands/square/brand2.jpg" alt="Brand">
-                    </a>
-                    <a href="#" title="Brand Name" class="client">
-                        <img class="img-responsive" src="/img/demos/shop/brands/square/brand3.jpg" alt="Brand">
-                    </a>
-                    <a href="#" title="Brand Name" class="client">
-                        <img class="img-responsive" src="/img/demos/shop/brands/square/brand4.jpg" alt="Brand">
-                    </a>
-                    <a href="#" title="Brand Name" class="client">
-                        <img class="img-responsive" src="/img/demos/shop/brands/square/brand5.jpg" alt="Brand">
-                    </a>
-                    <a href="#" title="Brand Name" class="client">
-                        <img class="img-responsive" src="/img/demos/shop/brands/square/brand6.jpg" alt="Brand">
-                    </a>
-                    <a href="#" title="Brand Name" class="client">
-                        <img class="img-responsive" src="/img/demos/shop/brands/square/brand2.jpg" alt="Brand">
-                    </a>
+                    @foreach (var brand in brands)
+                {
+                <a href="#" title="@brand.Name" class="client">
+                    <img class="img-responsive" src="@brand.Address" alt="Brand", style="height:120px">
+                </a>
+                }
                 </div>
             </div>
             <div class="container mb-sm">
