@@ -5,6 +5,7 @@ using TCVShared.Data;
 using TCVShared.Helpers;
 using TCVWeb.Models;
 using System.Linq;
+using System;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -58,9 +59,56 @@ namespace TCVWeb.Controllers
             return View();
         }
 
-        public IActionResult Category()
+        public IActionResult Category(int id, string from, string origin)
         {
-            return View();
+            PagedList<ShopItem> model = new PagedList<ShopItem>();
+            // Filter products  by category 
+            var filterQuery = _dbContext.ShopItems.Where(x => model.Search == null);
+            var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            if (id == 0) {
+                selectQuery = _dbContext.ShopItems.Where(x => x.SKU.Substring(0, 3) == "NUT").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+            else if (id == 1){
+                selectQuery = _dbContext.ShopItems.Where(x => x.SKU.Substring(0, 3) == "VEG").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+            else if (id == 3){
+                selectQuery = _dbContext.ShopItems.Where(x => x.SKU.Substring(0, 3) == "SEE").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+
+            }
+            else if (id == 2){
+                selectQuery = _dbContext.ShopItems.Where(x => x.SKU.Substring(0, 3) == "FRU").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+            else {
+            }
+
+            // Filter products by export or import  
+            if (from == "D") {
+                selectQuery = _dbContext.ShopItems.Where(x => x.SKU.Substring(3, 1) == "D").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+            else if (from == "F") {
+                selectQuery = _dbContext.ShopItems.Where(x => x.SKU.Substring(3, 1) == "F").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+
+            // Filter products by Origin
+            if (origin == "VN")
+            {
+                selectQuery = _dbContext.ShopItems.Where(x => x.SKU.Substring(4, 2) == "VN").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+            else if (origin == "AU")
+            {
+                selectQuery = _dbContext.ShopItems.Where(x => x.SKU.Substring(4, 2) == "AU").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+            else if (origin == "IL")
+            {
+                selectQuery = _dbContext.ShopItems.Where(x => x.SKU.Substring(4, 2) == "IL").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+
+            model.TotalRows = filterQuery.Count();
+            model.Content = selectQuery.ToList();
+
+            ViewData["categories"] = new String[] { "Hạt", "Rau củ", "Trái Cây", "Cây giống" };
+
+            return View(model);
         }
     }
 }

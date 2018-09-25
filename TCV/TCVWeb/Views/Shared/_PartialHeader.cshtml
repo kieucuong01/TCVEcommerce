@@ -143,64 +143,13 @@
                                     </a>
                                 </li>
                                 <li class="dropdown dropdown-mega-small">
-                                    <a href="@Url.Action("Category","Product")" class="dropdown-toggle">
-                                        Các loại Hạt <span class="tip tip-new">New</span>
+                                    <a href="@Url.Action("Category","Product", new { id = 3})" >
+                                        Cây giống <span class="tip tip-new">New</span>
                                     </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <div class="dropdown-mega-content dropdown-mega-content-small">
-                                                <div class="row">
-                                                    <div class="col-md-7">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <a href="demo-shop-14-category-4col.html" class="dropdown-mega-sub-title">Women</a>
-                                                                <ul class="dropdown-mega-sub-nav">
-                                                                    <li><a href="demo-shop-14-category-4col.html">Top &amp; Blouses</a></li>
-                                                                    <li><a href="demo-shop-14-category-4col.html">Accessories</a></li>
-                                                                    <li><a href="demo-shop-14-category-4col.html">Dresses &amp; Skirts</a></li>
-                                                                    <li><a href="demo-shop-14-category-4col.html">Shoes &amp; Boots</a></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <a href="demo-shop-14-category-4col.html" class="dropdown-mega-sub-title">Men</a>
-                                                                <ul class="dropdown-mega-sub-nav">
-                                                                    <li><a href="demo-shop-14-category-4col.html">Accessories</a></li>
-                                                                    <li><a href="demo-shop-14-category-4col.html">Watch Fashion<span class="tip tip-new">New</span></a></li>
-                                                                    <li><a href="demo-shop-14-category-4col.html">Tees, Knits &amp; Polos</a></li>
-                                                                    <li><a href="demo-shop-14-category-4col.html">Pants &amp; Denim</a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <a href="demo-shop-14-category-4col.html" class="dropdown-mega-sub-title">Jewellery<span class="tip tip-hot">Hot!</span></a>
-                                                                <ul class="dropdown-mega-sub-nav">
-                                                                    <li><a href="demo-shop-14-category-4col.html">Sweaters</a></li>
-                                                                    <li><a href="demo-shop-14-category-4col.html">Heels &amp; Sandals</a></li>
-                                                                    <li><a href="demo-shop-14-category-4col.html">Jeans &amp; Shorts</a></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <a href="demo-shop-14-category-4col.html" class="dropdown-mega-sub-title">Kids Fashion</a>
-                                                                <ul class="dropdown-mega-sub-nav">
-                                                                    <li><a href="demo-shop-14-category-4col.html">Casual Shoes</a></li>
-                                                                    <li><a href="demo-shop-14-category-4col.html">Spring Autumn</a></li>
-                                                                    <li><a href="demo-shop-14-category-4col.html">Winter Sneakers</a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-5 mega-banner-bg">
-                                                        <img src="~/img/demos/shop/menu-bg.png" alt="Banner bg">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
                                 </li>
                                 <li class="dropdown dropdown-mega">
                                     <a href="@Url.Action("Category","Product")" class="dropdown-toggle">
-                                        Rau củ quả <span class="tip tip-hot">Hot!</span>
+                                        Sản phẩm nông nghiệp <span class="tip tip-hot">Hot!</span>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
@@ -220,95 +169,42 @@
                                                     <div class="col-md-8">
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <a href="demo-shop-14-category-4col.html" class="cat-img"><img src="~/img/demos/shop/cat-tv.png" alt="Category Name"></a>
-                                                                <a href="demo-shop-14-category-4col.html" class="dropdown-mega-sub-title">Smart Tvs</a>
+                                                                <a href="@Url.Action("Category","Product", new { id = 0})" class="cat-img"><img src="~/img/demos/shop/cat-tv.png" alt="Category Name"></a>
+                                                                <a href="@Url.Action("Category","Product", new { id = 0})" class="dropdown-mega-sub-title">Hạt</a>
                                                                 <ul class="dropdown-mega-sub-nav">
-                                                                    <li><a href="demo-shop-14-category-4col.html">TV, Audio</a></li>
+                                                                    <li><a href="@Url.Action("Category","Product", new { id = 0, from = "F"})">Các loại hạt nhập khẩu</a></li>
+                                                                    <li><a href="@Url.Action("Category","Product", new { id = 0, from = "D"})">Các loại hạt xuất khẩu</a></li>
                                                                 </ul>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <a href="demo-shop-14-category-4col.html" class="cat-img"><img src="~/img/demos/shop/cat-camera.png" alt="Category Name"></a>
-                                                                <a href="demo-shop-14-category-4col.html" class="dropdown-mega-sub-title">Cameras</a>
+                                                                <a href="@Url.Action("Category","Product", new { id = 1})" class="cat-img"><img src="~/img/demos/shop/cat-camera.png" alt="Category Name"></a>
+                                                                <a href="@Url.Action("Category","Product", new { id = 1})" class="dropdown-mega-sub-title">Rau củ</a>
                                                                 <ul class="dropdown-mega-sub-nav">
-                                                                    <li><a href="demo-shop-14-category-4col.html">Cell Phones &amp; Accessories</a></li>
+                                                                    <li><a href="@Url.Action("Category","Product", new { id = 1, from = "F"})">Rau củ nhập khẩu</a></li>
+                                                                    <li><a href="@Url.Action("Category","Product", new { id = 1, from = "D"})">Rau củ xuất khẩu</a></li>
                                                                 </ul>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <a href="demo-shop-14-category-4col.html" class="cat-img"><img src="~/img/demos/shop/cat-game.png" alt="Category Name"></a>
-                                                                <a href="demo-shop-14-category-4col.html" class="dropdown-mega-sub-title">Games</a>
+                                                                <a href="@Url.Action("Category","Product", new { id = 2})" class="cat-img"><img src="~/img/demos/shop/cat-game.png" alt="Category Name"></a>
+                                                                <a href="@Url.Action("Category","Product", new { id = 2})" class="dropdown-mega-sub-title">Trái cây</a>
                                                                 <ul class="dropdown-mega-sub-nav">
-                                                                    <li><a href="demo-shop-14-category-4col.html">e-Book Readers</a></li>
+                                                                    <li><a href="@Url.Action("Category","Product", new { id = 2, from = "F"})">Trái cây nhập khẩu</a></li>
+                                                                    <li><a href="@Url.Action("Category","Product", new { id = 2, from = "D"})">Trái cây xuất khẩu</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="menu-banner-area">
-                                                            <img src="~/img/demos/shop/menu-cat.png" alt="Menu Banner">
+                                                            <img src="~/img/icon/logo.jpg" alt="Menu Banner">
                                                             <div class="menu-banner-header">
-                                                                <h3>Shop Now <span class="font-weight-bold">3D</span> <span class="font-weight-extra-bold">Tv's</span></h3>
-                                                                <a href="#" class="btn btn-primary">View now <i class="fa fa-caret-right"></i></a>
+                                                                <h3>Shop Now <span class="font-weight-bold"> on </span> <span class="font-weight-extra-bold">TVC</span></h3>
+                                                                <a href="@Url.Action("Category","Product")" class="btn btn-primary">View now <i class="fa fa-caret-right"></i></a>
                                                             </div>
-                                                            <p>This is a custom block. You can add any images or links here</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" href="#">
-                                        Khuyến mãi
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li class="dropdown-submenu">
-                                            <a href="#">Category</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="demo-shop-14-category-2col.html">Category - 2 Columns</a></li>
-                                                <li><a href="demo-shop-14-category-3col.html">Category - 3 Columns</a></li>
-                                                <li><a href="demo-shop-14-category-4col.html">Category - 4 Columns</a></li>
-                                                <li><a href="demo-shop-14-category-5col.html">Category - 5 Columns</a></li>
-                                                <li><a href="demo-shop-14-category-6col.html">Category - 6 Columns</a></li>
-                                                <li><a href="demo-shop-14-category-7col.html">Category - 7 Columns</a></li>
-                                                <li><a href="demo-shop-14-category-8col.html">Category - 8 Columns</a></li>
-                                                <li><a href="demo-shop-14-category-list.html">Category - List</a></li>
-                                                <li><a href="demo-shop-14-category-right-sidebar.html">Rigt Sidebar</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown-submenu">
-                                            <a href="#">Category Banners</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="demo-shop-14-category-banner-boxed-slider.html">Boxed Slider</a></li>
-                                                <li><a href="demo-shop-14-category-banner-boxed-image.html">Boxed Image</a></li>
-                                                <li><a href="demo-shop-14-category-banner-fullwidth.html">Fullwidth Image</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown-submenu">
-                                            <a href="#">Product Details</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="demo-shop-14-product-details.html">Product Details</a></li>
-                                                <li><a href="demo-shop-14-product-details2.html">Product Details 2</a></li>
-                                                <li><a href="demo-shop-14-product-details3.html">Product Details 3</a></li>
-                                                <li><a href="demo-shop-14-product-details4.html">Product Details 4</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="demo-shop-14-cart.html">Shopping Cart</a></li>
-                                        <li><a href="demo-shop-14-checkout.html">Checkout</a></li>
-                                        <li><a href="demo-shop-14-about-us.html">About Us</a></li>
-                                        <li class="dropdown-submenu">
-                                            <a href="#">Dashboard</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="demo-shop-14-dashboard.html">Dashboard</a></li>
-                                                <li><a href="demo-shop-14-myaccount.html">My Account</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown-submenu">
-                                            <a href="#">Login &amp; Register</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="demo-shop-14-login.html">Login</a></li>
-                                                <li><a href="demo-shop-14-register.html">Register</a></li>
-                                            </ul>
                                         </li>
                                     </ul>
                                 </li>

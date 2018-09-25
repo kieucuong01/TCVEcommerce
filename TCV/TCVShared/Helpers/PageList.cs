@@ -47,7 +47,7 @@ namespace TCVShared.Helpers
         public PagedModel()
         {
             CurPage = 1;
-            PageSize = 15;
+            PageSize = 20;
         }
     }
 

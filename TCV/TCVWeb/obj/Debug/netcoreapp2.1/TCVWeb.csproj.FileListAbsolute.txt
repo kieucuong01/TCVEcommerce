@@ -187,3 +187,4 @@ D:/VUONG/project/TCVEcommerce/TCV/TCVWeb/obj/Debug/netcoreapp2.1/Razor/Areas/Adm
 /Users/mac/Downloads/project/TCVEcommerce/TCV/TCVWeb/obj/Debug/netcoreapp2.1/Razor/Views/BlogPost/Index.g.cshtml.cs
 /Users/mac/Downloads/project/TCVEcommerce/TCV/TCVWeb/obj/Debug/netcoreapp2.1/Razor/Views/Shared/_PartialRightBlog.g.cshtml.cs
 /Users/mac/Downloads/project/TCVEcommerce/TCV/TCVWeb/obj/Debug/netcoreapp2.1/Razor/Views/Product/Detail.g.cshtml.cs
+/Users/mac/Downloads/project/TCVEcommerce/TCV/TCVWeb/obj/Debug/netcoreapp2.1/Razor/Views/Shared/_PartialFilterCategory.g.cshtml.cs
