@@ -7,9 +7,11 @@ namespace TCVShared.Data
 {
     public class AppDBContext : IdentityDbContext<AppUser, AppRole, int>
     {
-        public virtual DbSet<Campaign> Campaigns { get; set; }
+        public virtual DbSet<AppSetting> AppSettings { get; set; }
+
         public virtual DbSet<MediaAlbum> MediaAlbums { get; set; }
         public virtual DbSet<MediaFile> MediaFiles { get; set; }
+
         public virtual DbSet<Taxonomy> Taxonomies { get; set; }
         public virtual DbSet<BlogPost> BlogPosts { get; set; }
         public virtual DbSet<BlogPostTaxo> BlogPostTaxoes { get; set; }
@@ -42,11 +44,6 @@ namespace TCVShared.Data
             {
                 b.HasIndex(e => e.Action);
                 b.HasIndex(e => e.LogTime);
-            });
-
-            builder.Entity<Campaign>(b =>
-            {
-                b.HasIndex(e => e.Code).IsUnique();
             });
 
             builder.Entity<Taxonomy>(b =>

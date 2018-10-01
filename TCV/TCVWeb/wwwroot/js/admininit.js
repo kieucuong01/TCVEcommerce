@@ -1,71 +1,87 @@
-
-
-// Animate
+// Popover
 (function($) {
 
 	'use strict';
 
-	if ( $.isFunction($.fn[ 'appear' ]) ) {
-
-		$(function() {
-			$('[data-plugin-animate], [data-appear-animation]').each(function() {
-				var $this = $( this ),
-					opts = {};
-
-				var pluginOptions = $this.data('plugin-options');
-				if (pluginOptions)
-					opts = pluginOptions;
-
-				$this.themePluginAnimate(opts);
-			});
-		});
-
+	if ( $.isFunction( $.fn['popover'] ) ) {
+		$( '[data-toggle=popover]' ).popover();
 	}
 
 }).apply(this, [jQuery]);
 
-// Carousel
+// Tooltip
 (function($) {
 
 	'use strict';
 
-	if ( $.isFunction($.fn[ 'owlCarousel' ]) ) {
-
-		$(function() {
-			$('[data-plugin-carousel]').each(function() {
-				var $this = $( this ),
-					opts = {};
-
-				var pluginOptions = $this.data('plugin-options');
-				if (pluginOptions)
-					opts = pluginOptions;
-
-				$this.themePluginCarousel(opts);
-			});
-		});
-
+	if ( $.isFunction( $.fn['tooltip'] ) ) {
+		$( '[data-toggle=tooltip],[rel=tooltip]' ).tooltip({ container: 'body' });
 	}
 
 }).apply(this, [jQuery]);
 
-// Chart Circular
+// Header Menu Nav
+(function(theme, $) {
+
+	'use strict';
+	
+	if (typeof theme.Nav !== 'undefined') {
+		theme.Nav.initialize();
+	}
+	
+}).apply(this, [window.theme, jQuery]);
+
+// Scroll to Top
+(function(theme, $) {
+	// Scroll to Top Button.
+	if (typeof theme.PluginScrollToTop !== 'undefined') {
+		theme.PluginScrollToTop.initialize();
+	}
+}).apply(this, [window.theme, jQuery]);
+
+// Sidebar Widgets
 (function($) {
 
 	'use strict';
 
-	if ( $.isFunction($.fn[ 'easyPieChart' ]) ) {
+	function expand( content ) {
+		content.children( '.widget-content' ).slideDown( 'fast', function() {
+			$(this).css( 'display', '' );
+			content.removeClass( 'widget-collapsed' );
+		});
+	}
 
-		$(function() {
-			$('[data-plugin-chart-circular], .circular-bar-chart:not(.manual)').each(function() {
-				var $this = $( this ),
-					opts = {};
+	function collapse( content ) {
+		content.children('.widget-content' ).slideUp( 'fast', function() {
+			content.addClass( 'widget-collapsed' );
+			$(this).css( 'display', '' );
+		});
+	}
 
-				var pluginOptions = $this.data('plugin-options');
-				if (pluginOptions)
-					opts = pluginOptions;
+	var $widgets = $( '.sidebar-widget' );
 
-				$this.themePluginChartCircular(opts);
-			});
+	$widgets.each( function() {
+
+		var $widget = $( this ),
+			$toggler = $widget.find( '.widget-toggle' );
+
+		$toggler.on('click.widget-toggler', function() {
+			$widget.hasClass('widget-collapsed') ? expand($widget) : collapse($widget);
+		});
+	});
+
+}).apply(this, [jQuery]);
+
+// iosSwitcher
+(function($) {
+
+	'use strict';
+
+	if ( $.isFunction( $.fn.confirmation ) ) {
+
+		$.extend( $.fn.confirmation.Constructor.DEFAULTS, {
+			btnOkIcon 		: 'fa fa-check',
+			btnCancelIcon 	: 'fa fa-times'
 		});
 
 	}
@@ -125,7 +141,7 @@
 
 	'use strict';
 
-	if ( $.isFunction($.fn[ 'bootstrapDP' ]) ) {
+	if ( $.isFunction($.fn[ 'datepicker' ]) ) {
 
 		$(function() {
 			$('[data-plugin-datepicker]').each(function() {
@@ -144,17 +160,6 @@
 
 }).apply(this, [jQuery]);
 
-// Header Menu Nav
-(function(theme, $) {
-
-	'use strict';
-	
-	if (typeof theme.Nav !== 'undefined') {
-		theme.Nav.initialize();
-	}
-	
-}).apply(this, [window.theme, jQuery]);
-
 // iosSwitcher
 (function($) {
 
@@ -168,47 +173,6 @@
 
 				$this.themePluginIOS7Switch();
 			});
-		});
-
-	}
-
-}).apply(this, [jQuery]);
-
-// Lightbox
-(function($) {
-
-	'use strict';
-
-	if ( $.isFunction($.fn[ 'magnificPopup' ]) ) {
-
-		$(function() {
-			$('[data-plugin-lightbox], .lightbox:not(.manual)').each(function() {
-				var $this = $( this ),
-					opts = {};
-
-				var pluginOptions = $this.data('plugin-options');
-				if (pluginOptions)
-					opts = pluginOptions;
-
-				$this.themePluginLightbox(opts);
-			});
-		});
-
-	}
-
-}).apply(this, [jQuery]);
-
-// Portlets
-(function($) {
-
-	'use strict';
-
-	if ( typeof NProgress !== 'undefined' && $.isFunction( NProgress.configure ) ) {
-
-		NProgress.configure({
-			showSpinner: false,
-			ease: 'ease',
-			speed: 750
 		});
 
 	}
@@ -326,70 +290,6 @@
 }).apply(this, [jQuery]);
 
 
-// Popover
-(function($) {
-
-	'use strict';
-
-	if ( $.isFunction( $.fn['popover'] ) ) {
-		$( '[data-toggle=popover]' ).popover();
-	}
-
-}).apply(this, [jQuery]);
-
-// Portlets
-(function($) {
-
-	'use strict';
-
-	$(function() {
-		$('[data-plugin-portlet]').each(function() {
-			var $this = $( this ),
-				opts = {};
-
-			var pluginOptions = $this.data('plugin-options');
-			if (pluginOptions)
-				opts = pluginOptions;
-
-			$this.themePluginPortlet(opts);
-		});
-	});
-
-}).apply(this, [jQuery]);
-
-// Scroll to Top
-(function(theme, $) {
-	// Scroll to Top Button.
-	if (typeof theme.PluginScrollToTop !== 'undefined') {
-		theme.PluginScrollToTop.initialize();
-	}
-}).apply(this, [window.theme, jQuery]);
-
-// Scrollable
-(function($) {
-
-	'use strict';
-
-	if ( $.isFunction($.fn[ 'nanoScroller' ]) ) {
-
-		$(function() {
-			$('[data-plugin-scrollable]').each(function() {
-				var $this = $( this ),
-					opts = {};
-
-				var pluginOptions = $this.data('plugin-options');
-				if (pluginOptions) {
-					opts = pluginOptions;
-				}
-
-				$this.themePluginScrollable(opts);
-			});
-		});
-
-	}
-
-}).apply(this, [jQuery]);
-
 // Select2
 (function($) {
 
@@ -407,64 +307,6 @@
 					opts = pluginOptions;
 
 				$this.themePluginSelect2(opts);
-			});
-		});
-
-	}
-
-}).apply(this, [jQuery]);
-
-// Sidebar Widgets
-(function($) {
-
-	'use strict';
-
-	function expand( content ) {
-		content.children( '.widget-content' ).slideDown( 'fast', function() {
-			$(this).css( 'display', '' );
-			content.removeClass( 'widget-collapsed' );
-		});
-	}
-
-	function collapse( content ) {
-		content.children('.widget-content' ).slideUp( 'fast', function() {
-			content.addClass( 'widget-collapsed' );
-			$(this).css( 'display', '' );
-		});
-	}
-
-	var $widgets = $( '.sidebar-widget' );
-
-	$widgets.each( function() {
-
-		var $widget = $( this ),
-			$toggler = $widget.find( '.widget-toggle' );
-
-		$toggler.on('click.widget-toggler', function() {
-			$widget.hasClass('widget-collapsed') ? expand($widget) : collapse($widget);
-		});
-	});
-
-}).apply(this, [jQuery]);
-
-// Slider
-(function($) {
-
-	'use strict';
-
-	if ( $.isFunction($.fn[ 'slider' ]) ) {
-
-		$(function() {
-			$('[data-plugin-slider]').each(function() {
-				var $this = $( this ),
-					opts = {};
-
-				var pluginOptions = $this.data('plugin-options');
-				if (pluginOptions) {
-					opts = pluginOptions;
-				}
-
-				$this.themePluginSlider(opts);
 			});
 		});
 
@@ -568,6 +410,204 @@
 
 }).apply(this, [jQuery]);
 
+// Mailbox
+(function($) {
+
+	'use strict';
+
+	$(function() {
+		$('[data-mailbox]').each(function() {
+			var $this = $( this );
+
+			$this.themeMailbox();
+		});
+	});
+
+}).apply(this, [jQuery]);
+
+// Animate
+(function($) {
+
+	'use strict';
+
+	if ( $.isFunction($.fn[ 'appear' ]) ) {
+
+		$(function() {
+			$('[data-plugin-animate], [data-appear-animation]').each(function() {
+				var $this = $( this ),
+					opts = {};
+
+				var pluginOptions = $this.data('plugin-options');
+				if (pluginOptions)
+					opts = pluginOptions;
+
+				$this.themePluginAnimate(opts);
+			});
+		});
+
+	}
+
+}).apply(this, [jQuery]);
+
+// Carousel
+(function($) {
+
+	'use strict';
+
+	if ( $.isFunction($.fn[ 'owlCarousel' ]) ) {
+
+		$(function() {
+			$('[data-plugin-carousel]').each(function() {
+				var $this = $( this ),
+					opts = {};
+
+				var pluginOptions = $this.data('plugin-options');
+				if (pluginOptions)
+					opts = pluginOptions;
+
+				$this.themePluginCarousel(opts);
+			});
+		});
+
+	}
+
+}).apply(this, [jQuery]);
+
+// Chart Circular
+(function($) {
+
+	'use strict';
+
+	if ( $.isFunction($.fn[ 'easyPieChart' ]) ) {
+
+		$(function() {
+			$('[data-plugin-chart-circular], .circular-bar-chart:not(.manual)').each(function() {
+				var $this = $( this ),
+					opts = {};
+
+				var pluginOptions = $this.data('plugin-options');
+				if (pluginOptions)
+					opts = pluginOptions;
+
+				$this.themePluginChartCircular(opts);
+			});
+		});
+
+	}
+
+}).apply(this, [jQuery]);
+
+// Lightbox
+(function($) {
+
+	'use strict';
+
+	if ( $.isFunction($.fn[ 'magnificPopup' ]) ) {
+
+		$(function() {
+			$('[data-plugin-lightbox], .lightbox:not(.manual)').each(function() {
+				var $this = $( this ),
+					opts = {};
+
+				var pluginOptions = $this.data('plugin-options');
+				if (pluginOptions)
+					opts = pluginOptions;
+
+				$this.themePluginLightbox(opts);
+			});
+		});
+
+	}
+
+}).apply(this, [jQuery]);
+
+// Portlets
+(function($) {
+
+	'use strict';
+
+	if ( typeof NProgress !== 'undefined' && $.isFunction( NProgress.configure ) ) {
+
+		NProgress.configure({
+			showSpinner: false,
+			ease: 'ease',
+			speed: 750
+		});
+
+	}
+
+}).apply(this, [jQuery]);
+
+// Portlets
+(function($) {
+
+	'use strict';
+
+	$(function() {
+		$('[data-plugin-portlet]').each(function() {
+			var $this = $( this ),
+				opts = {};
+
+			var pluginOptions = $this.data('plugin-options');
+			if (pluginOptions)
+				opts = pluginOptions;
+
+			$this.themePluginPortlet(opts);
+		});
+	});
+
+}).apply(this, [jQuery]);
+
+// Scrollable
+(function($) {
+
+	'use strict';
+
+	if ( $.isFunction($.fn[ 'nanoScroller' ]) ) {
+
+		$(function() {
+			$('[data-plugin-scrollable]').each(function() {
+				var $this = $( this ),
+					opts = {};
+
+				var pluginOptions = $this.data('plugin-options');
+				if (pluginOptions) {
+					opts = pluginOptions;
+				}
+
+				$this.themePluginScrollable(opts);
+			});
+		});
+
+	}
+
+}).apply(this, [jQuery]);
+
+// Slider
+(function($) {
+
+	'use strict';
+
+	if ( $.isFunction($.fn[ 'slider' ]) ) {
+
+		$(function() {
+			$('[data-plugin-slider]').each(function() {
+				var $this = $( this ),
+					opts = {};
+
+				var pluginOptions = $this.data('plugin-options');
+				if (pluginOptions) {
+					opts = pluginOptions;
+				}
+
+				$this.themePluginSlider(opts);
+			});
+		});
+
+	}
+
+}).apply(this, [jQuery]);
+
 // Toggle
 (function($) {
 
@@ -585,17 +625,6 @@
 			$this.themePluginToggle(opts);
 		});
 	});
-
-}).apply(this, [jQuery]);
-
-// Tooltip
-(function($) {
-
-	'use strict';
-
-	if ( $.isFunction( $.fn['tooltip'] ) ) {
-		$( '[data-toggle=tooltip],[rel=tooltip]' ).tooltip({ container: 'body' });
-	}
 
 }).apply(this, [jQuery]);
 
@@ -646,15 +675,15 @@
 
 }).apply(this, [jQuery]);
 
-// Word Rotator
+// Word Rotate
 (function($) {
 
 	'use strict';
 
-	if ( $.isFunction($.fn[ 'themePluginWordRotator' ]) ) {
+	if ( $.isFunction($.fn[ 'themePluginWordRotate' ]) ) {
 
 		$(function() {
-			$('[data-plugin-wort-rotator], .wort-rotator:not(.manual)').each(function() {
+			$('[data-plugin-word-rotate], .word-rotate:not(.manual)').each(function() {
 				var $this = $( this ),
 					opts = {};
 
@@ -662,36 +691,10 @@
 				if (pluginOptions)
 					opts = pluginOptions;
 
-				$this.themePluginWordRotator(opts);
+				$this.themePluginWordRotate(opts);
 			});
 		});
 
 	}
-
-}).apply(this, [jQuery]);
-
-// Base
-(function(theme, $) {
-
-	'use strict';
-
-	theme = theme || {};
-
-	theme.Skeleton.initialize();
-
-}).apply(this, [window.theme, jQuery]);
-
-// Mailbox
-(function($) {
-
-	'use strict';
-
-	$(function() {
-		$('[data-mailbox]').each(function() {
-			var $this = $( this );
-
-			$this.themeMailbox();
-		});
-	});
 
 }).apply(this, [jQuery]);

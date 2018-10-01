@@ -14,7 +14,7 @@ namespace TCVWeb.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -146,6 +146,20 @@ namespace TCVWeb.Migrations
                         .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("TCVShared.Data.AppSetting", b =>
+                {
+                    b.Property<string>("Name")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(64);
+
+                    b.Property<string>("Value")
+                        .IsRequired();
+
+                    b.HasKey("Name");
+
+                    b.ToTable("AppSettings");
                 });
 
             modelBuilder.Entity("TCVShared.Data.AppUser", b =>
@@ -284,28 +298,6 @@ namespace TCVWeb.Migrations
                     b.HasIndex("TaxoId");
 
                     b.ToTable("BlogPostTaxoes");
-                });
-
-            modelBuilder.Entity("TCVShared.Data.Campaign", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(64);
-
-                    b.Property<DateTime?>("CreateTime");
-
-                    b.Property<string>("FullName")
-                        .HasMaxLength(128);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Code")
-                        .IsUnique();
-
-                    b.ToTable("Campaigns");
                 });
 
             modelBuilder.Entity("TCVShared.Data.CartItem", b =>

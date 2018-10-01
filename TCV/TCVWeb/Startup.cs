@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TCVShared.Data;
 using Microsoft.AspNetCore.HttpOverrides;
+using TCVShared.Helpers;
 
 namespace TCVWeb
 {
@@ -99,11 +100,10 @@ namespace TCVWeb
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            app.UseSession();
-            app.UseHttpsRedirection();
+
             app.UseStaticFiles();
-            app.UseCookiePolicy();
             app.UseAuthentication();
+            app.InitAppSettings();
 
             app.UseMvc(routes =>
             {
