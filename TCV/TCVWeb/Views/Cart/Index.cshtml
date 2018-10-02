@@ -1,9 +1,15 @@
-﻿<div role="main" class="main">
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div role="main" class="main">
     <div class="cart">
         <div class="container">
             <h1 class="h2 heading-primary mt-lg clearfix">
                 <span>Shopping Cart</span>
-                <a href="#" class="btn btn-primary pull-right">Proceed to Checkout</a>
+                <a href="@Url.Action("Checkout","Cart")" class="btn btn-primary pull-right">Proceed to Checkout</a>
             </h1>
             <div class="row">
                 <div class="col-md-8 col-lg-9">

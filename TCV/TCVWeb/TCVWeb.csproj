@@ -21,6 +21,8 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Views\Product\" />
     <Folder Include="Views\Account\" />
+    <Folder Include="Views\Wish\" />
+    <Folder Include="Views\Cart\" />
   </ItemGroup>
 
   <ItemGroup>

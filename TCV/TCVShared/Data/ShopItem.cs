@@ -117,6 +117,16 @@ namespace TCVShared.Data
         }
 
         [NotMapped]
+        [Display(Name = "Rating")]
+        public virtual float TotalRating
+        {
+            get
+            {
+                return Thread == null ? 0 : Thread.TotalRating/5;
+            }
+        }
+
+        [NotMapped]
         [DisplayFormat(DataFormatString = "{0:#,#.000} VNĐ")]
         public virtual double CurrentPrice
         {

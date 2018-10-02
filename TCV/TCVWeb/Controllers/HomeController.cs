@@ -26,7 +26,7 @@ namespace TCVWeb.Controllers
             _logger = logger;
             _userManager = userManager;
         }
-
+            
         // GET: FeatureProduct 
         public IActionResult Index(PagedList<ShopItem> model)
         {
@@ -95,16 +95,6 @@ namespace TCVWeb.Controllers
         }
 
         public IActionResult Register()
-        {
-            return View();
-        }
-
-        public IActionResult Cart()
-        {
-            return View();
-        }
-
-        public IActionResult Checkout()
         {
             return View();
         }

@@ -31,13 +31,16 @@
             <div id="panel-filter-price" class="accordion-body collapse in">
                 <div class="panel-body">
                     <div class="filter-price">
-                        <div class="filter-price-details">
-                            <span>from</span>
-                            <input type="text" id="price-range-low" class="form-control" placeholder="Min">
-                            <span>to</span>
-                            <input type="text" id="price-range-high" class="form-control" placeholder="Max">
-                            <a href="#" class="btn btn-primary">FILTER</a>
-                        </div>
+                        <form action="Category" autocomplete="on">
+                            <div class="filter-price-details">
+                                <span>from</span>
+                                <input type="text" id="price-range-low" class="form-control" placeholder="Min" name="minPrice">
+                                <span>to</span>
+                                <input type="text" id="price-range-high" class="form-control" placeholder="Max" name="maxPrice">
+
+                                <input class="btn btn-primary" type="submit" value="FILTER"/>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -108,7 +111,7 @@
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
+        @*<div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-brand">
@@ -125,7 +128,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div>*@
 
     </div>
 </aside>

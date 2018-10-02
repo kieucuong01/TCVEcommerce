@@ -59,7 +59,7 @@ namespace TCVWeb.Controllers
             return View();
         }
 
-        public IActionResult Category(int id, string from, string origin)
+        public IActionResult Category(int id, string from, string origin, int maxPrice, int minPrice, string style)
         {
             PagedList<ShopItem> model = new PagedList<ShopItem>();
             // Filter products  by category 
@@ -102,10 +102,21 @@ namespace TCVWeb.Controllers
             {
                 selectQuery = _dbContext.ShopItems.Where(x => x.SKU.Substring(4, 2) == "IL").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
             }
+            // Filter product by prices 
+
+            if (maxPrice != 0){
+                selectQuery = _dbContext.ShopItems.Where(x => x.CurrentPrice >= minPrice && x.CurrentPrice <= maxPrice).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
 
             model.TotalRows = filterQuery.Count();
             model.Content = selectQuery.ToList();
 
+            if (style == "list"){
+                ViewData["style"] = "list";
+            }
+            else {
+                ViewData["style"] = "grid";
+            }
             ViewData["categories"] = new String[] { "Hạt", "Rau củ", "Trái Cây", "Cây giống" };
 
             return View(model);
