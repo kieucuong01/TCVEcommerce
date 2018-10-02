@@ -9,6 +9,14 @@ namespace TCVShared.Data
 {
     public class AppRole : IdentityRole<int>
     {
+        public AppRole()
+        {
+        }
+
+        public AppRole(string roleName)
+            : base(roleName)
+        {
+        }
     }
 
     public class AppUser : IdentityUser<int>

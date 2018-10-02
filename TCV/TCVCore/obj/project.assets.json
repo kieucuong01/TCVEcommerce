@@ -11574,28 +11574,30 @@
     ]
   },
   "packageFolders": {
-    "/Users/mac/.nuget/packages/": {},
-    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
+    "C:\\Users\\HungVuong\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/mac/Downloads/project/TCVEcommerce/TCV/TCVCore/TCVCore.csproj",
+      "projectUniqueName": "D:\\Vuong\\TCVEcommerce\\TCV\\TCVCore\\TCVCore.csproj",
       "projectName": "TCVCore",
-      "projectPath": "/Users/mac/Downloads/project/TCVEcommerce/TCV/TCVCore/TCVCore.csproj",
-      "packagesPath": "/Users/mac/.nuget/packages/",
-      "outputPath": "/Users/mac/Downloads/project/TCVEcommerce/TCV/TCVCore/obj",
+      "projectPath": "D:\\Vuong\\TCVEcommerce\\TCV\\TCVCore\\TCVCore.csproj",
+      "packagesPath": "C:\\Users\\HungVuong\\.nuget\\packages\\",
+      "outputPath": "D:\\Vuong\\TCVEcommerce\\TCV\\TCVCore\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/Users/mac/.config/NuGet/NuGet.Config"
+        "C:\\Users\\HungVuong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.1"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -11615,17 +11617,17 @@
           "Microsoft.AspNetCore.App": {
             "suppressParent": "All",
             "target": "Package",
-            "version": "2.1.1"
+            "version": "[2.1.1, )",
+            "autoReferenced": true
+          },
+          "Microsoft.NETCore.App": {
+            "target": "Package",
+            "version": "[2.1.0, )",
+            "autoReferenced": true
           },
           "Pomelo.EntityFrameworkCore.MySql": {
             "target": "Package",
-            "version": "2.1.1"
-          },
-          "Microsoft.NETCore.App": {
-            "suppressParent": "All",
-            "target": "Package",
-            "version": "2.1",
-            "autoReferenced": true
+            "version": "[2.1.1, )"
           }
         },
         "imports": [

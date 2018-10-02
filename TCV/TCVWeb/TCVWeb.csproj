@@ -6,8 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Admin\Data\**" />
+    <Content Remove="Areas\Admin\Data\**" />
+    <EmbeddedResource Remove="Areas\Admin\Data\**" />
+    <None Remove="Areas\Admin\Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.4" PrivateAssets="All" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.2" />
   </ItemGroup>
@@ -17,19 +24,58 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Views\Product\" />
-    <Folder Include="Views\Account\" />
-    <Folder Include="Views\Wish\" />
-    <Folder Include="Views\Cart\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Remove="wwwroot\js\theme.js" />
-    <Content Remove="wwwroot\css\adminapp.css" />
     <Content Remove="wwwroot\css\.DS_Store" />
     <Content Remove="wwwroot\ajax\demo-church-gallery-ajax-on-page-1.html" />
     <Content Remove="wwwroot\ajax\demo-church-gallery-ajax-on-page-2.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Account\Index.cshtml" />
+    <None Include="Views\BlogPost\Category.cshtml" />
+    <None Include="Views\BlogPost\Details.cshtml" />
+    <None Include="Views\BlogPost\Index.cshtml" />
+    <None Include="Views\Home\About.cshtml" />
+    <None Include="Views\Home\Cart.cshtml" />
+    <None Include="Views\Home\Checkout.cshtml" />
+    <None Include="Views\Home\Contact.cshtml" />
+    <None Include="Views\Home\Help.cshtml" />
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Home\Login.cshtml" />
+    <None Include="Views\Home\Privacy.cshtml" />
+    <None Include="Views\Home\Register.cshtml" />
+    <None Include="Views\Product\Category.cshtml" />
+    <None Include="Views\Product\Detail.cshtml" />
+    <None Include="Views\Product\Index.cshtml" />
+    <None Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Shared\_CookieConsentPartial.cshtml" />
+    <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Shared\_LoginPartial.cshtml" />
+    <None Include="Views\Shared\_PartialFilterCategory.cshtml" />
+    <None Include="Views\Shared\_PartialFooter.cshtml" />
+    <None Include="Views\Shared\_PartialHeader.cshtml" />
+    <None Include="Views\Shared\_PartialRightBlog.cshtml" />
+    <None Include="Views\_ViewImports.cshtml" />
+    <None Include="Views\_ViewStart.cshtml" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\npm.js" />
+    <None Include="wwwroot\lib\bootstrap\LICENSE" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\LICENSE.md" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
   </ItemGroup>
 </Project>
