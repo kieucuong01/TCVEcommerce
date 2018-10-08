@@ -7,6 +7,9 @@ using TCVShared.Helpers;
 using TCVWeb.Models;
 using System.Linq;
 using Microsoft.AspNetCore.Session;
+using System.Collections.Generic;
+using TCVWeb.Areas.Admin.Models;
+using Newtonsoft.Json;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace TCVWeb.Controllers
@@ -27,18 +30,132 @@ namespace TCVWeb.Controllers
 
         }
 
-        private int isExisting(int id){
-            return -1;
-        }
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View();
+            var cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
+            if (cart == null)
+            {
+                cart = new ShopCart();
+                cart.Items = new List<CartItem>();
+            }
+
+            var suggestionProducts = _dbContext.ShopItems.Where(product => product.SKU.Substring(6, 1) == "S").Take(4).ToList(); ;
+
+            ViewData["suggestionProducts"] = suggestionProducts;
+
+                return View(cart);
         }
 
         public IActionResult Checkout()
         {
             return View();
+        }
+
+        // Cart/AddToCart/1?quantity=1 
+        public void AddToCart(int id, int quantity) {
+            var cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
+
+            // Set default quantity 
+            if (quantity == 0) 
+                quantity = 1;
+
+            if (cart == null) {
+                cart = new ShopCart();
+                var cartItem = new CartItem();
+                var shopItem = _dbContext.ShopItems.Find(id);
+
+                cartItem.ShopItem = shopItem;
+                cartItem.Quantity = quantity;
+                cartItem.ShopCart = cart;
+
+                cart.Items = new List<CartItem>();
+                cart.Items.Add(cartItem);
+
+                HttpContext.Session.SetObjectAsJson("Cart", cart);
+            }
+            else {
+                int existIndex = -1;
+                for (int i = 0; i < cart.Items.Count; i++)
+                {
+                    if (cart.Items.ElementAt(i).ShopItem.Id == id)
+                    {
+                        existIndex = i;
+                        break;
+                    }
+                }
+                if (existIndex == -1){
+                    var cartItem = new CartItem();
+                    var shopItem = _dbContext.ShopItems.Find(id);
+                    cartItem.ShopItem = shopItem;
+                    cartItem.Quantity = quantity;
+                    cartItem.ShopCart = cart;
+                    cart.Items.Add(cartItem);
+                }
+                else {
+                    cart.Items.ElementAt(existIndex).Quantity = cart.Items.ElementAt(existIndex).Quantity + quantity;
+                }
+
+                HttpContext.Session.SetObjectAsJson("Cart", cart);
+            }
+        }
+
+        public IActionResult AddToCartFromCart(int id, int quantity) {
+            this.AddToCart(id, quantity);
+
+            var cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
+
+            return RedirectToAction("Index", "Cart"); 
+        }
+
+        // /Cart/RemoveProduct/1
+        public void RemoveProduct(int id){
+            var cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
+            var indexOfProduct = this.FindIndexOfProduct(id, cart);
+            cart.Items.Remove(cart.Items.ElementAt(indexOfProduct));
+
+            HttpContext.Session.SetObjectAsJson("Cart", cart);
+        }
+
+        // /Cart/ClearCart
+        public void ClearCart(){
+            var cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
+            cart.Items.Clear();
+
+            HttpContext.Session.SetObjectAsJson("Cart", cart);
+        }
+
+        // /Cart/IncreaseQuantity/1
+        public void IncreaseQuantity(int id){
+            var cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
+            var indexOfProduct = this.FindIndexOfProduct(id, cart);
+            cart.Items.ElementAt(indexOfProduct).Quantity++ ;
+
+            HttpContext.Session.SetObjectAsJson("Cart", cart);
+        }
+
+        // /Cart/DecreaseQuantity/1
+        public void DecreaseQuantity(int id)
+        {
+            var cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
+            var indexOfProduct = this.FindIndexOfProduct(id, cart);
+            cart.Items.ElementAt(indexOfProduct).Quantity--;
+
+            HttpContext.Session.SetObjectAsJson("Cart", cart);
+        }
+
+        //CUSTOM FUNCTION 
+        private int FindIndexOfProduct(int id, ShopCart cart){
+            int existIndex = -1;
+            for (int i = 0; i < cart.Items.Count; i++)
+            {
+                if (cart.Items.ElementAt(i).ShopItem.Id == id)
+                {
+                    existIndex = i;
+                    return i;
+                }
+            }
+            return -1;
         }
     }
 }

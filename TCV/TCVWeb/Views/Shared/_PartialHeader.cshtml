@@ -1,4 +1,9 @@
-﻿<div class="body">
+﻿@{ 
+    bool isAuthenticated = this.User.Identity.IsAuthenticated;
+    string emailLogined = this.User.Identity.Name;
+}
+
+<div class="body">
     <header id="header" data-plugin-options="{'stickyEnabled': true, 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': false, 'stickyStartAt': 142, 'stickySetTop': '-142px', 'stickyChangeLogo': false}">
         <div class="header-body">
             <div class="header-top">
@@ -24,8 +29,15 @@
                         <ul class="top-menu">
                             <li><a href="@Url.Action("About","Home")">Về ticivi</a></li>
                             <li><a href="@Url.Action("Help","Home")">Trợ giúp</a></li>
-                            <li><a href="@Url.Action("Register","Home")">Đăng ký</a></li>
-                            <li><a href="@Url.Action("Login","Home")">Đăng nhập</a></li>
+                            @if (isAuthenticated == false)
+                            {
+                            <li><a href="@Url.Action("Register", "Account")">Đăng ký</a></li>
+                            <li><a href="@Url.Action("Login", "Account")">Đăng nhập</a></li>
+                            }
+                            else {
+                            <li><a href="@Url.Action("Index", "Account")">@emailLogined</a></li>
+                            <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
+                            }
                         </ul>
                     </div>
                     <p class="welcome-msg">CHÀO MỪNG BẠN ĐẾN VỚI NÔNG NGHIỆP VN </p>
@@ -143,10 +155,10 @@
                                     </a>
                                 </li>
                                 @*<li class="dropdown dropdown-mega-small">
-                                    <a href="@Url.Action("Category","Product", new { id = 3})" >
-                                        Cây giống <span class="tip tip-new">New</span>
-                                    </a>
-                                </li>*@
+                                        <a href="@Url.Action("Category","Product", new { id = 3})" >
+                                            Cây giống <span class="tip tip-new">New</span>
+                                        </a>
+                                    </li>*@
                                 <li class="dropdown dropdown-mega">
                                     <a href="@Url.Action("Category","Product")" class="dropdown-toggle">
                                         Sản phẩm nông nghiệp <span class="tip tip-hot">Hot!</span>
@@ -425,4 +437,4 @@
         </div>
     </div>
     <div id="mobile-menu-overlay"></div>
-    </div>
+</div>

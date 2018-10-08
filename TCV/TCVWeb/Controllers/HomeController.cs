@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -26,11 +27,13 @@ namespace TCVWeb.Controllers
             _logger = logger;
             _userManager = userManager;
         }
-            
+
         // GET: FeatureProduct 
-        public IActionResult Index(PagedList<ShopItem> model)
+        public IActionResult Index(PagedList<ShopItem> model, int pageSize)
         {
-            var filterQuery = _dbContext.ShopItems.Where(x => model.Search == null);
+            model.PageSize = pageSize != 0 ? pageSize : 12;
+
+            var filterQuery = _dbContext.ShopItems.Where(x => model.Search == null && x.SKU.Substring(6,1) == "S");
             var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
 
             model.TotalRows = filterQuery.Count();
@@ -85,16 +88,6 @@ namespace TCVWeb.Controllers
         }
 
         public IActionResult Help()
-        {
-            return View();
-        }
-
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        public IActionResult Register()
         {
             return View();
         }

@@ -28,13 +28,14 @@ namespace TCVWeb.Controllers
             _userManager = userManager;
         }
         // GET: BlogPost
-        public async Task<IActionResult> Index(PagedList<BlogPost> model)
+        public async Task<IActionResult> Index(PagedList<BlogPost> model, int pageSize)
         {
             var filterQuery = _dbContext.BlogPosts.Where(x => model.Search == null || x.Title.Contains(model.Search));
             var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
 
             model.TotalRows = filterQuery.Count();
             model.Content = await selectQuery.ToListAsync();
+            model.PageSize = pageSize != 0 ? pageSize : 12;
 
             return View(model);
         }

@@ -1,9 +1,10 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model ShopCart
 @{
+    var suggestionProducts = ViewData["suggestionProducts"] as List<ShopItem>;
 }
-
 <div role="main" class="main">
     <div class="cart">
         <div class="container">
@@ -26,63 +27,39 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="product-action-td">
-                                        <a href="#" title="Remove product" class="btn-remove"><i class="fa fa-times"></i></a>
-                                    </td>
-                                    <td class="product-image-td">
-                                        <a href="#" title="Product Name">
-                                            <img src="../img/demos/shop/products/cart-product1.jpg" alt="Product Name">
-                                        </a>
-                                    </td>
-                                    <td class="product-name-td">
-                                        <h2 class="product-name"><a href="#" title="Product Name">Women Fashion Blouse</a></h2>
-                                    </td>
-                                    <td>$120.00</td>
-                                    <td>
-                                        <div class="qty-holder">
-                                            <a href="#" class="qty-dec-btn" title="Dec">-</a>
-                                            <input type="text" class="qty-input" value="1">
-                                            <a href="#" class="qty-inc-btn" title="Inc">+</a>
-                                            <a href="#" class="edit-qty"><i class="fa fa-pencil"></i></a>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="text-primary">$120.00</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="product-action-td">
-                                        <a href="#" title="Remove product" class="btn-remove"><i class="fa fa-times"></i></a>
-                                    </td>
-                                    <td class="product-image-td">
-                                        <a href="#" title="Product Name">
-                                            <img src="../img/demos/shop/products/cart-product2.jpg" alt="Product Name">
-                                        </a>
-                                    </td>
-                                    <td class="product-name-td">
-                                        <h2 class="product-name"><a href="#" title="Product Name">Black Utility Top</a></h2>
-                                    </td>
-                                    <td>$49.00</td>
-                                    <td>
-                                        <div class="qty-holder">
-                                            <a href="#" class="qty-dec-btn" title="Dec">-</a>
-                                            <input type="text" class="qty-input" value="1">
-                                            <a href="#" class="qty-inc-btn" title="Inc">+</a>
-                                            <a href="#" class="edit-qty"><i class="fa fa-pencil"></i></a>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="text-primary">$49.00</span>
-                                    </td>
-                                </tr>
+                                @foreach (var cartItem in Model.Items)
+                                {
+                                    <tr id="@cartItem.ShopItem.Id" class="cart-items">
+                                        <td class="product-action-td">
+                                            <a href="" onclick="return RemoveProduct(@cartItem.ShopItem.Id)" title="Remove product" class="btn-remove"><i class="fa fa-times"></i></a>
+                                        </td>
+                                        <td class="product-image-td">
+                                            <a href="@Url.Action("Detail","Product",new { id = cartItem.ShopItem.Id})" title="@cartItem.ShopItem.Name">
+                                                <img src="@cartItem.ShopItem.Image" alt="Product Name">
+                                            </a>
+                                        </td>
+                                        <td class="product-name-td">
+                                            <h2 class="product-name"><a href="@Url.Action("Detail","Product",new { id = cartItem.ShopItem.Id})" title="@cartItem.ShopItem.Name">@cartItem.ShopItem.Name</a></h2>
+                                        </td>
+                                        <td>@cartItem.ShopItem.CurrentPrice</td>
+                                        <td>
+                                            <div class="qty-holder">
+                                                <a href="#" class="qty-dec-btn" title="Dec" onclick="return DecreaseQuantity(@cartItem.ShopItem.Id)">-</a>
+                                                <input type="text" class="qty-input" value="@cartItem.Quantity" id="quantity-@cartItem.ShopItem.Id">
+                                                <a href="#" class="qty-inc-btn" title="Inc" onclick="return IncreaseQuantity(@cartItem.ShopItem.Id)">+</a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="text-primary" id="sub-total-@cartItem.ShopItem.Id">@cartItem.ItemTotal</span>
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colspan="6" class="clearfix">
-                                        <button class="btn btn-default hover-primary btn-continue">Continue Shopping</button>
-                                        <button class="btn btn-default hover-primary btn-update">Update Shopping Cart</button>
-                                        <button class="btn btn-default hover-primary btn-clear">Clear Shopping Cart</button>
+                                        <a href="@Url.Action("Category","Product")"> <button class="btn btn-default hover-primary btn-continue">Continue Shopping</button> </a>
+                                        <button class="btn btn-default hover-primary btn-clear" onclick="return ClearCart()">Clear Shopping Cart</button>
                                     </td>
                                 </tr>
                             </tfoot>
@@ -91,64 +68,6 @@
                 </div>
                 <aside class="col-md-4 col-lg-3 sidebar shop-sidebar">
                     <div class="panel-group">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" href="#panel-cart-discount">
-                                        Discount Code
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="panel-cart-discount" class="accordion-body collapse">
-                                <div class="panel-body">
-                                    <p class="mb-sm">Enter your coupon code if you have one.</p>
-                                    <form action="#">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" required>
-                                        </div>
-                                        <input type="submit" class="btn btn-primary btn-block" value="Apply Coupon">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" href="#panel-cart-ship">
-                                        ESTIMATE SHIPPING AND TAX
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="panel-cart-ship" class="accordion-body collapse">
-                                <div class="panel-body">
-                                    <p class="mb-sm">Enter your destination to get a shipping estimate.</p>
-                                    <form action="#">
-                                        <div class="form-group">
-                                            <label>Contry <span class="required">*</span></label>
-                                            <select name="#" class="form-control">
-                                                <option value="United States">United States</option>
-                                                <option value="United Kingdon">United Kingdon</option>
-                                                <option value="China">China</option>
-                                                <option value="Russia">Russia</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>State/Province</label>
-                                            <select name="#" class="form-control">
-                                                <option value="United States">Please select region, state</option>
-                                                <option value="Alabama">Alabama</option>
-                                                <option value="Alaska">Alaska</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Zip Code</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                        <input type="submit" class="btn btn-primary btn-block" value="Get a Quote">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -161,19 +80,21 @@
                                 <div class="panel-body">
                                     <table class="totals-table">
                                         <tbody>
+                                       @foreach (var cartItem in Model.Items)
+                                        {
+                                        <tr id="cart-@cartItem.ShopItem.Id" class="cart-items">
+                                            <td>@cartItem.ShopItem.Name</td>
+                                            <td id="sub2-total-@cartItem.ShopItem.Id">@cartItem.ItemTotal</td>
+                                        </tr>
+                                        }
                                             <tr>
-                                                <td>Subtotal</td>
-                                                <td>$159.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Grand Total</td>
-                                                <td>$159.00</td>
+                                                <td>Total</td>
+                                                <td id="grand-total">@Model.GrandTotal</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     <div class="totals-table-action">
-                                        <a href="#" class="btn btn-primary btn-block">Proceed to Checkout</a>
-                                        <a href="#" class="btn btn-link btn-block">Checkout with Multiple Addresses</a>
+                                        <a href="@Url.Action("Checkout","Cart")" class="btn btn-primary btn-block">Proceed to Checkout</a>
                                     </div>
                                 </div>
                             </div>
@@ -184,75 +105,29 @@
             <div class="crosssell-products">
                 <h2 class="h4"><strong>Based on your selection, you may be interested in the following items:</strong></h2>
                 <div class="row">
+                    @foreach (var product in suggestionProducts)
+                    {
                     <div class="col-sm-6 col-md-3">
                         <div class="product product-sm">
                             <figure class="product-image-area">
-                                <a href="#" title="Product Name" class="product-image">
-                                    <img src="../img/demos/shop/products/cart-product3.jpg" alt="Product Name">
+                                <a href="@Url.Action("Detail","Product", new { id = product.Id})" title="@product.Name" class="product-image">
+                                    <img src="@product.Image" alt="Product Name">
                                 </a>
                             </figure>
                             <div class="product-details-area">
-                                <h2 class="product-name"><a href="#" title="Product Name">Jane Dress</a></h2>
+                                <h2 class="product-name"><a href="@Url.Action("Detail","Product", new { id = product.Id})" title="@product.Name">@product.Name</a></h2>
                                 <div class="product-price-box">
-                                    <span class="old-price">$120.00</span>
-                                    <span class="product-price">$90.00</span>
+                                    @if (product.RegularPrice != product.CurrentPrice)
+                                    {
+                                    <span class="old-price">@product.RegularPrice</span>
+                                    }
+                                    <span class="product-price">@product.CurrentPrice</span>
                                 </div>
-                                <a href="#" class="btn btn-default hover-primary">Add to Cart</a>
+                                <a href="@Url.Action("AddToCartFromCart","Cart",new { id= product.Id})" class="btn btn-default hover-primary">Add to Cart</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="product product-sm">
-                            <figure class="product-image-area">
-                                <a href="#" title="Product Name" class="product-image">
-                                    <img src="../img/demos/shop/products/cart-product4.jpg" alt="Product Name">
-                                </a>
-                            </figure>
-                            <div class="product-details-area">
-                                <h2 class="product-name"><a href="#" title="Product Name">Jane Dress - S</a></h2>
-                                <div class="product-price-box">
-                                    <span class="old-price">$100.00</span>
-                                    <span class="product-price">$89.00</span>
-                                </div>
-                                <a href="#" class="btn btn-default hover-primary">Add to Cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clearfix visible-sm"></div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="product product-sm">
-                            <figure class="product-image-area">
-                                <a href="#" title="Product Name" class="product-image">
-                                    <img src="../img/demos/shop/products/cart-product1.jpg" alt="Product Name">
-                                </a>
-                            </figure>
-                            <div class="product-details-area">
-                                <h2 class="product-name"><a href="#" title="Product Name">Jane Dress - XL</a></h2>
-                                <div class="product-price-box">
-                                    <span class="old-price">$100.00</span>
-                                    <span class="product-price">$69.00</span>
-                                </div>
-                                <a href="#" class="btn btn-default hover-primary">Add to Cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="product product-sm">
-                            <figure class="product-image-area">
-                                <a href="#" title="Product Name" class="product-image">
-                                    <img src="../img/demos/shop/products/cart-product2.jpg" alt="Product Name">
-                                </a>
-                            </figure>
-                            <div class="product-details-area">
-                                <h2 class="product-name"><a href="#" title="Product Name">Jane Dress - M</a></h2>
-                                <div class="product-price-box">
-                                    <span class="old-price">$110.00</span>
-                                    <span class="product-price">$79.00</span>
-                                </div>
-                                <a href="#" class="btn btn-default hover-primary">Add to Cart</a>
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>

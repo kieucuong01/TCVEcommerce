@@ -1,4 +1,4 @@
-﻿@addTagHelper *,TCV.Shared
+﻿@addTagHelper *,TCVShared
 @model PagedList<ShopItem>
 @{
     var categories = ViewData["categories"] as String[];
@@ -61,18 +61,18 @@
                             }
                         </div>
                         <ul class="pagination">
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#"><i class="fa fa-caret-right"></i></a></li>
+                            <pagination model="@Model" query-string="@Context.Request.QueryString" css-style="pagination pagination-sm"></pagination>
                         </ul>
+                       
                         <div class="limiter">
                             <label>Show:</label>
-                            <select>
+                            <select onchange="SelectPageSize()" id="page-size">
                                 <option value="12">12</option>
                                 <option value="24">24</option>
                                 <option value="36">36</option>
                             </select>
                         </div>
+
                     </div>
                 </div>
                 @if (viewType == "list")
@@ -120,7 +120,7 @@
                                         </div>
 
                                         <div class="product-actions">
-                                            <a href="#" class="addtocart" title="Add to Cart">
+                                            <a href="@Url.Action("AddToCart","Cart",new { id= item.Id})" accesskeyoclick="return AreYouSureFunction(this)" class="addtocart" title="Add to Cart">
                                                 <i class="fa fa-shopping-cart"></i>
                                                 <span>Add to Cart</span>
                                             </a>
@@ -181,7 +181,7 @@
                                             <a href="#" class="addtowishlist" title="Add to Wishlist">
                                                 <i class="fa fa-heart"></i>
                                             </a>
-                                            <a href="#" class="addtocart" title="Add to Cart">
+                                            <a href="@Url.Action("AddToCart","Cart",new { id= item.Id})" onclick="return AreYouSureFunction(this)" class="addtocart" title="Add to Cart">
                                                 <i class="fa fa-shopping-cart"></i>
                                                 <span>Add to Cart</span>
                                             </a>
@@ -198,15 +198,11 @@
                 }
                 <div class="toolbar-bottom">
                     <div class="toolbar">
-                        <div class="sorter">
-                            <ul class="pagination">
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#"><i class="fa fa-caret-right"></i></a></li>
-                            </ul>
+                        <div class="sorter">                           
+                            <pagination model="@Model" query-string="@Context.Request.QueryString" css-style="pagination pagination-sm"></pagination>                           
                             <div class="limiter">
                                 <label>Show:</label>
-                                <select>
+                                <select onchange="SelectPageSize()" id="page-size">
                                     <option value="12">12</option>
                                     <option value="24">24</option>
                                     <option value="36">36</option>

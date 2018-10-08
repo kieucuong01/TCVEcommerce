@@ -29,7 +29,7 @@ namespace TCVShared.Helpers
             CssStyle = "pagination";
             PrevText = "« Prev";
             NextText = "Next »";
-            ShowRecords = true;
+            ShowRecords = false;
             PagesCount = 7;
         }
 
