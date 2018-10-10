@@ -41,12 +41,6 @@ namespace TCVWeb.Controllers
             return View();
         }
 
-        // GET: Account/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: Account/Edit/5
         public ActionResult Edit(int id)
         {

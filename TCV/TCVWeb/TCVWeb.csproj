@@ -45,6 +45,7 @@
     <Content Remove="Views\Account\SendCode.cshtml" />
     <Content Remove="Views\Account\VerifyCode.cshtml" />
     <Content Remove="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <Content Remove="wwwroot\css\demos\demo-shop-14.css" />
   </ItemGroup>
 
   <ItemGroup>

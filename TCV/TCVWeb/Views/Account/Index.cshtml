@@ -1,89 +1,79 @@
-﻿<div role="main" class="main">
+﻿
+<div role="main" class="main">
     <section class="page-header">
         <div class="container">
             <ul class="breadcrumb">
                 <li><a href="#">Home</a></li>
-                <li class="active">My Account</li>
+                <li class="active">Dashboard</li>
             </ul>
         </div>
     </section>
 
     <div class="container">
         <div class="row">
-            <div class="col-md-9 col-md-push-3 my-account form-section">
-                <h1 class="h2 heading-primary font-weight-normal">Edit Account Information</h1>
-
-                <div class="featured-box featured-box-primary featured-box-flat featured-box-text-left mt-md">
-                    <div class="box-content">
-                        <form action="#">
-                            <h4 class="heading-primary text-uppercase mb-lg">ACCOUNT INFORMATION</h4>
-                            <div class="row">
-                                <div class="col-sm-4 col-md-3">
-                                    <div class="form-group">
-                                        <label class="font-weight-normal">First Name <span class="required">*</span></label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-md-3">
-                                    <div class="form-group">
-                                        <label class="font-weight-normal">Middle Name</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 col-md-5">
-                                    <div class="form-group">
-                                        <label class="font-weight-normal">Last Name <span class="required">*</span></label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                </div>
+            <div class="col-md-9 col-md-push-3 my-account">
+                <h1 class="h2 heading-primary font-weight-normal">My Dashboard</h1>
+                <div class="alert alert-success success-msg mb-xl" role="alert">
+                    Thank you for registering with Porto - Premium Template.
+                </div>
+                <div class="alert alert-success mb-xlg" role="alert">
+                    Hello, <strong>Porto customer!</strong> From your My Account Dashboard you have the ability to view a snapshot of your recent account activity and update your account information. Select a link below to view or edit information.
+                </div>
+                <h2 class="h3 mb-sm"><strong>Account Information</strong></h2>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="panel-box">
+                            <div class="panel-box-title">
+                                <h3>Contact Information</h3>
+                                <a href="#" class="panel-box-edit">Edit</a>
                             </div>
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="form-group">
-                                        <label class="font-weight-normal">Email Address <span class="required">*</span></label>
-                                        <input type="email" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12">
-                                    <div class="form-group">
-                                        <label class="font-weight-normal">Current Password <span class="required">*</span></label>
-                                        <input type="password" class="form-control" required>
-                                    </div>
-                                </div>
+                            <div class="panel-box-content">
+                                <p>
+                                    Name LastName<br>
+                                    porto_shop@gmail.com<br>
+                                    <a href="#">Change Password</a>
+                                </p>
                             </div>
-                            <div class="checkbox mb-xs">
-                                <label>
-                                    <input type="checkbox" value="1" id="change-pass-checkbox">
-                                    Change Password
-                                </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="panel-box">
+                            <div class="panel-box-title">
+                                <h3>Newsletters</h3>
+                                <a href="#" class="panel-box-edit">Edit</a>
                             </div>
-                            <div id="account-chage-pass">
-                                <h4 class="heading-primary text-uppercase mb-lg">CHANGE PASSWORD</h4>
+                            <div class="panel-box-content">
+                                <p>You are currently not subscribed to any newsletter.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel-box">
+                            <div class="panel-box-title">
+                                <h3>ADDRESS BOOK</h3>
+                                <a href="#" class="panel-box-edit">Manage Addresses</a>
+                            </div>
+                            <div class="panel-box-content">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="font-weight-normal">Password <span class="required">*</span></label>
-                                            <input type="password" class="form-control" required>
-                                        </div>
+                                        <h4 class="h5 heading-text-color font-weight-semibold mb-xs">Default Billing Address</h4>
+                                        <address>
+                                            You have not set a default billing address.<br>
+                                            <a href="#">Edit Address</a>
+                                        </address>
                                     </div>
                                     <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="font-weight-normal">Confirm Password <span class="required">*</span></label>
-                                            <input type="password" class="form-control" required>
-                                        </div>
+                                        <h4 class="h5 heading-text-color font-weight-semibold mb-xs">Default Shipping Address</h4>
+                                        <address>
+                                            You have not set a default shipping address.<br>
+                                            <a href="#">Edit Address</a>
+                                        </address>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <p class="required mt-lg mb-none">* Required Fields</p>
-                                    <div class="form-action clearfix mt-none">
-                                        <a href="demo-shop-14-login.html" class="pull-left"><i class="fa fa-angle-double-left"></i> Back</a>
-                                        <input type="submit" class="btn btn-primary" value="Save">
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -91,18 +81,10 @@
                 <aside class="sidebar">
                     <h4>My Account</h4>
                     <ul class="nav nav-list">
-                        <li><a href="#">Account Dashboard</a></li>
-                        <li class="active"><a href="#">Account Information</a></li>
-                        <li><a href="#">Address Book</a></li>
+                        <li class="active"><a href="#">Account Dashboard</a></li>
+                        <li><a href="@Url.Action("Edit","Account")">Account Information</a></li>
                         <li><a href="#">My Orders</a></li>
-                        <li><a href="#">Billing Agreements</a></li>
-                        <li><a href="#">Recurring Profiles</a></li>
-                        <li><a href="#">My Product Reviews</a></li>
-                        <li><a href="#">My Tags</a></li>
                         <li><a href="#">My Wishlist</a></li>
-                        <li><a href="#">My Applications</a></li>
-                        <li><a href="#">Newsletter Subscriptions</a></li>
-                        <li><a href="#">My Downloadable Products</a></li>
                     </ul>
                 </aside>
             </div>
