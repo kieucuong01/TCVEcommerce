@@ -1,15 +1,10 @@
-﻿using System;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TCVShared.Data;
 using TCVShared.Helpers;
-using TCVWeb.Models;
 using System.Linq;
-using Microsoft.AspNetCore.Session;
 using System.Collections.Generic;
-using TCVWeb.Areas.Admin.Models;
-using Newtonsoft.Json;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace TCVWeb.Controllers
@@ -53,7 +48,7 @@ namespace TCVWeb.Controllers
         }
 
         // Cart/AddToCart/1?quantity=1 
-        public void AddToCart(int id, int quantity) {
+        public ActionResult AddToCart(int id, int quantity) {
             var cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
 
             // Set default quantity 
@@ -97,51 +92,59 @@ namespace TCVWeb.Controllers
                 }
 
                 HttpContext.Session.SetObjectAsJson("Cart", cart);
+
             }
+            return PartialView("_PartialHeader");
         }
 
         public IActionResult AddToCartFromCart(int id, int quantity) {
             this.AddToCart(id, quantity);
-
-            var cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
-
+            
             return RedirectToAction("Index", "Cart"); 
         }
 
         // /Cart/RemoveProduct/1
-        public void RemoveProduct(int id){
+        public ActionResult RemoveProduct(int id){
             var cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
             var indexOfProduct = this.FindIndexOfProduct(id, cart);
             cart.Items.Remove(cart.Items.ElementAt(indexOfProduct));
 
             HttpContext.Session.SetObjectAsJson("Cart", cart);
+
+            return PartialView("_PartialHeader");
         }
 
         // /Cart/ClearCart
-        public void ClearCart(){
+        public ActionResult ClearCart(){
             var cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
             cart.Items.Clear();
 
             HttpContext.Session.SetObjectAsJson("Cart", cart);
+
+            return PartialView("_PartialHeader");
         }
 
         // /Cart/IncreaseQuantity/1
-        public void IncreaseQuantity(int id){
+        public ActionResult IncreaseQuantity(int id){
             var cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
             var indexOfProduct = this.FindIndexOfProduct(id, cart);
             cart.Items.ElementAt(indexOfProduct).Quantity++ ;
 
             HttpContext.Session.SetObjectAsJson("Cart", cart);
+
+            return PartialView("_PartialHeader");
         }
 
         // /Cart/DecreaseQuantity/1
-        public void DecreaseQuantity(int id)
+        public ActionResult DecreaseQuantity(int id)
         {
             var cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
             var indexOfProduct = this.FindIndexOfProduct(id, cart);
             cart.Items.ElementAt(indexOfProduct).Quantity--;
 
             HttpContext.Session.SetObjectAsJson("Cart", cart);
+
+            return PartialView("_PartialHeader");
         }
 
         //CUSTOM FUNCTION 

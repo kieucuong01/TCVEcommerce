@@ -42,11 +42,11 @@
     <script src="~/vendor/modernizr/modernizr.min.js"></script>
 </head>
 <body>
-    <partial name="_PartialHeader" />
+    @Html.Partial("_PartialHeader")
 
     @RenderBody()
 
-    <partial name="_PartialFooter" />
+    @Html.Partial("_PartialFooter")
 
     <!-- Vendor -->
     <script src="~/vendor/jquery/jquery.min.js"></script>

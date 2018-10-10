@@ -75,8 +75,6 @@ namespace TCVWeb.Controllers
 
         public IActionResult Category(PagedList<ShopItem> model, int pageSize, int id, string from, string origin, int maxPrice, int minPrice, string style)
         {
-            model.PageSize = pageSize != 0 ? pageSize : 12;
-
             // Filter products  by category 
             var filterQuery = _dbContext.ShopItems.Where(x => model.Search == null && x.SKU.Substring(6,1) == "S");
             var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
@@ -125,6 +123,8 @@ namespace TCVWeb.Controllers
 
             model.TotalRows = filterQuery.Count();
             model.Content = selectQuery.ToList();
+            model.PageSize = pageSize != 0 ? pageSize : 12;
+
 
             if (style == "list"){
                 ViewData["style"] = "list";

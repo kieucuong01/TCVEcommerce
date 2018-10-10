@@ -124,14 +124,7 @@ namespace TCVShared.Data
         [DisplayFormat(DataFormatString = "{0:#,#.000} VNĐ")]
         public double ShippingFee
         {
-            get
-            {
-                if (SubTotal > 0.0)
-                {
-                    return 100;
-                }
-                return 0.0;
-            }
+            get; set;
         }
 
         [NotMapped]

@@ -51,7 +51,7 @@ namespace TCVWeb.Controllers
 
             var supplier2 = new Supplier();
             supplier2.Name = "Kinh Do";
-            supplier2.Address = "http://snnptnt.binhthuan.gov.vn/wps/wcm/connect/a9cf2c0040d3c4bba3e5e30556390f18/logoKhuyennong-Khuyenngu.jpg?MOD=AJPERES&CACHEID=a9cf2c0040d3c4bba3e5e30556390f18";
+            supplier2.Address = "http://logodep.vn/wp-content/uploads/2017/01/thiet-ke-logo-cong-ty-hoi-nhap-_1292835984.jpg";
 
             var supplier3 = new Supplier();
             supplier3.Name = "Kinh Do";

@@ -120,4 +120,7 @@
     <None Include="Views\Account\VerifyCode.cshtml" />
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Checkout\" />
+  </ItemGroup>
 </Project>

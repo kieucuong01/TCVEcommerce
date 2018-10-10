@@ -3,8 +3,7 @@
     ViewBag.Title = "Register";
 }
 
-<div role="main" class="main">
-
+<div role="main" class="main">   
     <section class="form-section register-form">
         <div class="container">
             <h1 class="h2 heading-primary font-weight-normal mb-md mt-xlg">Create an Account</h1>
@@ -59,6 +58,7 @@
                                 <div class="form-group">
                                     <label class="font-weight-normal">Password <span class="required">*</span></label>
                                     <input type="password" asp-for="Password" class="form-control" required>
+                                    <span asp-validation-for="Password" class="text-danger"></span>
                                 </div>
                             </div>
 
@@ -66,6 +66,7 @@
                                 <div class="form-group">
                                     <label class="font-weight-normal">Confirm Password <span class="required">*</span></label>
                                     <input type="password" asp-for="ConfirmPassword" class="form-control" required>
+                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>

@@ -1,11 +1,18 @@
-﻿@{ 
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
     bool isAuthenticated = this.User.Identity.IsAuthenticated;
     string emailLogined = this.User.Identity.Name;
+    var cart = HttpContextAccessor.HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
+    if (cart == null)
+    {
+        cart = new ShopCart();
+        cart.Items = new List<CartItem>();
+    }
 }
 
 <div class="body">
     <header id="header" data-plugin-options="{'stickyEnabled': true, 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': false, 'stickyStartAt': 142, 'stickySetTop': '-142px', 'stickyChangeLogo': false}">
-        <div class="header-body">
+        <div class="header-body"  id="cartdetails">
             <div class="header-top">
                 <div class="container">
                     <div class="dropdowns-container">
@@ -31,12 +38,13 @@
                             <li><a href="@Url.Action("Help","Home")">Trợ giúp</a></li>
                             @if (isAuthenticated == false)
                             {
-                            <li><a href="@Url.Action("Register", "Account")">Đăng ký</a></li>
-                            <li><a href="@Url.Action("Login", "Account")">Đăng nhập</a></li>
+                                <li><a href="@Url.Action("Register", "Account")">Đăng ký</a></li>
+                                <li><a href="@Url.Action("Login", "Account")">Đăng nhập</a></li>
                             }
-                            else {
-                            <li><a href="@Url.Action("Index", "Account")">@emailLogined</a></li>
-                            <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
+                            else
+                            {
+                                <li><a href="@Url.Action("Index", "Account")">@emailLogined</a></li>
+                                <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
                             }
                         </ul>
                     </div>
@@ -48,8 +56,8 @@
                     <div class="header-column">
                         <div class="header-logo">
                             <a href="@Url.Action("Index","Home")">
-                                <img alt="Porto" width="111" height="51" src="~/img/icon/logo.jpg" class="dark-logo">
-                                <img alt="Porto" width="111" height="51" src="~/img/icon/logo.jpg" class="light-logo">
+                                <img alt="Porto" width="111" height="51" src="~/img/icon/logo.png" class="dark-logo">
+                                <img alt="Porto" width="111" height="51" src="~/img/icon/logo.png" class="light-logo">
                             </a>
                         </div>
                     </div>
@@ -66,54 +74,40 @@
                                     <a href="#" class="cart-dropdown-icon">
                                         <i class="minicart-icon"></i>
                                         <span class="cart-info">
-                                            <span class="cart-qty">2</span>
+                                            <span class="cart-qty">@cart.Items.Count</span>
                                             <span class="cart-text">item(s)</span>
                                         </span>
                                     </a>
                                     <div class="cart-dropdownmenu right">
                                         <div class="dropdownmenu-wrapper">
                                             <div class="cart-products">
-                                                <div class="product product-sm">
-                                                    <a href="#" class="btn-remove" title="Remove Product">
-                                                        <i class="fa fa-times"></i>
-                                                    </a>
-                                                    <figure class="product-image-area">
-                                                        <a href="demo-shop-14-product-details.html" title="Product Name" class="product-image">
-                                                            <img src="~/img/demos/shop/products/thumbs/cart-product1.jpg" alt="Product Name">
+                                                @foreach (var item in cart.Items)
+                                                {
+                                                    <div class="product product-sm">
+                                                        <a href="#" onclick="return RemoveProduct(@item.ShopItem.Id)" class="btn-remove" title="Remove Product">
+                                                            <i class="fa fa-times"></i>
                                                         </a>
-                                                    </figure>
-                                                    <div class="product-details-area">
-                                                        <h2 class="product-name"><a href="demo-shop-14-product-details.html" title="Product Name">Blue Women Top</a></h2>
-                                                        <div class="cart-qty-price">
-                                                            1 X
-                                                            <span class="product-price">$65.00</span>
+                                                        <figure class="product-image-area">
+                                                            <a href="@Url.Action("Detail","Product",new { id = item.ShopItem.Id})" title="@item.ShopItem.Name" class="product-image">
+                                                                <img src="@item.ShopItem.Image" alt="Product Name">
+                                                            </a>
+                                                        </figure>
+                                                        <div class="product-details-area">
+                                                            <h2 class="product-name"><a href="@Url.Action("Detail","Product",new { id = item.ShopItem.Id})" title="@item.ShopItem.Name">@item.ShopItem.Name</a></h2>
+                                                            <div class="cart-qty-price">
+                                                                @item.Quantity X
+                                                                <span class="product-price">@item.ShopItem.CurrentPrice</span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="product product-sm">
-                                                    <a href="#" class="btn-remove" title="Remove Product">
-                                                        <i class="fa fa-times"></i>
-                                                    </a>
-                                                    <figure class="product-image-area">
-                                                        <a href="demo-shop-14-product-details.html" title="Product Name" class="product-image">
-                                                            <img src="~/img/demos/shop/products/thumbs/cart-product2.jpg" alt="Product Name">
-                                                        </a>
-                                                    </figure>
-                                                    <div class="product-details-area">
-                                                        <h2 class="product-name"><a href="demo-shop-14-product-details.html" title="Product Name">Black Utility Top</a></h2>
-                                                        <div class="cart-qty-price">
-                                                            1 X
-                                                            <span class="product-price">$39.00</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                }
                                             </div>
                                             <div class="cart-totals">
-                                                Tổng cộng: <span>$104.00</span>
+                                                Tổng cộng: <span>@cart.GrandTotal</span>
                                             </div>
                                             <div class="cart-actions">
                                                 <a href="@Url.Action("Index","Cart")" class="btn btn-primary">Xem giỏ hàng</a>
-                                                <a href="@Url.Action("Checkout","Cart")" class="btn btn-primary">Đặt hàng</a>
+                                                <a href="@Url.Action("Index","Checkout")" class="btn btn-primary">Đặt hàng</a>
                                             </div>
                                         </div>
                                     </div>

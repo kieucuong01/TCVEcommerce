@@ -1,11 +1,16 @@
 ﻿    function AreYouSureFunction(source) {
             //Prompt for confirmation
-                $.ajax({
+
+            $.ajax(
+                {
                     url: source,
-                }).done(function () {
-                    //Item created!
-                    alert("Item Added!");
+                    success: function (partialView)
+                    {
+                        $('#cartdetails').html(partialView);
+                        alert("Item Added!");
+                    }
                 });
+
                 //This prevents the default behavior of the actual link (it will hit your controller action)
                 return false;
         }
@@ -14,13 +19,17 @@ function AddToCartWithQuantity(id){
     //Get
     var qt = $('#product-vqty').val();
 
-        $.ajax({
-                url: "/Cart/AddToCart/"+id+"?quantity="+qt,
-                }).done(function () {
-                    //Item created!
-                    alert("Item Added!");
+            $.ajax(
+                {
+                    url: "/Cart/AddToCart/"+id+"?quantity="+qt,
+                    success: function (partialView)
+                    {
+                        $('#cartdetails').html(partialView);
+                        alert("Item Added!");
+                    }
                 });
-   return false;
+                //This prevents the default behavior of the actual link (it will hit your controller action)
+                return false;
 }
 
 function RemoveProduct(id){
@@ -32,21 +41,26 @@ function RemoveProduct(id){
 
        $.ajax({
                 url: "/Cart/RemoveProduct/"+id,
-                }).done(function () {
+                success: function (partialView)
+                    {
+                    $('#cartdetails').html(partialView);
                     $('#'+id).remove();
                     $('#cart-'+id).remove();
-
                     $("#grand-total").text(currentGrandTotal-currentSubTotal);
+                    }
                 });
+
     return false;
 }
 
 function ClearCart(){
         $.ajax({
                 url: "/Cart/ClearCart",
-                }).done(function () {
+                success: function (partialView) {
+                    $('#cartdetails').html(partialView);
                     $('.cart-items').remove();
                     $("#grand-total").text(0)
+                    }
                 });
     return false;       
 }
@@ -61,12 +75,14 @@ function DecreaseQuantity(id) {
     if (currentQuantity != 1){
         $.ajax({
                 url: "/Cart/DecreaseQuantity/"+id,
-                }).done(function () {
+                success: function (partialView) {
+                    $('#cartdetails').html(partialView);
                     $("#quantity-"+id).val(currentQuantity-1);
                     $("#sub-total-"+id).text((currentSubTotal/currentQuantity)*(currentQuantity-1))
 
                     $("#sub2-total-"+id).text((currentSubTotal/currentQuantity)*(currentQuantity-1))
                     $("#grand-total").text(currentGrandTotal-unitPerProduct)
+                    }
                 });
     }
     return false;
@@ -81,11 +97,13 @@ function IncreaseQuantity(id) {
 
     $.ajax({
            url: "/Cart/IncreaseQuantity/"+id,
-           }).done(function () {
+           success: function (partialView) {
+                $('#cartdetails').html(partialView);
                 $("#quantity-"+id).val(currentQuantity+1);
                 $("#sub-total-"+id).text(unitPerProduct*(currentQuantity+1))
                 $("#sub2-total-"+id).text((currentSubTotal/currentQuantity)*(currentQuantity+1))
                 $("#grand-total").text(currentGrandTotal+unitPerProduct)
+                }
            });          
     return false;
 }
