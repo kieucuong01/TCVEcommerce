@@ -1,4 +1,7 @@
-﻿@model ShopItem
+﻿@using TCVShared.Helpers
+@using Newtonsoft.Json
+@using Microsoft.AspNetCore.Html
+@model ShopItem
 @{
     ViewBag.Icon = "fas fa-product-hunt";
     ViewBag.Title = "Danh mục sản phẩm";
@@ -52,12 +55,13 @@
     <script src="~/js/summernote-vi-VN.js"></script>
     <script>
         $(document).ready(function () {
-            $("#PostCats").select2({
+            $("#ItemCats").select2({
                 language: "vi",
                 theme: "bootstrap",
                 allowClear: true,
-                placeholder: "== Phân loại Tin tức =="
+                placeholder: "== Phân loại Sản phẩm =="
             });
+
         });
     </script>
 }

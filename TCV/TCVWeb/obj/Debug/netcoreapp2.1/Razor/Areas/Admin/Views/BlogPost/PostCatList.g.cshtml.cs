@@ -126,7 +126,7 @@ WriteAttributeValue("", 984, Url.Action("PostCatCreate"), 984, 28, false);
             WriteLiteral(" data-modal=\"\"><i class=\"fa fa-plus\"></i> Tạo Phân loại mới</a>\r\n        </div>\r\n        <div class=\"col-sm-8 text-right\">\r\n            ");
             EndContext();
             BeginContext(1149, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("partial", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "666c42210c644b8c882f512cf2b003cb", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("partial", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "d042fe3f63cd45229e6145a3f4745b26", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_TagHelpers_PartialTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.PartialTagHelper>();
@@ -145,7 +145,7 @@ WriteAttributeValue("", 984, Url.Action("PostCatCreate"), 984, 28, false);
             WriteLiteral("\r\n        </div>\r\n    </div>\r\n    <div class=\"table-responsive\">\r\n        ");
             EndContext();
             BeginContext(1260, 121, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("pagination", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cea04728b874470aa0474b06cb2616f6", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("pagination", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0491559db9e641cd86e8469fe4596cce", async() => {
             }
             );
             __TCVShared_Helpers_PaginationTagHelper = CreateTagHelper<global::TCVShared.Helpers.PaginationTagHelper>();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -34,14 +35,6 @@ namespace TCVWeb.Areas.Admin.Controllers
 
             model.TotalRows = filterQuery.Count();
             model.Content = selectQuery.ToList();
-
-            return View(model);
-        }
-        public ActionResult DetailsProduct(int id)
-        {
-            var model = _dbContext.ShopItems.Find(id);
-            if (model == null)
-                return BadRequest();
 
             return View(model);
         }
@@ -108,7 +101,7 @@ namespace TCVWeb.Areas.Admin.Controllers
             }
         }
 
-        public ActionResult ProductDetails(int? id)
+        public ActionResult DetailsProduct(int? id)
         {
             ShopItem model = _dbContext.ShopItems.Find(id);
             if (model == null)
@@ -117,7 +110,7 @@ namespace TCVWeb.Areas.Admin.Controllers
             return View(model);
         }
 
-        public ActionResult ProductUpdate(int? id)
+        public ActionResult UpdateProduct(int? id)
         {
             ShopItem model = _dbContext.ShopItems.Find(id);
             if (model == null)
@@ -130,7 +123,7 @@ namespace TCVWeb.Areas.Admin.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ProductUpdate(ShopItem model)
+        public ActionResult UpdateProduct(ShopItem model)
         {
             if (ModelState.IsValid)
             {
@@ -203,6 +196,32 @@ namespace TCVWeb.Areas.Admin.Controllers
             return View(model);
         }
 
+        public ActionResult DeleteProduct(int? id)
+        {
+            ShopItem model = _dbContext.ShopItems.Find(id);
+            if (model == null)
+                return BadRequest();
+
+            return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult DeleteProduct(ShopItem model)
+        {
+            try
+            {
+                _dbContext.Entry(model).State = EntityState.Deleted;
+                _dbContext.SaveChanges();
+                return Json(new ModalFormResult() { Code = 1 });
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+            }
+
+            return View(model);
+        }
+
 
         #region ItemCat
 
@@ -222,6 +241,7 @@ namespace TCVWeb.Areas.Admin.Controllers
             ViewBag.ParentId = new SelectList(_dbContext.ItemCats, "Id", "Name");
             return View("ItemCatEdit", new Taxonomy());
         }
+
 
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult ItemCatCreate(Taxonomy model)
@@ -275,6 +295,189 @@ namespace TCVWeb.Areas.Admin.Controllers
 
             ViewBag.ParentId = new SelectList(_dbContext.ItemCats, "Id", "Name");
             return View("ItemCatEdit", model);
+        }
+
+        #endregion
+
+        #region ItemAttr
+
+        public ActionResult ItemAttrList(PagedList<ShopAttrib> model)
+        {
+            var filterQuery = _dbContext.ShopAttribs.Where(x => model.Search == null || x.Name.Contains(model.Search));
+            var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+
+            model.TotalRows = filterQuery.Count();
+            model.Content = selectQuery.ToList();
+
+            return View(model);
+        }
+
+        public ActionResult ItemAttrCreate()
+        {
+            return View("ItemAttrEdit", new ShopAttrib());
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ItemAttrCreate(ShopAttrib model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _dbContext.ShopAttribs.Add(model);
+                    _dbContext.SaveChanges();
+                    return Json(new ModalFormResult() { Code = 1 });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+
+            return View("ItemAttrEdit", model);
+        }
+
+        public ActionResult ItemAttrUpdate(int? id)
+        {
+            ShopAttrib model = _dbContext.ShopAttribs.Find(id);
+            if (model == null)
+                return BadRequest();
+
+            return View("ItemAttrEdit", model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ItemAttrUpdate(ShopAttrib model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _dbContext.Entry(model).State = EntityState.Modified;
+                    _dbContext.SaveChanges();
+                    return Json(new ModalFormResult() { Code = 1 });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+
+            return View("ItemAttrEdit", model);
+        }
+
+        #endregion
+
+        #region ShopItemAttrib
+
+        public ActionResult ShopItemAttrCreate(int? id)
+        {
+            ShopItem item = _dbContext.ShopItems.Find(id);
+            if (item == null)
+                return BadRequest();
+
+            ViewBag.MediaAlbum = item.MediaAlbum;
+            ShopItemAttrib model = new ShopItemAttrib() { ItemId = item.Id, Values = "[]" };
+
+            ViewBag.AttrId = new SelectList(_dbContext.ShopAttribs, "Id", "Title");
+            return View("ShopItemAttrEdit", model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ShopItemAttrCreate(ShopItemAttrib model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    ShopAttrib attr = _dbContext.ShopAttribs.Find(model.AttrId);
+                    if (attr != null)
+                    {
+                        foreach (var item in model.ValuesList)
+                            item.Name = attr.Name;
+                        model.OnUpdateValues();
+                    }
+
+                    _dbContext.ShopItemAttribs.Add(model);
+                    _dbContext.SaveChanges();
+
+                    return Json(new ModalFormResult() { Code = 1 });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+
+            ViewBag.AttrId = new SelectList(_dbContext.ShopAttribs, "Id", "Title");
+            return View("ShopItemAttrEdit", model);
+        }
+
+        public ActionResult ShopItemAttrUpdate(int? id)
+        {
+            ShopItemAttrib model = _dbContext.ShopItemAttribs.Find(id);
+            if (model == null)
+                return BadRequest();
+
+            ViewBag.MediaAlbum = model.ShopItem.MediaAlbum;
+            ViewBag.AttrId = new SelectList(_dbContext.ShopAttribs, "Id", "Title");
+            return View("ShopItemAttrEdit", model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ShopItemAttrUpdate(ShopItemAttrib model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    ShopAttrib attr = _dbContext.ShopAttribs.Find(model.AttrId);
+                    if (attr != null)
+                    {
+                        foreach (var item in model.ValuesList)
+                            item.Name = attr.Name;
+                        model.OnUpdateValues();
+                    }
+
+                    _dbContext.Entry(model).State = EntityState.Modified;
+                    _dbContext.SaveChanges();
+
+                    return Json(new ModalFormResult() { Code = 1 });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+
+            ViewBag.AttrId = new SelectList(_dbContext.ShopAttribs, "Id", "Title");
+            return View("ShopItemAttrEdit", model);
+        }
+
+        public ActionResult ShopItemAttrDelete(int? id)
+        {
+            ShopItemAttrib model = _dbContext.ShopItemAttribs.Find(id);
+            if (model == null)
+                return BadRequest();
+
+            return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ShopItemAttrDelete(ShopItemAttrib model)
+        {
+            try
+            {
+                _dbContext.Entry(model).State = EntityState.Deleted;
+                _dbContext.SaveChanges();
+                return Json(new ModalFormResult() { Code = 1 });
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+            }
+
+            return View(model);
         }
 
         #endregion

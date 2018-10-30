@@ -1,14 +1,7 @@
-﻿@using Newtonsoft.Json
-@using TCVShared.Helpers
-@using Microsoft.AspNetCore.Html
-@model BlogPost
+﻿@model BlogPost
 @{
     ViewBag.Icon = "fa-table";
     ViewBag.Title = "Thông tin Tin tức";
-    string[] previewData = Model.MediaAlbum == null ? new string[0] : Model.MediaAlbum.MediaFiles.Select(x => x.FileLink).ToArray();
-    object[] previewConfig = Model.MediaAlbum == null ? new object[0] : Model.MediaAlbum.MediaFiles.Select(x => new { key = x.Id, caption = x.FileName, size = x.FileSize, showDrag = false, width = "120px" }).ToArray();
-    var x1 = new HtmlString(JsonConvert.SerializeObject(previewData));
-    var x2 = new HtmlString(JsonConvert.SerializeObject(previewConfig));
 }
 <section role="main" class="content-body">
     <header class="page-header">
@@ -77,26 +70,3 @@
         </div>
     </div>
 </section>
-@section Scripts
-    {
-    <script>
-        $("#files").fileinput({
-            uploadUrl: "/Admin/BlogPost/FileUpload/@Model.Id",
-            deleteUrl: "/Admin/ThuVien/FileRemove",
-            initialPreview: @x1,
-            initialPreviewConfig: @x2,
-            initialPreviewAsData: true,
-            overwriteInitial: false,
-            uploadAsync: false,
-            maxFileSize: 2048,
-            resizeImage: true,
-            maxImageWidth: 2048,
-            maxImageHeight: 2048,
-            allowedFileTypes: ['image', 'html', 'text', 'video', 'audio', 'flash'],
-            allowedPreviewTypes: ['image', 'html', 'text', 'video', 'audio', 'flash']
-        }).on('filebeforedelete', function() {
-            var aborted = !window.confirm('Bạn xác nhận muốn xóa file này?');
-            return aborted;
-        });
-    </script>
-}

@@ -11,16 +11,13 @@ namespace TCVShared.Data
     {
         public int Id { get; set; }
 
-        [Required, StringLength(3)]
-        public String SKUCode { get; set; }
-
         [Required, StringLength(64)]
         [Display(Name = "Tên gọi")]
         public string Name { get; set; }
 
         [Required, StringLength(128)]
-        [Display(Name = "Banner")]
-        public string Image { get; set; }
+        [Display(Name = "Tiêu đề")]
+        public string Title { get; set; }
     }
 
     public class AttribValue
