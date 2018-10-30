@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using TCVShared.Data;
 using TCVShared.Helpers;
@@ -41,27 +44,10 @@ namespace TCVWeb.Controllers
             return View();
         }
 
-        // GET: Account/Edit/5
-        public ActionResult Edit(int id)
+        // GET: Account
+        public ActionResult Edit()
         {
             return View();
-        }
-
-        // POST: Account/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
 
         //
@@ -89,6 +75,11 @@ namespace TCVWeb.Controllers
             if (result.Succeeded)
             {
                 _logger.LogInformation("Logged in {userName}.", model.Email);
+
+                if (returnUrl == "/Checkout") {
+                    return RedirectToAction("Index", "Checkout");
+                }
+
                 return RedirectToAction("Index", "Home");
             }
             if (result.RequiresTwoFactor)
@@ -277,6 +268,220 @@ namespace TCVWeb.Controllers
             return View();
         }
 
+
+
+        //
+        // POST: /Account/ExternalLogin
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult ExternalLogin(string provider, string returnUrl = null)
+        {
+            // Request a redirect to the external login provider
+            var redirectUrl = Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl });
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            return new ChallengeResult(provider, properties);
+        }
+
+        //
+        // GET: /Account/ExternalLoginFailure
+        [AllowAnonymous]
+        public ActionResult ExternalLoginFailure()
+        {
+            return View();
+        }
+
+        //
+        // GET: /Account/ExternalLoginCallback
+        [AllowAnonymous]
+        public async Task<ActionResult> ExternalLoginCallback(string returnUrl = null)
+        {
+            var loginInfo = await _signInManager.GetExternalLoginInfoAsync();
+            if (loginInfo == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            // Sign in the user with this external login provider if the user already has a login
+            var result = await _signInManager.ExternalLoginSignInAsync(loginInfo.LoginProvider, loginInfo.ProviderKey, isPersistent: false);
+            if (result.Succeeded)
+            {
+                return RedirectToLocal(returnUrl);
+            }
+            if (result.RequiresTwoFactor)
+            {
+                return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
+            }
+            if (result.IsLockedOut)
+            {
+                return View("Lockout");
+            }
+            else
+            {
+                // If the user does not have an account, then prompt the user to create an account
+                ViewBag.ReturnUrl = returnUrl;
+                ViewBag.LoginProvider = loginInfo.LoginProvider;
+                // REVIEW: handle case where email not in claims?
+                var email = loginInfo.Principal.FindFirstValue(ClaimTypes.Email);
+                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
+            }
+        }
+
+        //
+        // POST: /Account/ExternalLoginConfirmation
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl = null)
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction("Index", "Manage");
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Get the information about the user from the external login provider
+                var info = await _signInManager.GetExternalLoginInfoAsync();
+                if (info == null)
+                {
+                    return View("ExternalLoginFailure");
+                }
+                var user = new AppUser { UserName = model.Email, Email = model.Email };
+                var result = await _userManager.CreateAsync(user);
+
+                // NOTE: Used for end to end testing only
+                //Just for automated testing adding a claim named 'ManageStore' - Not required for production
+                var manageClaim = info.Principal.Claims.Where(c => c.Type == "ManageStore").FirstOrDefault();
+                if (manageClaim != null)
+                {
+                    await _userManager.AddClaimAsync(user, manageClaim);
+                }
+
+                if (result.Succeeded)
+                {
+                    result = await _userManager.AddLoginAsync(user, info);
+                    if (result.Succeeded)
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return RedirectToLocal(returnUrl);
+                    }
+                }
+                AddErrors(result);
+            }
+
+            ViewBag.ReturnUrl = returnUrl;
+            return View(model);
+        }
+
+
+        //
+        // GET: /Account/SendCode
+        [AllowAnonymous]
+        public async Task<ActionResult> SendCode(bool rememberMe, string returnUrl = null)
+        {
+            //TODO : Default rememberMe as well?
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+            if (user == null)
+            {
+                return View("Error");
+            }
+            var userFactors = await _userManager.GetValidTwoFactorProvidersAsync(user);
+            var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
+            return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
+        }
+
+        //
+        // POST: /Account/SendCode
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SendCode(SendCodeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+            if (user == null)
+            {
+                return View("Error");
+            }
+
+            // Generate the token and send it
+            var code = await _userManager.GenerateTwoFactorTokenAsync(user, model.SelectedProvider);
+            if (string.IsNullOrWhiteSpace(code))
+            {
+                return View("Error");
+            }
+
+            var message = "Your security code is: " + code;
+            if (model.SelectedProvider == "Email")
+            {
+                await MessageServices.SendEmailAsync(await _userManager.GetEmailAsync(user), "Security Code", message);
+            }
+            else if (model.SelectedProvider == "Phone")
+            {
+                await MessageServices.SendSmsAsync(await _userManager.GetPhoneNumberAsync(user), message);
+            }
+
+            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
+        }
+
+        //
+        // GET: /Account/VerifyCode
+        [AllowAnonymous]
+        public async Task<ActionResult> VerifyCode(string provider, bool rememberMe, string returnUrl = null)
+        {
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+            if (user == null)
+            {
+                return View("Error");
+            }
+
+            // Remove before production
+#if DEMO
+            if (user != null)
+            {
+                ViewBag.Code = await UserManager.GenerateTwoFactorTokenAsync(user, provider);
+            }
+#endif
+            return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
+        }
+
+        //
+        // POST: /Account/VerifyCode
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // The following code protects for brute force attacks against the two factor codes.
+            // If a user enters incorrect codes for a specified amount of time then the user account
+            // will be locked out for a specified amount of time.
+            // You can configure the account lockout settings in IdentityConfig
+            var result = await _signInManager.TwoFactorSignInAsync(model.Provider, model.Code, model.RememberMe, model.RememberBrowser);
+            if (result.Succeeded)
+            {
+                return RedirectToLocal(model.ReturnUrl);
+            }
+            if (result.IsLockedOut)
+            {
+                return View("Lockout");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid code.");
+                return View(model);
+            }
+
+        }
 
 
         #region Helpers

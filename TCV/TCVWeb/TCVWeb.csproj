@@ -46,6 +46,29 @@
     <Content Remove="Views\Account\VerifyCode.cshtml" />
     <Content Remove="Views\Shared\_ValidationScriptsPartial.cshtml" />
     <Content Remove="wwwroot\css\demos\demo-shop-14.css" />
+    <Content Remove="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Remove="Views\Manage\ChangePassword.cshtml" />
+    <Content Remove="Views\Manage\Index.cshtml" />
+    <Content Remove="Views\Manage\ManageLogins.cshtml" />
+    <Content Remove="Views\Manage\SetPassword.cshtml" />
+    <Content Remove="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Remove="Views\AccountTest\_ExternalLoginsListPartial.cshtml" />
+    <Content Remove="Views\AccountTest\ConfirmEmail.cshtml" />
+    <Content Remove="Views\AccountTest\ExternalLoginConfirmation.cshtml" />
+    <Content Remove="Views\AccountTest\ExternalLoginFailure.cshtml" />
+    <Content Remove="Views\AccountTest\ForgotPassword.cshtml" />
+    <Content Remove="Views\AccountTest\ForgotPasswordConfirmation.cshtml" />
+    <Content Remove="Views\AccountTest\Login.cshtml" />
+    <Content Remove="Views\AccountTest\Register.cshtml" />
+    <Content Remove="Views\AccountTest\RegisterConfirmation.cshtml" />
+    <Content Remove="Views\AccountTest\ResetPassword.cshtml" />
+    <Content Remove="Views\AccountTest\ResetPasswordConfirmation.cshtml" />
+    <Content Remove="Views\AccountTest\SendCode.cshtml" />
+    <Content Remove="Views\AccountTest\VerifyCode.cshtml" />
+    <Content Remove="Views\AccountReal\ExternalLoginConfirmation.cshtml" />
+    <Content Remove="Views\AccountReal\ExternalLoginFailure.cshtml" />
+    <Content Remove="Views\AccountReal\_ExternalLoginsListPartial.cshtml" />
+    <Content Remove="Views\Manage\GetMyOrder.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -120,8 +143,15 @@
     <None Include="Views\Account\SendCode.cshtml" />
     <None Include="Views\Account\VerifyCode.cshtml" />
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="Views\Manage\ChangePassword.cshtml" />
+    <None Include="Views\Manage\Index.cshtml" />
+    <None Include="Views\Manage\SetPassword.cshtml" />
+    <None Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <None Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <None Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Checkout\" />
+    <Folder Include="Views\Manage\" />
   </ItemGroup>
 </Project>

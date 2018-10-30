@@ -5,7 +5,7 @@
     var viewType = ViewData["style"] as String;
 }
 <div role="main" class="main">
-    <section class="page-header">
+    @*<section class="page-header">
         <div class="container">
             <ul class="breadcrumb">
                 <li><a href="#">Home</a></li>
@@ -13,7 +13,7 @@
                 <li class="active">Dresses</li>
             </ul>
         </div>
-    </section>
+    </section>*@
     <div class="container">
         <div class="row">
             <div class="col-md-9 col-md-push-3">
@@ -120,16 +120,17 @@
                                         </div>
 
                                         <div class="product-actions">
-                                            <a href="@Url.Action("AddToCart","Cart",new { id= item.Id})" accesskeyoclick="return AreYouSureFunction(this)" class="addtocart" title="Add to Cart">
+                                            <a href="@Url.Action("AddToCart","Cart",new { id= item.Id})" onclick ="return AreYouSureFunction(this)" class="addtocart" title="Add to Cart">
                                                 <i class="fa fa-shopping-cart"></i>
                                                 <span>Add to Cart</span>
                                             </a>
-                                            <a href="#" class="addtowishlist" title="Add to Wishlist">
+                                            <a href="@Url.Action("AddToWishList","Wish",new { id= item.Id})" class="addtowishlist" title="Add to Wishlist">
                                                 <i class="fa fa-heart"></i>
                                             </a>
-                                            <a href="#" class="quickview" title="Quick View">
+                                            <a href="#" class="quickview" title="Quick View" data-toggle="modal" data-target=".quickview-modal" id="@item.Id">
                                                 <i class="fa fa-search"></i>
                                             </a>
+
                                         </div>
                                     </div>
                                 </div>
@@ -149,10 +150,11 @@
                                             <img src="@item.Image" alt="Product Name" style="width:100%; height:200px">
                                             <img src="@item.Preview" alt="Product Name" class="product-hover-image" style="width:100%; height:200px">
                                         </a>
-                                        <a href="#" class="product-quickview">
+                                        <a href="#" class="product-quickview" data-toggle="modal" data-target=".quickview-modal" id="@item.Id">
                                             <i class="fa fa-share-square-o"></i>
                                             <span>Quick View</span>
                                         </a>
+
                                         @if (item.SalePrice != item.RegularPrice)
                                         {
                                             <div class="product-label"><span class="discount">-10%</span></div>
@@ -178,14 +180,14 @@
                                             <span class="product-price">@item.CurrentPrice</span>
                                         </div>
                                         <div class="product-actions">
-                                            <a href="#" class="addtowishlist" title="Add to Wishlist">
+                                            <a href="@Url.Action("AddToWishList","Wish",new { id= item.Id})" class="addtowishlist" title="Add to Wishlist">
                                                 <i class="fa fa-heart"></i>
                                             </a>
                                             <a href="@Url.Action("AddToCart","Cart",new { id= item.Id})" onclick="return AreYouSureFunction(this)" class="addtocart" title="Add to Cart">
                                                 <i class="fa fa-shopping-cart"></i>
                                                 <span>Add to Cart</span>
                                             </a>
-                                              <a href="#" class="comparelink" title="Quick View">
+                                              <a href="#" class="comparelink" title="Quick View" data-toggle="modal" data-target=".quickview-modal" id="@item.Id">
                                                 <i class="fa fa-search"></i>
                                             </a>
 
@@ -213,7 +215,17 @@
                 </div>
             </div>
             @Html.Partial("_PartialFilterCategory", categories)
-
+            
         </div>
     </div>
+
+   <div class="modal fade quickview-modal" tabindex="-1" role="dialog" aria-labelledby="myLoginModal" >
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+            @await Html.PartialAsync("_PartialQuickView", new ShopItem())
+            </div>
+        </div>
+   </div>
+
+
 </div>

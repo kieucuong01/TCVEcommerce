@@ -132,9 +132,18 @@ namespace TCVWeb.Controllers
             else {
                 ViewData["style"] = "grid";
             }
-            ViewData["categories"] = new String[] { "Hạt", "Rau củ", "Trái Cây", "Cây giống" };
+            ViewData["categories"] = new String[] { "Hạt", "Thực phẩm", "Hoa quả sấy", "Nấm" };
 
             return View(model);
         }
+
+        // GET: /Product/QuickView/<id>
+        public IActionResult QuickView(int id)
+        {
+            ShopItem model = _dbContext.ShopItems.Find(id);
+
+            return PartialView("_PartialQuickView", model);
+        }
+
     }
 }

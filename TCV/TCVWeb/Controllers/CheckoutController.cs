@@ -8,11 +8,15 @@ using Microsoft.Extensions.Logging;
 using TCVShared.Data;
 using Microsoft.AspNetCore.Identity;
 using TCVShared.Helpers;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace TCVWeb.Controllers
 {
+    [Authorize]
     public class CheckoutController : Controller
     {
         private const string PromoCode = "FREE";
@@ -32,110 +36,117 @@ namespace TCVWeb.Controllers
         }
 
         // GET: /Checkout/
-        public IActionResult Index(ShopCart model)
+        [AllowAnonymous]
+        public IActionResult Index(ShopOrder model)
         {
-            model = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
+            ShopCart cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
+            cart.ShippingFee = 30000;
+            HttpContext.Session.SetObjectAsJson("Cart", cart);
+
+            if (cart == null){
+                return RedirectToAction("Index", "Cart");
+            }
+            model.AdjustPrice = cart.SubTotal;
+            model.GrandTotalPrice = cart.GrandTotal;
+            model.OrderStatus = 0;
+            model.ShippingFee = cart.ShippingFee;
+
+            List<OrderItem> listOrder = new List<OrderItem>();
+
+            foreach(var cartItem in cart.Items){
+                OrderItem orderItem = new OrderItem();
+
+                orderItem.ShopItem = cartItem.ShopItem;
+                orderItem.Quantity = cartItem.Quantity;
+                orderItem.ItemId = cartItem.ItemId;
+                orderItem.ShopOrder = model;
+
+                listOrder.Add(orderItem);
+            }
+
+            model.Items = listOrder;
+
+            if (this.User.Identity.IsAuthenticated == true)
+            {
+                var userId = _userManager.GetUserId(HttpContext.User);
+                var shippingAddressList = _dbContext.Shippings.Where(address => address.UserId == Int32.Parse(userId)).ToList();
+                if (shippingAddressList.Count != 0)
+                {
+                    model.ShippingAddress = shippingAddressList.First();
+                }
+
+                model.AppUser = _userManager.Users.Where(user => user.Email == this.User.Identity.Name).First();
+            }
 
             return View(model);
         }
 
-        // GET : /Checkout/ApplyShippingFee
-        public void ApplyShippingFee(string province, string district, string street) {
-            var cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
-            if (province == "HCM"){
-                if (district == "1" || district == "2"){
-                    cart.ShippingFee = 0.0;
-                }
-                else {
-                    cart.ShippingFee = 30000;
-                }
+        // Post : /Checkout/PlaceOrder
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> PlaceOrder(ShopOrder model, CancellationToken requestAborted)
+        {
+            var user = _userManager.GetUserAsync(HttpContext.User);
+            ShopCart cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
+
+            model.AdjustPrice = cart.SubTotal;
+            model.GrandTotalPrice = cart.GrandTotal;
+            model.OrderStatus = 0;
+            model.ShippingFee = cart.ShippingFee;
+            model.CreateTime = DateTime.Now;
+
+            if (this.User.Identity.IsAuthenticated){
+                model.UserId = user.Id;
             }
-            HttpContext.Session.SetObjectAsJson("Cart", cart);
+            else {
+                model.UserId = -1;
+            }
 
+            _dbContext.ShopOrders.Add(model);
+
+            await _dbContext.SaveChangesAsync(requestAborted);
+
+            List<OrderItem> listOrder = new List<OrderItem>();
+
+            foreach (var cartItem in cart.Items)
+            {
+                OrderItem orderItem = new OrderItem();
+
+                //orderItem.ShopItem = cartItem.ShopItem;
+                orderItem.Quantity = cartItem.Quantity;
+                orderItem.ItemId = cartItem.ShopItem.Id;
+                orderItem.OrderId = model.Id;
+
+                //orderItem.ShopOrder = model;
+
+                listOrder.Add(orderItem);
+
+                _dbContext.OrderItems.Add(orderItem);
+            }
+            //model.Items = listOrder;
+
+            _dbContext.SaveChanges();
+
+            return View(model);
         }
-        ////
-        //// GET: /Checkout/
-        //public IActionResult AddressAndPayment()
-        //{
-        //    return View();
-        //}
 
-        ////
-        //// POST: /Checkout/AddressAndPayment
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> AddressAndPayment(
-        //    [FromForm] Order order,
-        //    CancellationToken requestAborted)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(order);
-        //    }
-
-        //    var formCollection = await HttpContext.Request.ReadFormAsync();
-
-        //    try
-        //    {
-        //        if (string.Equals(formCollection["PromoCode"].FirstOrDefault(), PromoCode,
-        //            StringComparison.OrdinalIgnoreCase) == false)
-        //        {
-        //            return View(order);
+        //// GET : /Checkout/ApplyShippingFee
+        //[AllowAnonymous]
+        //public ActionResult ApplyShippingFee(string province, string district, string street) {
+        //    var cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
+        //    if (province == "HCM"){
+        //        if (district == "1" || district == "2"){
+        //            cart.ShippingFee = 0.0;
         //        }
-        //        else
-        //        {
-        //            order.Username = HttpContext.User.Identity.Name;
-        //            order.OrderDate = DateTime.Now;
-
-        //            //Add the Order
-        //            _dbContext.ShopOrders.Add(order);
-
-        //            //Process the order
-        //            var cart = ShoppingCart.GetCart(dbContext, HttpContext);
-        //            await cart.CreateOrder(order);
-
-        //            _logger.LogInformation("User {userName} started checkout of {orderId}.", order.Username, order.OrderId);
-
-        //            // Save all changes
-        //            await dbContext.SaveChangesAsync(requestAborted);
-
-        //            return RedirectToAction("Complete", new { id = order.OrderId });
+        //        else {
+        //            cart.ShippingFee = 30000;
         //        }
         //    }
-        //    catch
-        //    {
-        //        //Invalid - redisplay with errors
-        //        return View(order);
-        //    }
+        //    HttpContext.Session.SetObjectAsJson("Cart", cart);
+
+        //    return PartialView("_PartialTotal", cart);
         //}
 
-        ////
-        //// GET: /Checkout/Complete
-
-        //public async Task<IActionResult> Complete(int id)
-        //{
-        //    var userName = HttpContext.User.Identity.Name;
-
-        //    // Validate customer owns this order
-        //    bool isValid = await _dbContext.Orders.AnyAsync(
-        //        o => o.OrderId == id &&
-        //        o.Username == userName);
-
-        //    if (isValid)
-        //    {
-        //        _logger.LogInformation("User {userName} completed checkout on order {orderId}.", userName, id);
-        //        return View(id);
-        //    }
-        //    else
-        //    {
-        //        _logger.LogError(
-        //            "User {userName} tried to checkout with an order ({orderId}) that doesn't belong to them.",
-        //            userName,
-        //            id);
-        //        return View("Error");
-        //    }
-        //}
     }
 
 }

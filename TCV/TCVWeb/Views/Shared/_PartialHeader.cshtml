@@ -43,7 +43,7 @@
                             }
                             else
                             {
-                                <li><a href="@Url.Action("Index", "Account")">@emailLogined</a></li>
+                                <li><a href="@Url.Action("Index", "Manage")">@emailLogined</a></li>
                                 <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
                             }
                         </ul>
@@ -121,11 +121,7 @@
                                         <select id="cat" name="cat">
                                             <option value="">Tất cả danh mục</option>
                                             <option value="4">Hạt</option>
-                                            <option value="12">- Hạt điều</option>
-                                            <option value="13">- Hạt chia</option>
-                                            <option value="5">Rau củ quả</option>
-                                            <option value="21">- Nho mỹ</option>
-                                            <option value="22">- Nho ấn độ</option>
+                                            <option value="5">Rau củ quả</option>                                           
                                         </select>
                                         <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
                                     </div>

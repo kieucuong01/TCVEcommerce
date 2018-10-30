@@ -39,7 +39,7 @@ namespace TCVWeb.Controllers
             model.TotalRows = filterQuery.Count();
             model.Content = selectQuery.ToList();
 
-            ViewData["categories"] = new String[] { "Hạt", "Rau củ", "Trái Cây", "Cây giống" };
+            ViewData["categories"] = new String[] { "Hạt", "Thực phẩm", "Hoa quả sấy", "Nấm" };
 
             var supplier = new Supplier();
             supplier.Name = "Kinh Do";

@@ -89,6 +89,7 @@
         }(document, 'script', 'facebook-jssdk'));
     </script>
 
+
     <!-- Category view -->
     @*<script src="../vendor/nouislider/nouislider.min.js"></script>*@
 
@@ -102,6 +103,17 @@
     <script src="~/js/custom.js"></script>
     <!-- Theme Initialization Files -->
     <script src="/js/theme.init.js"></script>
+    <!-- Your customer chat code -->
+    <div class="fb-customerchat"
+         attribution=setup_tool
+         page_id="1649396448515665"
+         theme_color="#67b868"
+         logged_in_greeting="Chat với Admin Ticivi"
+         logged_out_greeting="Chat với Admin Ticivi">
+    </div>
+    
     @RenderSection("Scripts", false)
+
+
 </body>
 </html>

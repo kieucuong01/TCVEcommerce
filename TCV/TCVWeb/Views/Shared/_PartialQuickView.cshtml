@@ -1,0 +1,61 @@
+﻿@model ShopItem
+<div class="product-essential edit-content" style="padding:30px" id="qv-content">
+    <div class="row">
+        <div class="product-img-box col-sm-5">
+            <div class="product-img-box-wrapper">
+                <div class="product-img-wrapper">
+                    <img id="product-zoom" src="@Model.Image" data-zoom-image="@Model.Image" alt="Product main image">
+                </div>
+            </div>
+        </div>
+        <div class="product-details-box col-sm-7">
+
+            <h1 class="product-name">
+                @Model.Name
+            </h1>
+            <div class="product-rating-container">
+                <div class="product-ratings">
+                    <div class="ratings-box">
+                        <div class="rating" style="width:60%"></div>
+                    </div>
+                </div>
+                <div class="review-link">
+                    <a href="#" class="review-link-in" rel="nofollow"> <span class="count">1</span> customer review</a>
+                </div>
+            </div>
+            <div class="product-short-desc">
+                @Html.Raw(Model.Content)
+
+            </div>
+            <div class="product-detail-info">
+                <div class="product-price-box">
+                    <span class="old-price">@Model.RegularPrice</span>
+                    <span class="product-price">@Model.SalePrice</span>
+                </div>
+                <p class="availability">
+                    <span class="font-weight-semibold">Availability:</span>
+                    In Stock
+                </p>
+            </div>
+
+
+            <div class="product-actions">
+                <div class="product-detail-qty">
+                    <input type="text" value="1" class="vertical-spinner" id="product-vqty">
+                </div>
+                <a href="" onclick="return AddToCartWithQuantity(@Model.Id)" class="addtocart" title="Add to Cart">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>Add to Cart</span>
+                </a>
+                <div class="actions-right">
+                    <a href="@Url.Action("AddToWishList","Wish",new { id= Model.Id})" class="addtowishlist" title="Add to Wishlist">
+                        <i class="fa fa-heart"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="product-share-box">
+                <div class="addthis_inline_share_toolbox"></div>
+            </div>
+        </div>
+    </div>
+</div>
