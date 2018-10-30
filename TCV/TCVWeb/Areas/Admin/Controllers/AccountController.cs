@@ -53,7 +53,7 @@ namespace TCVWeb.Areas.Admin.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    return RedirectToLocal(model.ReturnUrl);
+                    return RedirectToAction(nameof(HomeAdminController.Index), "HomeAdmin");
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -172,7 +172,7 @@ namespace TCVWeb.Areas.Admin.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction(nameof(HomeAdminController.Index), "Home");
+            return RedirectToAction(nameof(AccountController.Login), new { Areas = "Admin" });
         }
 
         private async Task<string> GetUserName(ExternalLoginInfo loginInfo)

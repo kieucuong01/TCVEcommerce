@@ -83,6 +83,15 @@ namespace TCVShared.Data
             get { return Taxonomies.Where(x => x.Type == TaxoType.PostTag); }
         }
 
+        public virtual IQueryable<Taxonomy> ItemCats
+        {
+            get { return Taxonomies.Where(x => x.Type == TaxoType.ItemCat); }
+        }
+
+        public virtual IQueryable<Taxonomy> ItemTags
+        {
+            get { return Taxonomies.Where(x => x.Type == TaxoType.ItemTag); }
+        }
     }
 }
 

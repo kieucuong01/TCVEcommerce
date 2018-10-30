@@ -142,7 +142,7 @@ WriteAttributeValue("", 773, Url.Action("Index"), 773, 20, false);
                 Reset mã cứu hộ không làm thay đổi key của ứng dụng Authenticator. Nếu bạn muốn thay đổi key của ứng dụng Authenticator bạn có thể ");
             EndContext();
             BeginContext(1476, 70, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9e25f35c686f4cc4a33383eef4ad08fe", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2191e561f08f43ac914c279c4d2f5c16", async() => {
                 BeginContext(1518, 24, true);
                 WriteLiteral(" Reset mã Authenticator.");
                 EndContext();
@@ -164,7 +164,7 @@ WriteAttributeValue("", 773, Url.Action("Index"), 773, 20, false);
             WriteLiteral("\r\n            </p>\r\n        </div>\r\n        <div>\r\n            ");
             EndContext();
             BeginContext(1609, 207, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "df7a4666af084a47a7ba3d975b91b3e9", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3d1088b613174df08807ec184940dd57", async() => {
                 BeginContext(1683, 126, true);
                 WriteLiteral("\r\n                <button class=\"btn btn-danger\" type=\"submit\"><i class=\"fa fa-check\"></i> Reset lại mã</button>\r\n            ");
                 EndContext();

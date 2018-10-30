@@ -9,8 +9,8 @@ using TCVShared.Data;
 namespace TCVWeb.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20181001103450_Media")]
-    partial class Media
+    [Migration("20181029074902_InitData")]
+    partial class InitData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -235,26 +235,136 @@ namespace TCVWeb.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("TCVShared.Data.Campaign", b =>
+            modelBuilder.Entity("TCVShared.Data.BlogPost", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(64);
+                    b.Property<int?>("AlbumId");
+
+                    b.Property<string>("Content");
+
+                    b.Property<string>("ContentEn");
 
                     b.Property<DateTime?>("CreateTime");
 
-                    b.Property<string>("FullName")
+                    b.Property<string>("CreateUser")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("ExtLink")
+                        .HasMaxLength(1024);
+
+                    b.Property<int>("Format");
+
+                    b.Property<string>("Image")
+                        .HasMaxLength(512);
+
+                    b.Property<DateTime?>("LastUpdate");
+
+                    b.Property<string>("Preview")
+                        .HasMaxLength(1024);
+
+                    b.Property<string>("PreviewEn")
+                        .HasMaxLength(1024);
+
+                    b.Property<DateTime?>("PublishTime");
+
+                    b.Property<int>("Status");
+
+                    b.Property<int?>("ThreadId");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(128);
+
+                    b.Property<string>("TitleEn")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("UpdateUser")
                         .HasMaxLength(128);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Code")
-                        .IsUnique();
+                    b.HasIndex("AlbumId");
 
-                    b.ToTable("Campaign");
+                    b.HasIndex("ThreadId");
+
+                    b.ToTable("BlogPosts");
+                });
+
+            modelBuilder.Entity("TCVShared.Data.BlogPostTaxo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("PostId");
+
+                    b.Property<int>("TaxoId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("TaxoId");
+
+                    b.ToTable("BlogPostTaxoes");
+                });
+
+            modelBuilder.Entity("TCVShared.Data.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CartId");
+
+                    b.Property<string>("ItemAttrib");
+
+                    b.Property<int>("ItemId");
+
+                    b.Property<int>("Quantity");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("ShopCartItems");
+                });
+
+            modelBuilder.Entity("TCVShared.Data.Deliver", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("City")
+                        .HasMaxLength(64);
+
+                    b.Property<string>("Country")
+                        .HasMaxLength(64);
+
+                    b.Property<string>("Phone");
+
+                    b.Property<string>("State")
+                        .HasMaxLength(64);
+
+                    b.Property<int?>("ThreadId");
+
+                    b.Property<int?>("UserId");
+
+                    b.Property<string>("ZipCode")
+                        .HasMaxLength(32);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ThreadId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Deliver");
                 });
 
             modelBuilder.Entity("TCVShared.Data.MediaAlbum", b =>
@@ -296,7 +406,7 @@ namespace TCVWeb.Migrations
                     b.Property<string>("FileName")
                         .HasMaxLength(128);
 
-                    b.Property<int>("FileSize");
+                    b.Property<long>("FileSize");
 
                     b.Property<string>("FullPath")
                         .HasMaxLength(512);
@@ -306,6 +416,59 @@ namespace TCVWeb.Migrations
                     b.HasIndex("AlbumId");
 
                     b.ToTable("MediaFiles");
+                });
+
+            modelBuilder.Entity("TCVShared.Data.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ItemAttrib");
+
+                    b.Property<int>("ItemId");
+
+                    b.Property<int>("OrderId");
+
+                    b.Property<int>("Quantity");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("ShopOrderItems");
+                });
+
+            modelBuilder.Entity("TCVShared.Data.Shipping", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("City")
+                        .HasMaxLength(64);
+
+                    b.Property<string>("Country")
+                        .HasMaxLength(64);
+
+                    b.Property<string>("Phone");
+
+                    b.Property<string>("State")
+                        .HasMaxLength(64);
+
+                    b.Property<int?>("UserId");
+
+                    b.Property<string>("ZipCode")
+                        .HasMaxLength(32);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Shippings");
                 });
 
             modelBuilder.Entity("TCVShared.Data.ShopAttrib", b =>
@@ -323,7 +486,21 @@ namespace TCVWeb.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShopAttrib");
+                    b.ToTable("ShopAttribs");
+                });
+
+            modelBuilder.Entity("TCVShared.Data.ShopCart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ShopCarts");
                 });
 
             modelBuilder.Entity("TCVShared.Data.ShopItem", b =>
@@ -335,28 +512,49 @@ namespace TCVWeb.Migrations
 
                     b.Property<string>("Content");
 
+                    b.Property<string>("ContentEn");
+
                     b.Property<DateTime?>("CreateTime");
 
                     b.Property<string>("Image")
                         .HasMaxLength(512);
 
+                    b.Property<DateTime?>("LastUpdate");
+
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64);
+
+                    b.Property<string>("NameEn")
                         .IsRequired()
                         .HasMaxLength(64);
 
                     b.Property<string>("Packaging");
 
+                    b.Property<string>("PackagingEn");
+
                     b.Property<string>("Preview")
                         .HasMaxLength(1024);
 
+                    b.Property<string>("PreviewEn")
+                        .HasMaxLength(1024);
+
+                    b.Property<DateTime?>("PublishTime");
+
                     b.Property<double>("RegularPrice");
+
+                    b.Property<double>("RegularPriceEn");
 
                     b.Property<string>("SKU")
                         .HasMaxLength(32);
 
                     b.Property<double>("SalePrice");
 
+                    b.Property<double>("SalePriceEn");
+
                     b.Property<string>("Specifications");
+
+                    b.Property<string>("SpecificationsEn");
 
                     b.Property<int>("Status");
 
@@ -373,7 +571,7 @@ namespace TCVWeb.Migrations
 
                     b.HasIndex("ThreadId");
 
-                    b.ToTable("ShopItem");
+                    b.ToTable("ShopItems");
                 });
 
             modelBuilder.Entity("TCVShared.Data.ShopItemAttrib", b =>
@@ -395,7 +593,7 @@ namespace TCVWeb.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("ShopItemAttrib");
+                    b.ToTable("ShopItemAttribs");
                 });
 
             modelBuilder.Entity("TCVShared.Data.ShopItemTaxo", b =>
@@ -413,7 +611,99 @@ namespace TCVWeb.Migrations
 
                     b.HasIndex("TaxoId");
 
-                    b.ToTable("ShopItemTaxo");
+                    b.ToTable("ShopItemTaxoes");
+                });
+
+            modelBuilder.Entity("TCVShared.Data.ShopOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<double>("AdjustPrice");
+
+                    b.Property<DateTime?>("CreateTime");
+
+                    b.Property<int?>("DeliverId");
+
+                    b.Property<DateTime?>("DeliveryTime");
+
+                    b.Property<double>("GrandTotalPrice");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(256);
+
+                    b.Property<int>("OrderStatus");
+
+                    b.Property<string>("PaymentInfo");
+
+                    b.Property<int>("PaymentStatus");
+
+                    b.Property<double>("ShippingFee");
+
+                    b.Property<int?>("ShippingId");
+
+                    b.Property<int?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeliverId");
+
+                    b.HasIndex("ShippingId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ShopOrders");
+                });
+
+            modelBuilder.Entity("TCVShared.Data.ShopWish", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ShopWishes");
+                });
+
+            modelBuilder.Entity("TCVShared.Data.Supplier", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("City")
+                        .HasMaxLength(64);
+
+                    b.Property<string>("Country")
+                        .HasMaxLength(64);
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Phone");
+
+                    b.Property<string>("State")
+                        .HasMaxLength(64);
+
+                    b.Property<int?>("ThreadId");
+
+                    b.Property<int?>("UserId");
+
+                    b.Property<string>("ZipCode")
+                        .HasMaxLength(32);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ThreadId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Suppliers");
                 });
 
             modelBuilder.Entity("TCVShared.Data.Taxonomy", b =>
@@ -435,7 +725,7 @@ namespace TCVWeb.Migrations
 
                     b.HasIndex("Name", "Type");
 
-                    b.ToTable("Taxonomy");
+                    b.ToTable("Taxonomies");
                 });
 
             modelBuilder.Entity("TCVShared.Data.UserMessage", b =>
@@ -467,7 +757,7 @@ namespace TCVWeb.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserMessage");
+                    b.ToTable("UserMessages");
                 });
 
             modelBuilder.Entity("TCVShared.Data.UserThread", b =>
@@ -483,7 +773,25 @@ namespace TCVWeb.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserThread");
+                    b.ToTable("UserThreads");
+                });
+
+            modelBuilder.Entity("TCVShared.Data.WishItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ItemId");
+
+                    b.Property<int>("WishId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("WishId");
+
+                    b.ToTable("ShopWishItems");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -539,6 +847,54 @@ namespace TCVWeb.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("TCVShared.Data.BlogPost", b =>
+                {
+                    b.HasOne("TCVShared.Data.MediaAlbum", "MediaAlbum")
+                        .WithMany()
+                        .HasForeignKey("AlbumId");
+
+                    b.HasOne("TCVShared.Data.UserThread", "Thread")
+                        .WithMany()
+                        .HasForeignKey("ThreadId");
+                });
+
+            modelBuilder.Entity("TCVShared.Data.BlogPostTaxo", b =>
+                {
+                    b.HasOne("TCVShared.Data.BlogPost", "BlogPost")
+                        .WithMany("Taxonomies")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TCVShared.Data.Taxonomy", "Taxonomy")
+                        .WithMany()
+                        .HasForeignKey("TaxoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TCVShared.Data.CartItem", b =>
+                {
+                    b.HasOne("TCVShared.Data.ShopCart", "ShopCart")
+                        .WithMany("Items")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TCVShared.Data.ShopItem", "ShopItem")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TCVShared.Data.Deliver", b =>
+                {
+                    b.HasOne("TCVShared.Data.UserThread", "Thread")
+                        .WithMany()
+                        .HasForeignKey("ThreadId");
+
+                    b.HasOne("TCVShared.Data.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("TCVShared.Data.MediaAlbum", b =>
                 {
                     b.HasOne("TCVShared.Data.AppUser", "AppUser")
@@ -552,6 +908,33 @@ namespace TCVWeb.Migrations
                         .WithMany("MediaFiles")
                         .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TCVShared.Data.OrderItem", b =>
+                {
+                    b.HasOne("TCVShared.Data.ShopItem", "ShopItem")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TCVShared.Data.ShopOrder", "ShopOrder")
+                        .WithMany("Items")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TCVShared.Data.Shipping", b =>
+                {
+                    b.HasOne("TCVShared.Data.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("TCVShared.Data.ShopCart", b =>
+                {
+                    b.HasOne("TCVShared.Data.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("TCVShared.Data.ShopItem", b =>
@@ -591,6 +974,39 @@ namespace TCVWeb.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("TCVShared.Data.ShopOrder", b =>
+                {
+                    b.HasOne("TCVShared.Data.Deliver", "Deliver")
+                        .WithMany()
+                        .HasForeignKey("DeliverId");
+
+                    b.HasOne("TCVShared.Data.Shipping", "ShippingAddress")
+                        .WithMany()
+                        .HasForeignKey("ShippingId");
+
+                    b.HasOne("TCVShared.Data.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("TCVShared.Data.ShopWish", b =>
+                {
+                    b.HasOne("TCVShared.Data.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("TCVShared.Data.Supplier", b =>
+                {
+                    b.HasOne("TCVShared.Data.UserThread", "Thread")
+                        .WithMany()
+                        .HasForeignKey("ThreadId");
+
+                    b.HasOne("TCVShared.Data.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("TCVShared.Data.Taxonomy", b =>
                 {
                     b.HasOne("TCVShared.Data.Taxonomy", "Parent")
@@ -612,6 +1028,19 @@ namespace TCVWeb.Migrations
                     b.HasOne("TCVShared.Data.AppUser", "AppUser")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TCVShared.Data.WishItem", b =>
+                {
+                    b.HasOne("TCVShared.Data.ShopItem", "ShopItem")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TCVShared.Data.ShopWish", "ShopWish")
+                        .WithMany("Items")
+                        .HasForeignKey("WishId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

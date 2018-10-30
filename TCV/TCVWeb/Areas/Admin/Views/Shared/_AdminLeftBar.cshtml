@@ -26,33 +26,8 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="@(Html.IsActive("CashLog") ? "nav-parent nav-expanded nav-active" : "nav-parent")">
-                        <a href="#"><i class="fa fa-history"></i> <span>Cash Log</span></a>
-                        <ul class="nav nav-children">
-                            <li class="@(Html.IsActive("CashLog", "ChargeLog") ? "nav-active" : "")">
-                                <a href="@Url.Action("ChargeLog", "CashLog")"><i class="fa fa-tasks"></i> Charge Log</a>
-                            </li>
-                            <li class="@(Html.IsActive("CashLog", "ExchangeLog") ? "nav-active" : "")">
-                                <a href="@Url.Action("ExchangeLog", "CashLog")"><i class="fa fa-tasks"></i> Exchange Log</a>
-                            </li>
-                        </ul>
-                    </li>
                     @if (User.IsInRole("Manager"))
                     {
-                        <li class="@(Html.IsActive("Reports") ? "nav-parent nav-expanded nav-active" : "nav-parent")">
-                            <a href="#"><i class="fa fa-bar-chart"></i> <span>Báo cáo</span></a>
-                            <ul class="nav nav-children">
-                                <li class="@(Html.IsActive("Reports", "General") ? "nav-active" : "")">
-                                    <a href="@Url.Action("General", "Reports")"><i class="fa fa-bar-chart"></i> Tổng hợp </a>
-                                </li>
-                                <li class="@(Html.IsActive("Reports", "CashCharge") ? "nav-active" : "")">
-                                    <a href="@Url.Action("CashCharge", "Reports")"><i class="fa fa-usd"></i> Nạp thẻ </a>
-                                </li>
-                                <li class="@(Html.IsActive("Reports", "BankAccount") ? "nav-active" : "")">
-                                    <a href="@Url.Action("BankAccount", "Reports")"><i class="fa fa-bank"></i> Ngân hàng </a>
-                                </li>
-                            </ul>
-                        </li>
                         <li class="@(Html.IsActive("Media") ? "nav-parent nav-expanded nav-active" : "nav-parent")">
                             <a href="#"><i class="fa fa-image"></i> <span>Thư viện</span></a>
                             <ul class="nav nav-children">
@@ -72,31 +47,26 @@
                                 </li>
                             </ul>
                         </li>
-                    }
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <li class="@(Html.IsActive("GameApp") ? "nav-parent nav-expanded nav-active" : "nav-parent")">
-                            <a href="#"><i class="fa fa-gamepad"></i> <span>Game App</span></a>
-                            <ul class="nav nav-children">
-                                <li class="@(Html.IsActive("GameApp", "Index") ? "nav-active" : "")">
-                                    <a href="@Url.Action("Index", "GameApp")"><i class="fa fa-tasks"></i> Danh sách</a>
-                                </li>
-                                <li class="@(Html.IsActive("GameApp", "Create") ? "nav-active" : "")">
-                                    <a href="@Url.Action("Create", "GameApp")" data-modal=""><i class="fa fa-plus"></i> Thêm mới</a>
-                                </li>
-                            </ul>
-                        </li>
                         <li class="@(Html.IsActive("Product") ? "nav-parent nav-expanded nav-active" : "nav-parent")">
                             <a href="#"><i class="fa fa-cubes"></i> <span>Sản phẩm</span></a>
                             <ul class="nav nav-children">
                                 <li class="@(Html.IsActive("Product", "Index") ? "nav-active" : "")">
                                     <a href="@Url.Action("Index", "Product")"><i class="fa fa-tasks"></i> Danh sách</a>
                                 </li>
-                                <li class="@(Html.IsActive("Product", "Create") ? "nav-active" : "")">
-                                    <a href="@Url.Action("Create", "Product")" data-modal=""><i class="fa fa-plus"></i> Thêm mới</a>
+                                <li class="@(Html.IsActive("Product", "Orders") ? "nav-active" : "")">
+                                    <a href="@Url.Action("Orders", "Product")"><i class="fa fa-shopping-cart"></i> Đơn hàng</a>
+                                </li>
+                                <li class="@(Html.IsActive("Product", "ItemCatList") ? "nav-active" : "")">
+                                    <a href="@Url.Action("ItemCatList", "Product")"><i class="fa fa-cubes"></i> Phân loại</a>
+                                </li>
+                                <li class="@(Html.IsActive("Product", "ItemAttrList") ? "nav-active" : "")">
+                                    <a href="@Url.Action("ItemAttrList", "Product")"><i class="fa fa-sliders"></i> Thuộc tính</a>
                                 </li>
                             </ul>
                         </li>
+                    }
+                    @*@if (User.IsInRole("Admin"))
+                    {
                         <li class="@(Html.IsActive("Settings") ? "nav-parent nav-expanded nav-active" : "nav-parent")">
                             <a href="#"><i class="fa fa-cogs"></i> <span>Settings</span></a>
                             <ul class="nav nav-children">
@@ -117,7 +87,7 @@
                                 </li>
                             </ul>
                         </li>
-                    }
+                    }*@
                 </ul>
             </nav>
         </div>

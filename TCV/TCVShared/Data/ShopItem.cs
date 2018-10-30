@@ -34,6 +34,10 @@ namespace TCVShared.Data
         [Display(Name = "Tên gọi")]
         public string Name { get; set; }
 
+        [Required, StringLength(64)]
+        [Display(Name = "Tên gọi English")]
+        public string NameEn { get; set; }
+
         [StringLength(512)]
         [Display(Name = "Hình đại diện")]
         public string Image { get; set; }
@@ -42,23 +46,39 @@ namespace TCVShared.Data
         [Display(Name = "Giới thiệu")]
         [DataType(DataType.MultilineText)]
         public string Preview { get; set; }
+        [StringLength(1024)]
+        [Display(Name = "Giới thiệu English")]
+        [DataType(DataType.MultilineText)]
+        public string PreviewEn { get; set; }
 
         [Display(Name = "Mô tả")]
         public string Content { get; set; }
+        [Display(Name = "Mô tả English")]
+        public string ContentEn { get; set; }
 
         [Display(Name = "Giá ban đầu")]
         [DisplayFormat(DataFormatString = "{0:#,#.000} VNĐ")]
         public double RegularPrice { get; set; }
+        [Display(Name = "Giá ban đầu English")]
+        [DisplayFormat(DataFormatString = "$ {0:#,#.00}")]
+        public double RegularPriceEn { get; set; }
 
         [Display(Name = "Giá khuyến mãi")]
         [DisplayFormat(DataFormatString = "{0:#,#.000} VNĐ")]
         public double SalePrice { get; set; }
+        [Display(Name = "Giá khuyến mãi English")]
+        [DisplayFormat(DataFormatString = "$ {0:#,#.00}")]
+        public double SalePriceEn { get; set; }
 
         [Display(Name = "Đóng gói")]
         public string Packaging { get; set; }
+        [Display(Name = "Đóng gói English")]
+        public string PackagingEn { get; set; }
 
         [Display(Name = "Thông số")]
         public string Specifications { get; set; }
+        [Display(Name = "Thông số English")]
+        public string SpecificationsEn { get; set; }
 
         [Display(Name = "Hình ảnh")]
         public int? AlbumId { get; set; }
@@ -69,6 +89,14 @@ namespace TCVShared.Data
         [Display(Name = "Ngày tạo")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime? CreateTime { get; set; }
+
+        [Display(Name = "Sửa cuối")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
+        public DateTime? LastUpdate { get; set; }
+
+        [Display(Name = "Giờ đăng")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
+        public DateTime? PublishTime { get; set; }
 
         [Display(Name = "Trạng thái")]
         public EntityStatus Status { get; set; }

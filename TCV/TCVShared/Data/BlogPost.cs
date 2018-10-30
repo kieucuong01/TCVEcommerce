@@ -59,6 +59,10 @@ namespace TCVShared.Data
         [Display(Name = "Tiêu đề")]
         public string Title { get; set; }
 
+        [StringLength(128)]
+        [Display(Name = "Tiêu đề English")]
+        public string TitleEn { get; set; }
+
         [StringLength(512)]
         [Display(Name = "Hình đại diện")]
         public string Image { get; set; }
@@ -72,8 +76,15 @@ namespace TCVShared.Data
         [DataType(DataType.MultilineText)]
         public string Preview { get; set; }
 
+        [StringLength(1024)]
+        [Display(Name = "Giới thiệu English")]
+        [DataType(DataType.MultilineText)]
+        public string PreviewEn { get; set; }
+
         [Display(Name = "Nội dung")]
         public string Content { get; set; }
+        [Display(Name = "Nội dung English")]
+        public string ContentEn  { get; set; }
 
         [Display(Name = "Định dạng")]
         public PostFormat Format { get; set; }

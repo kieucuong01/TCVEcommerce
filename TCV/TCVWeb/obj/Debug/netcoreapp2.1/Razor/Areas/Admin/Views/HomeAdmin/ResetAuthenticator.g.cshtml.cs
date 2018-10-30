@@ -141,7 +141,7 @@ WriteAttributeValue("", 781, Url.Action("Index"), 781, 20, false);
             ");
             EndContext();
             BeginContext(1419, 186, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "802e69c221954865b05e059c9a0a068d", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9e35091917c440a78ba9ac9b901750d9", async() => {
                 BeginContext(1490, 108, true);
                 WriteLiteral("\r\n                <button class=\"btn btn-danger\" type=\"submit\">Reset mã Authenticator</button>\r\n            ");
                 EndContext();

@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\fileinput.min.css" />
     <Content Remove="wwwroot\js\theme.js" />
     <Content Remove="wwwroot\css\.DS_Store" />
     <Content Remove="wwwroot\ajax\demo-church-gallery-ajax-on-page-1.html" />
@@ -57,6 +58,7 @@
     <None Include="Views\Shared\_PartialRightBlog.cshtml" />
     <None Include="Views\_ViewImports.cshtml" />
     <None Include="Views\_ViewStart.cshtml" />
+    <None Include="wwwroot\css\fileinput.min.css" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.css.map" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css.map" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />

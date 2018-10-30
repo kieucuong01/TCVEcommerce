@@ -242,6 +242,8 @@ namespace TCVWeb.Migrations
 
                     b.Property<string>("Content");
 
+                    b.Property<string>("ContentEn");
+
                     b.Property<DateTime?>("CreateTime");
 
                     b.Property<string>("CreateUser")
@@ -260,6 +262,9 @@ namespace TCVWeb.Migrations
                     b.Property<string>("Preview")
                         .HasMaxLength(1024);
 
+                    b.Property<string>("PreviewEn")
+                        .HasMaxLength(1024);
+
                     b.Property<DateTime?>("PublishTime");
 
                     b.Property<int>("Status");
@@ -268,6 +273,9 @@ namespace TCVWeb.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
+                        .HasMaxLength(128);
+
+                    b.Property<string>("TitleEn")
                         .HasMaxLength(128);
 
                     b.Property<string>("UpdateUser")
@@ -396,7 +404,7 @@ namespace TCVWeb.Migrations
                     b.Property<string>("FileName")
                         .HasMaxLength(128);
 
-                    b.Property<int>("FileSize");
+                    b.Property<long>("FileSize");
 
                     b.Property<string>("FullPath")
                         .HasMaxLength(512);
@@ -502,28 +510,49 @@ namespace TCVWeb.Migrations
 
                     b.Property<string>("Content");
 
+                    b.Property<string>("ContentEn");
+
                     b.Property<DateTime?>("CreateTime");
 
                     b.Property<string>("Image")
                         .HasMaxLength(512);
 
+                    b.Property<DateTime?>("LastUpdate");
+
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64);
+
+                    b.Property<string>("NameEn")
                         .IsRequired()
                         .HasMaxLength(64);
 
                     b.Property<string>("Packaging");
 
+                    b.Property<string>("PackagingEn");
+
                     b.Property<string>("Preview")
                         .HasMaxLength(1024);
 
+                    b.Property<string>("PreviewEn")
+                        .HasMaxLength(1024);
+
+                    b.Property<DateTime?>("PublishTime");
+
                     b.Property<double>("RegularPrice");
+
+                    b.Property<double>("RegularPriceEn");
 
                     b.Property<string>("SKU")
                         .HasMaxLength(32);
 
                     b.Property<double>("SalePrice");
 
+                    b.Property<double>("SalePriceEn");
+
                     b.Property<string>("Specifications");
+
+                    b.Property<string>("SpecificationsEn");
 
                     b.Property<int>("Status");
 

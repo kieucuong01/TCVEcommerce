@@ -131,7 +131,7 @@ WriteAttributeValue("", 399, Url.Action("Index", "Home"), 399, 28, false);
             WriteLiteral("                <div class=\"alert alert-danger\">\r\n                    <b>Bạn không còn mã cứu hộ nào</b>\r\n                    <p>Bạn phải ");
             EndContext();
             BeginContext(1043, 64, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "75e885316c8c49e0ae465c1b40278edb", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cf271349dc7a4d17b4dd4d9e4e8c80fa", async() => {
                 BeginContext(1088, 15, true);
                 WriteLiteral("Reset mã cứu hộ");
                 EndContext();
@@ -163,7 +163,7 @@ WriteAttributeValue("", 399, Url.Action("Index", "Home"), 399, 28, false);
             WriteLiteral("                <div class=\"alert alert-danger\">\r\n                    <b>You have 1 recovery code left.</b>\r\n                    <p>You can ");
             EndContext();
             BeginContext(1414, 85, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "80dd18e2305a44e6b3297183cde17d6d", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ac949a8141dc435a9a33d5ca9dcfc576", async() => {
                 BeginContext(1459, 36, true);
                 WriteLiteral("generate a new set of recovery codes");
                 EndContext();
@@ -205,7 +205,7 @@ WriteAttributeValue("", 399, Url.Action("Index", "Home"), 399, 28, false);
             WriteLiteral(" mã cứu hộ.</b>\r\n                    <p>Bạn nên ");
             EndContext();
             BeginContext(1774, 64, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "46daf3118db04e83979b9721564c81b5", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "30ee0992741d43d181f3fc9af5dee9e6", async() => {
                 BeginContext(1819, 15, true);
                 WriteLiteral("Reset mã cứu hộ");
                 EndContext();
@@ -235,7 +235,7 @@ WriteAttributeValue("", 399, Url.Action("Index", "Home"), 399, 28, false);
             WriteLiteral("            ");
             EndContext();
             BeginContext(1936, 88, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "37339e15e6d64cb683b60a9f5915b947", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f81581539e1d4048881aa00ad65d5ed3", async() => {
                 BeginContext(2005, 15, true);
                 WriteLiteral("Reset mã cứu hộ");
                 EndContext();
@@ -275,7 +275,7 @@ WriteAttributeValue("", 399, Url.Action("Index", "Home"), 399, 28, false);
             WriteLiteral("            ");
             EndContext();
             BeginContext(2140, 87, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "be9f81ae597d41ce85ddd1c51eaa1ab0", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "be0576a08bd9427d9d8519089f83d74e", async() => {
                 BeginContext(2200, 23, true);
                 WriteLiteral("Thiết lập Authenticator");
                 EndContext();
@@ -308,7 +308,7 @@ WriteAttributeValue("", 399, Url.Action("Index", "Home"), 399, 28, false);
             WriteLiteral("            ");
             EndContext();
             BeginContext(2277, 87, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "28ca029fea144aebaa0e1ce9e8f9cd61", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3a998f5b42b943b1a27653c307e36bdc", async() => {
                 BeginContext(2337, 23, true);
                 WriteLiteral("Thiết lập Authenticator");
                 EndContext();
@@ -331,7 +331,7 @@ WriteAttributeValue("", 399, Url.Action("Index", "Home"), 399, 28, false);
             WriteLiteral("\r\n            ");
             EndContext();
             BeginContext(2378, 92, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3664ab90006a41169b060daadf4b01aa", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fb97f071e39b435d81e32b15d2fabe94", async() => {
                 BeginContext(2444, 22, true);
                 WriteLiteral("Reset mã Authenticator");
                 EndContext();

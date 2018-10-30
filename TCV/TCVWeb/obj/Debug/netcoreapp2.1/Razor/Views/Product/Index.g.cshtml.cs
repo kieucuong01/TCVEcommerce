@@ -253,7 +253,7 @@ using TCVShared.Helpers;
                                     ");
             EndContext();
             BeginContext(13164, 592, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "65c7bb0a3c1f4750a075bd2fdde1ec5d", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4a17df0235474aedb9b6e5aeca5c7188", async() => {
                 BeginContext(13181, 568, true);
                 WriteLiteral(@"
                                         <div class=""form-group"">
@@ -297,7 +297,7 @@ using TCVShared.Helpers;
                                     ");
             EndContext();
             BeginContext(14632, 6381, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "82fb0a974943458bba9fbade338a7699", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "986471f4efe04f32a7b0626bc27fbdd5", async() => {
                 BeginContext(14649, 6357, true);
                 WriteLiteral(@"
                                         <table class=""ratings-table"">
