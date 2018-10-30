@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -28,15 +29,17 @@ namespace TCVWeb.Controllers
         }
 
         // GET: FeatureProduct 
-        public IActionResult Index(PagedList<ShopItem> model)
+        public IActionResult Index(PagedList<ShopItem> model, int pageSize)
         {
-            var filterQuery = _dbContext.ShopItems.Where(x => model.Search == null);
+            model.PageSize = pageSize != 0 ? pageSize : 12;
+
+            var filterQuery = _dbContext.ShopItems.Where(x => model.Search == null && x.SKU.Substring(6,1) == "S");
             var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
 
             model.TotalRows = filterQuery.Count();
             model.Content = selectQuery.ToList();
 
-            ViewData["categories"] = new String[] { "Hạt", "Rau củ", "Trái Cây", "Cây giống" };
+            ViewData["categories"] = new String[] { "Hạt", "Thực phẩm", "Hoa quả sấy", "Nấm" };
 
             var supplier = new Supplier();
             supplier.Name = "Kinh Do";
@@ -48,7 +51,7 @@ namespace TCVWeb.Controllers
 
             var supplier2 = new Supplier();
             supplier2.Name = "Kinh Do";
-            supplier2.Address = "http://snnptnt.binhthuan.gov.vn/wps/wcm/connect/a9cf2c0040d3c4bba3e5e30556390f18/logoKhuyennong-Khuyenngu.jpg?MOD=AJPERES&CACHEID=a9cf2c0040d3c4bba3e5e30556390f18";
+            supplier2.Address = "http://logodep.vn/wp-content/uploads/2017/01/thiet-ke-logo-cong-ty-hoi-nhap-_1292835984.jpg";
 
             var supplier3 = new Supplier();
             supplier3.Name = "Kinh Do";
@@ -85,26 +88,6 @@ namespace TCVWeb.Controllers
         }
 
         public IActionResult Help()
-        {
-            return View();
-        }
-
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-        public IActionResult Cart()
-        {
-            return View();
-        }
-
-        public IActionResult Checkout()
         {
             return View();
         }

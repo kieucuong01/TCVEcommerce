@@ -28,6 +28,7 @@ namespace TCVShared.Data
         public virtual DbSet<ShopWish> ShopWishes { get; set; }
         public virtual DbSet<WishItem> WishItems { get; set; }
         public virtual DbSet<ShopOrder> ShopOrders { get; set; }
+        public virtual DbSet<OrderItem> OrderItems { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<Shipping> Shippings { get; set; }
 

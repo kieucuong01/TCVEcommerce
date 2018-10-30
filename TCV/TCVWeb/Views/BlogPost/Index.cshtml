@@ -1,4 +1,4 @@
-﻿@addTagHelper *,TCV.Shared
+﻿@addTagHelper *,TCVShared
 @model PagedList<BlogPost>
 @{
     ViewBag.Icon = "fas fa-archive";
@@ -34,9 +34,10 @@
 
                         <div class="limiter">
                             <label>Show:</label>
-                            <select>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
+                            <select onchange="SelectPageSize()" id="page-size">
+                                <option value="12">12</option>
+                                <option value="24">24</option>
+                                <option value="36">36</option>
                             </select>
                         </div>
                     </div>
@@ -112,18 +113,18 @@
                         </div>
 
                         <ul class="pagination">
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#"><i class="fa fa-caret-right"></i></a></li>
+                            <pagination model="@Model" query-string="@Context.Request.QueryString" css-style="pagination pagination-sm"></pagination>
                         </ul>
-
+                       
                         <div class="limiter">
                             <label>Show:</label>
-                            <select>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
+                            <select onchange="SelectPageSize()" id="page-size">
+                                <option value="12">12</option>
+                                <option value="24">24</option>
+                                <option value="36">36</option>
                             </select>
                         </div>
+
                     </div>
                 </div>
             </div>

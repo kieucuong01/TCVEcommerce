@@ -1,6 +1,6 @@
 /********************************************
- * REVOLUTION 5.4.6.4 EXTENSION - NAVIGATION
- * @version: 1.3.5 (06.04.2017)
+ * REVOLUTION 5.2 EXTENSION - NAVIGATION
+ * @version: 1.3.2 (25.10.2016)
  * @requires jquery.themepunch.revolution.js
  * @author ThemePunch
 *********************************************/
@@ -10,8 +10,8 @@ var _R = jQuery.fn.revolution,
 	_ISM = _R.is_mobile(),
 	extension = {	alias:"Navigation Min JS",
 					name:"revolution.extensions.navigation.min.js",
-					min_core: "5.4.0",
-					version:"1.3.5"
+					min_core: "5.3",
+					version:"1.3.2"
 			  };
 
 
@@ -242,14 +242,8 @@ jQuery.extend(true,_R, {
 					inst = inst.replace(obj.from,obj.to);
 				});	
 				_a.right.j.html(inst);
-				
-				if (!_a.rtl) {				
-					punchgs.TweenLite.set(_a.left.j.find('.tp-arr-imgholder'),{backgroundImage:"url("+opt.thumbs[pi].src+")"});
-					punchgs.TweenLite.set(_a.right.j.find('.tp-arr-imgholder'),{backgroundImage:"url("+opt.thumbs[ni].src+")"});			
-				} else {
-					punchgs.TweenLite.set(_a.left.j.find('.tp-arr-imgholder'),{backgroundImage:"url("+opt.thumbs[ni].src+")"});
-					punchgs.TweenLite.set(_a.right.j.find('.tp-arr-imgholder'),{backgroundImage:"url("+opt.thumbs[pi].src+")"});			
-				}
+				punchgs.TweenLite.set(_a.left.j.find('.tp-arr-imgholder'),{backgroundImage:"url("+opt.thumbs[pi].src+")"});
+				punchgs.TweenLite.set(_a.right.j.find('.tp-arr-imgholder'),{backgroundImage:"url("+opt.thumbs[ni].src+")"});			
 			}
 
 			
@@ -297,9 +291,7 @@ jQuery.extend(true,_R, {
 		if (c) swipeAction(cp.find('.tp-thumbs'),opt);
 		if (d) swipeAction(cp.find('.tp-tabs'),opt);
 		if (opt.sliderType==="carousel") swipeAction(container,opt,true);
-		if ((opt.navigation.touch.touchOnDesktop==="on") || (opt.navigation.touch.touchenabled=="on" && _ISM)) swipeAction(container,opt,"swipebased");
-		
-		
+		if (opt.navigation.touch.touchenabled=="on") swipeAction(container,opt,"swipebased");
 	}
 
 });
@@ -593,8 +585,6 @@ var swipeAction = function(container,opt,vertical) {
 		swipeStatus:function(event,phase,direction,distance,duration,fingerCount,fingerData) {			
 					
 
-			
-
 			var withinslider = isme('rev_slider_wrapper',container,event),
 				withinthumbs =  isme('tp-thumbs',container,event),
 				withintabs =  isme('tp-tabs',container,event),
@@ -607,13 +597,10 @@ var swipeAction = function(container,opt,vertical) {
 			if (opt.sliderType==="carousel" && 
 				(((phase==="move" || phase==="end" || phase=="cancel") &&  (opt.dragStartedOverSlider && !opt.dragStartedOverThumbs && !opt.dragStartedOverTabs))
 				 || (phase==="start" && withinslider>0 && withinthumbs===0 && withintabs===0))) {				
-				
-				if (_ISM && (direction ==="up" || direction==="down")) return;
-			
+									
 				opt.dragStartedOverSlider = true;
 				distance = (direction && direction.match(/left|up/g)) ?  Math.round(distance * -1) : distance = Math.round(distance * 1);
 				
-
 				switch (phase) {
 					case "start":								
 						if (_.positionanim!==undefined) {											
@@ -1107,8 +1094,8 @@ var addThumb = function(container,o,li,what,opt) {
 		_margin = (o.position === "outer-top" || o.position==="outer-bottom") && (o.h_align==="center") ? "auto" : "0";
 	
 
-	tm.css({maxWidth:maxw+"px",maxHeight:maxh+"px",overflow:"hidden",position:"relative"});			
-	t.css({maxWidth:(maxw)+"px",/*margin:_margin, */maxHeight:maxh+"px",overflow:"visible",position:position,background:o.wrapper_color,padding:o.wrapper_padding+"px",boxSizing:"contet-box"});
+	tm.css({maxWidth:maxw+"px",maxHeight:maxh+"px",overflow:"hidden",position:"relative"});		
+	t.css({maxWidth:(maxw)+"px",/*margin:_margin, */maxHeight:maxh+"px",overflow:"visible",position:position,background:cHex(o.wrapper_color,o.wrapper_opacity),padding:o.wrapper_padding+"px",boxSizing:"contet-box"});
 
 	
 	

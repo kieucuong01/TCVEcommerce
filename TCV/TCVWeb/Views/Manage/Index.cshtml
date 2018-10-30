@@ -1,0 +1,92 @@
+﻿@model IndexViewModel
+<div role="main" class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-md-push-3 my-account">
+                <h1 class="h2 heading-primary font-weight-normal">My Dashboard</h1>
+                @if (ViewData["StatusMessage"] != "")
+                {
+                <div class="alert alert-success success-msg mb-xl" role="alert">
+                    @ViewData["StatusMessage"]
+                </div>
+                }
+                <h2 class="h3 mb-sm"><strong>Account Information</strong></h2>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="panel-box">
+                            <div class="panel-box-title">
+                                <h3>Contact Information</h3>
+                                <a asp-controller="Manage" asp-action="ChangePassword" class="panel-box-edit">Edit</a>
+                            </div>
+                            <div class="panel-box-content">
+                                <p>
+                                    @this.User.Identity.Name<br>
+                                    <a asp-controller="Manage" asp-action="ChangePassword">Change Password</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="panel-box">
+                            <div class="panel-box-title">
+                                <h3>Two-Factor Authentication</h3>
+                            </div>
+                            <div class="panel-box-content">
+                                @if (Model.TwoFactor)
+                                {
+                                    <form asp-controller="Manage" asp-action="DisableTwoFactorAuthentication" method="post" class="form-horizontal" role="form">
+                                        Enabled [<button type="submit" class="btn-link">Disable</button>]
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form asp-controller="Manage" asp-action="EnableTwoFactorAuthentication" method="post" class="form-horizontal" role="form">
+                                        [<button type="submit" class="btn-link">Enable</button>] Disabled
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel-box">
+                            <div class="panel-box-title">
+                                <h3>ADDRESS BOOK</h3>
+                                <a href="@Url.Action("ChangePassword","Manage")" class="panel-box-edit">Manage Addresses</a>
+                            </div>
+                            <div class="panel-box-content">
+                                <div class="row">                                   
+                                    <div class="col-sm-12">
+                                        <h4 class="h5 heading-text-color font-weight-semibold mb-xs">Default Shipping Address</h4>
+                                        <address>
+                                            @if (Model.ShippingAddress == null) {
+                                                <p>You have not set a default shipping ifdress.</p>
+                                            }
+                                            else {
+                                                <p> @Model.ShippingAddress.Address, @Model.ShippingAddress.State, @Model.ShippingAddress.City </p>
+                                            }
+
+                                            <a href="@Url.Action("ChangePassword","Manage")">Edit Address</a>
+                                        </address>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-md-pull-9">
+                <aside class="sidebar">
+                    <h4>My Account</h4>
+                    <ul class="nav nav-list">
+                        <li class="active"><a href="#">Account Dashboard</a></li>
+                        <li><a href="@Url.Action("ChangePassword","Manage")">Account Infomation</a></li>
+                        <li><a href="@Url.Action("GetMyOrder","Manage")">My Orders</a></li>
+                        <li><a href="@Url.Action("Index","Wish")">My Wishlist</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </div>
+    </div>
+</div>

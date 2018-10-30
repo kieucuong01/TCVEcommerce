@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
     <!-- Basic -->
     <meta charset="utf-8">
@@ -12,7 +12,7 @@
     <link rel="shortcut icon" href="~/img/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon" href="~/img/apple-touch-icon.png">
     <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=4.0">
     <!-- Web Fonts  -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800%7CShadows+Into+Light" rel="stylesheet" type="text/css">
     <!-- Vendor CSS -->
@@ -42,14 +42,15 @@
     <script src="~/vendor/modernizr/modernizr.min.js"></script>
 </head>
 <body>
-    <partial name="_PartialHeader" />
+    @Html.Partial("_PartialHeader")
 
     @RenderBody()
 
-    <partial name="_PartialFooter" />
+    @Html.Partial("_PartialFooter")
 
     <!-- Vendor -->
     <script src="~/vendor/jquery/jquery.min.js"></script>
+
     <script src="~/vendor/jquery.appear/jquery.appear.min.js"></script>
     <script src="~/vendor/jquery.easing/jquery.easing.min.js"></script>
     <script src="~/vendor/jquery-cookie/jquery-cookie.min.js"></script>
@@ -63,7 +64,7 @@
     <script src="~/vendor/owl.carousel/owl.carousel.min.js"></script>
     <script src="~/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
     <script src="~/vendor/vide/vide.min.js"></script>
-    
+
     <!-- Theme Base, Components and Settings -->
     <script src="~/js/theme.js"></script>
 
@@ -88,15 +89,31 @@
         }(document, 'script', 'facebook-jssdk'));
     </script>
 
+
     <!-- Category view -->
     @*<script src="../vendor/nouislider/nouislider.min.js"></script>*@
 
     <!-- Demo -->
     <script src="~/js/demos/demo-shop-14.js"></script>
+
+    <!-- Test -->
+    <script src="~/js/cuongTest.js"></script>
+
     <!-- Theme Custom -->
     <script src="~/js/custom.js"></script>
     <!-- Theme Initialization Files -->
     <script src="/js/theme.init.js"></script>
+    <!-- Your customer chat code -->
+    <div class="fb-customerchat"
+         attribution=setup_tool
+         page_id="1649396448515665"
+         theme_color="#67b868"
+         logged_in_greeting="Chat với Admin Ticivi"
+         logged_out_greeting="Chat với Admin Ticivi">
+    </div>
+    
+    @RenderSection("Scripts", false)
+
 
 </body>
 </html>

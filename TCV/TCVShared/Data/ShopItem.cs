@@ -121,26 +121,36 @@ namespace TCVShared.Data
         [Display(Name = "Thẻ gắn")]
         public string ItemTags { get; set; }
 
+        //[NotMapped]
+        //[Display(Name = "Bình luận")]
+        //public virtual ICollection<UserMessage> Messages
+        //{
+        //    get
+        //    {
+        //        if (ThreadId == null)
+        //            return new List<UserMessage>();
+
+        //        return Thread.Children.Where(x => x.ParentId == null).ToList();
+        //    }
+        //}
+
+        //[NotMapped]
+        //[Display(Name = "Tổng số Bình luận")]
+        //public virtual int TotalMessages
+        //{
+        //    get
+        //    {
+        //        return Thread == null ? 0 : Thread.MsgCount;
+        //    }
+        //}
+
         [NotMapped]
-        [Display(Name = "Bình luận")]
-        public virtual ICollection<UserMessage> Messages
+        [Display(Name = "Rating")]
+        public virtual float TotalRating
         {
             get
             {
-                if (ThreadId == null)
-                    return new List<UserMessage>();
-
-                return Thread.Children.Where(x => x.ParentId == null).ToList();
-            }
-        }
-
-        [NotMapped]
-        [Display(Name = "Tổng số Bình luận")]
-        public virtual int TotalMessages
-        {
-            get
-            {
-                return Thread == null ? 0 : Thread.MsgCount;
+                return Thread == null ? 0 : Thread.TotalRating/5;
             }
         }
 

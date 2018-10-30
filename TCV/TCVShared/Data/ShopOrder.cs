@@ -26,7 +26,7 @@ namespace TCVShared.Data
         public string City { get; set; }
 
         [StringLength(64)]
-        [Display(Name = "Tiểu bang")]
+        [Display(Name = "Quận/Huyện")]
         public string State { get; set; }
 
         [StringLength(64)]
