@@ -4,7 +4,7 @@
         <div class="product-img-box col-sm-5">
             <div class="product-img-box-wrapper">
                 <div class="product-img-wrapper">
-                    <img id="product-zoom" src="@Model.Image" data-zoom-image="@Model.Image" alt="Product main image">
+                    <img id="product-zoom" src="@Model.Image" data-zoom-image="@Model.Image" alt="Product main image" style="object-fit: cover; width:100%; height:300px">
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div class="review-link">
-                    <a href="#" class="review-link-in" rel="nofollow"> <span class="count">1</span> customer review</a>
+                    <a href="#" class="review-link-in" rel="nofollow"> <span class="count">1</span> lượt đánh giá</a>
                 </div>
             </div>
             <div class="product-short-desc">
@@ -33,8 +33,8 @@
                     <span class="product-price">@Model.SalePrice</span>
                 </div>
                 <p class="availability">
-                    <span class="font-weight-semibold">Availability:</span>
-                    In Stock
+                    <span class="font-weight-semibold">Tình trạng: </span>
+                    Còn hàng
                 </p>
             </div>
 
@@ -48,9 +48,9 @@
                     <span>Thêm vào giỏ</span>
                 </a>
                 <div class="actions-right">
-                    <a href="@Url.Action("AddToWishList","Wish",new { id= Model.Id})" class="addtowishlist" title="Yêu thích">
-                        <i class="fa fa-heart"></i>
-                    </a>
+                        <a href="#" onclick="return AddProductToWishlist(@Model.Id)" class="addtowishlist" title="Yêu thích">
+                            <i class="fa fa-heart"></i>
+                        </a>
                 </div>
             </div>
             <div class="product-share-box">

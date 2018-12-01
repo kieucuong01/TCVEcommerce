@@ -122,7 +122,7 @@
                                                 <i class="fa fa-shopping-cart"></i>
                                                 <span>Thêm vào giỏ</span>
                                             </a>
-                                            <a href="@Url.Action("AddToWishList","Wish",new { id= item.Id})" class="addtowishlist" title="Yêu thích">
+                                            <a href="#" onclick="return AddProductToWishlist(@item.Id)" class="addtowishlist" title="Yêu thích">
                                                 <i class="fa fa-heart"></i>
                                             </a>
                                             <a href="#" class="quickview" title="Xem nhanh" data-toggle="modal" data-target=".quickview-modal" id="@item.Id">
@@ -178,7 +178,7 @@
                                             <span class="product-price">@item.CurrentPrice</span>
                                         </div>
                                         <div class="product-actions">
-                                            <a href="@Url.Action("AddToWishList","Wish",new { id= item.Id})" class="addtowishlist" title="Yêu thích">
+                                            <a href="#" onclick="return AddProductToWishlist(@item.Id)" class="addtowishlist" title="Yêu thích">
                                                 <i class="fa fa-heart"></i>
                                             </a>
                                             <a href="@Url.Action("AddToCart","Cart",new { id= item.Id})" onclick="return AreYouSureFunction(this)" class="addtocart" title="Thêm vào giỏ">

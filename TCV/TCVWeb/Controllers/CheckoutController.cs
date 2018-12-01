@@ -40,6 +40,11 @@ namespace TCVWeb.Controllers
         public IActionResult Index(ShopOrder model)
         {
             ShopCart cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
+
+            if (cart == null) {
+                return RedirectToAction("Index", "Home");
+            }
+
             cart.ShippingFee = 30000;
             HttpContext.Session.SetObjectAsJson("Cart", cart);
 

@@ -42,38 +42,24 @@ namespace TCVWeb.Controllers
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo("vi");
             }
 
-            model.PageSize = pageSize != 0 ? pageSize : 12;
+            model.PageSize = pageSize != 0 ? pageSize : 18;
 
-            var filterQuery = _dbContext.ShopItems.Where(x => model.Search == null && x.SKU.Substring(6,1) == "S");
+            var filterQuery = _dbContext.ShopItems.Where(x => model.Search == null);
             var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
 
             model.TotalRows = filterQuery.Count();
             model.Content = selectQuery.ToList();
 
-            ViewData["categories"] = new String[] { "Hạt", "Thực phẩm", "Hoa quả sấy", "Nấm" };
-
             var supplier = new Supplier();
             supplier.Name = "Kinh Do";
             supplier.Address = "https://i.doanhnhansaigon.vn/2015/07/16/mondelez-kinh-o-doanhnhans-1508412719.jpg";
-
-            var supplier1 = new Supplier();
-            supplier1.Name = "Kinh Do";
-            supplier1.Address = "http://tonghoinn.vn/vnt_upload/news/07_2017/341111.jpg";
-
-            var supplier2 = new Supplier();
-            supplier2.Name = "Kinh Do";
-            supplier2.Address = "http://logodep.vn/wp-content/uploads/2017/01/thiet-ke-logo-cong-ty-hoi-nhap-_1292835984.jpg";
-
-            var supplier3 = new Supplier();
-            supplier3.Name = "Kinh Do";
-            supplier3.Address = "http://logodep.vn/wp-content/uploads/2017/01/thiet-ke-logo-cong-ty-hoi-nhap-_1292835984.jpg";
 
             var supplier4 = new Supplier();
             supplier4.Name = "Kinh Do";
             supplier4.Address = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSstGYeLddZ4B5W6AKFFq-GUBFyobEcvrnBTht5TD7IQ0-kPdqn";
 
 
-            ViewData["brands"] = new Supplier[] { supplier, supplier1, supplier2, supplier3, supplier4, supplier, supplier3, supplier4 };
+            ViewData["brands"] = new Supplier[] { supplier, supplier, supplier, supplier, supplier4, supplier4, supplier4, supplier4 };
 
             return View(model);
         }

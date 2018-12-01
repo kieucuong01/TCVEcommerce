@@ -40,8 +40,17 @@ namespace TCVWeb.Controllers
             ShopItem[] otherSizeProduct = _dbContext.ShopItems.Where(product => product.SKU.Substring(10, 3) == currentProduct.SKU.Substring(10, 3)).ToArray();
 
             var additionalInfomation = new List<AdditionInfo>();
-            additionalInfomation.Add(new AdditionInfo("Origin", currentProduct.SKU.Substring(4, 2)));
-            additionalInfomation.Add(new AdditionInfo("Size", currentProduct.SKU.Substring(6, 1)));
+            Taxonomy category = _dbContext.Taxonomies.FirstOrDefault(t => t.Id == int.Parse(currentProduct.SKU.Substring(0, 3)));
+                 Taxonomy origin = _dbContext.Taxonomies.FirstOrDefault(t => t.Id == int.Parse(currentProduct.SKU.Substring(3, 1)));
+               Taxonomy country = _dbContext.Taxonomies.FirstOrDefault(t => t.Id == int.Parse(currentProduct.SKU.Substring(4, 3)));
+                Taxonomy size = _dbContext.Taxonomies.FirstOrDefault(t => t.Id == int.Parse(currentProduct.SKU.Substring(7, 2)));
+             Taxonomy supplier = _dbContext.Taxonomies.FirstOrDefault(t => t.Id == int.Parse(currentProduct.SKU.Substring(9, 3)));
+
+            additionalInfomation.Add(new AdditionInfo("Phân loại", category.Name));
+            additionalInfomation.Add(new AdditionInfo("Xuất xứ", origin.Name));
+            additionalInfomation.Add(new AdditionInfo("Nước sản xuất", country.Name));
+            additionalInfomation.Add(new AdditionInfo("Khối lượng", size.Name));
+            additionalInfomation.Add(new AdditionInfo("Nhà cung cấp ", "TICIVI"));
 
             ViewData["additionalInfomation"] = additionalInfomation;
 
@@ -49,22 +58,23 @@ namespace TCVWeb.Controllers
 
             ViewData["otherSizeProduct"] = otherSizeProduct;
 
-            if (_dbContext.ShopItems.Any(o => int.Parse(o.SKU.Substring(10,3)) == int.Parse(currentProduct.SKU.Substring(10,3)) + 1) == true) {
-                ViewData["nextProduct"] = _dbContext.ShopItems.FirstOrDefault(o => int.Parse(o.SKU.Substring(10, 3)) == int.Parse(currentProduct.SKU.Substring(10, 3)) + 1);
+            int productId = int.Parse(currentProduct.SKU.Substring(12, 3));
+            if (_dbContext.ShopItems.Any(o => int.Parse(o.SKU.Substring(12,3)) == productId + 1) == true) {
+                ViewData["nextProduct"] = _dbContext.ShopItems.FirstOrDefault(o => int.Parse(o.SKU.Substring(12, 3)) == productId + 1);
             }
             else {
                 ViewData["nextProduct"] = currentProduct;
             }
 
-            if (_dbContext.ShopItems.Any(o => int.Parse(o.SKU.Substring(10, 3)) == int.Parse(currentProduct.SKU.Substring(10, 3)) - 1) == true){
-                ViewData["previousProduct"] = _dbContext.ShopItems.FirstOrDefault(o => int.Parse(o.SKU.Substring(10, 3)) == int.Parse(currentProduct.SKU.Substring(10, 3)) - 1);
+            if (_dbContext.ShopItems.Any(o => int.Parse(o.SKU.Substring(12, 3)) == productId - 1) == true){
+                ViewData["previousProduct"] = _dbContext.ShopItems.FirstOrDefault(o => int.Parse(o.SKU.Substring(12, 3)) == productId - 1);
             }
             else {
                 ViewData["previousProduct"] = currentProduct;
             }
 
-
-            ViewData["suggestedProduct"] = _dbContext.ShopItems.Where(product => product.Id < 5 && product.SKU.Substring(6,1) == "S").ToArray();
+            
+            ViewData["suggestedProduct"] = _dbContext.ShopItems.Where(product => product.Id < 5).ToArray();
 
             // Get comment;
             List<UserMessage> comments = _dbContext.UserMessages.Where(comment => comment.ThreadId == currentProduct.ThreadId).ToList();

@@ -26,14 +26,14 @@ namespace TCVWeb.Models
     public class SetPasswordViewModel
     {
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} phải có độ dài ít nhât {2} kí tự.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "Mật khẩu mới")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "Nhập lại mật khẩu mới")]
+        [Compare("NewPassword", ErrorMessage = "Nhập lại mật khẩu không khớp.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -43,14 +43,14 @@ namespace TCVWeb.Models
         [Display(Name = "Current password")]
         public string OldPassword { get; set; }
 
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} phải có độ dài ít nhât {2} kí tự.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "Mật khẩu mới")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "Nhập lại mật khẩu mới")]
+        [Compare("NewPassword", ErrorMessage = "Nhập lại mật khẩu không khớp.")]
         public string ConfirmPassword { get; set; }
 
         public Shipping ShippingAddress { get; set; }

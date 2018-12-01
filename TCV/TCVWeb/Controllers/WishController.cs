@@ -96,14 +96,14 @@ namespace TCVWeb.Controllers
 
                     _dbContext.WishItems.Add(item);
                     _dbContext.SaveChanges();
-                    return "Product has been added to wishlist";
+                    return "Thêm sản phẩm vào danh sách yêu thích thành công";
                 }
                 else {
-                    return "Product has exist in wishlist";
+                    return "Sản phẩm đã tồn tại trong danh sách yêu thích của bạn";
                 }
             }
             else {
-                return "You must login to add product to wishlist";
+                return "Bạn phải đăng nhập để lưu được những sản phẩm yêu thích";
             }
         }
 

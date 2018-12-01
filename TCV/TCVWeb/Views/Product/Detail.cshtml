@@ -28,7 +28,7 @@
                             <div class="product-img-box col-sm-5">
                                 <div class="product-img-box-wrapper">
                                     <div class="product-img-wrapper">
-                                        <img id="product-zoom" src="@currentProduct.Image" data-zoom-image="@currentProduct.Image" alt="Product main image">
+                                        <img id="product-zoom" src="@currentProduct.Image" data-zoom-image="@currentProduct.Image" alt="Product main image" style="object-fit: cover; width:100%; height:400px">
                                     </div>
                                     <a href="#" class="product-img-zoom" title="Zoom">
                                         <span class="glyphicon glyphicon-search"></span>
@@ -37,27 +37,27 @@
                                 <div class="owl-carousel manual" id="productGalleryThumbs">
                                     <div class="product-img-wrapper">
                                         <a href="#" data-image="@currentProduct.Image" data-zoom-image="@currentProduct.Image" class="product-gallery-item">
-                                            <img src="@currentProduct.Image" alt="product">
+                                            <img src="@currentProduct.Image" alt="product" style="object-fit: cover; width:100%; height:100px">
                                         </a>
                                     </div>
                                     <div class="product-img-wrapper">
                                         <a href="#" data-image="@currentProduct.Preview" data-zoom-image="@currentProduct.Preview" class="product-gallery-item">
-                                            <img src="@currentProduct.Preview" alt="product">
+                                            <img src="@currentProduct.Preview" alt="product" style="object-fit: cover; width:100%; height:100px">
                                         </a>
                                     </div>
                                     <div class="product-img-wrapper">
                                         <a href="#" data-image="~/img/demos/shop/products/single/product3.jpg" data-zoom-image="~/img/demos/shop/products/single/product3.jpg" class="product-gallery-item">
-                                            <img src="~/img/demos/shop/products/single/thumbs/product3.jpg" alt="product">
+                                            <img src="~/img/demos/shop/products/single/thumbs/product3.jpg" alt="product" style="object-fit: cover; width:100%; height:100px">
                                         </a>
                                     </div>
                                     <div class="product-img-wrapper">
                                         <a href="#" data-image="~/img/demos/shop/products/single/product4.jpg" data-zoom-image="~/img/demos/shop/products/single/product4.jpg" class="product-gallery-item">
-                                            <img src="~/img/demos/shop/products/single/thumbs/product4.jpg" alt="product">
+                                            <img src="~/img/demos/shop/products/single/thumbs/product4.jpg" alt="product" style="object-fit: cover; width:100%; height:100px">
                                         </a>
                                     </div>
                                     <div class="product-img-wrapper">
                                         <a href="#" data-image="~/img/demos/shop/products/single/product5.jpg" data-zoom-image="~/img/demos/shop/products/single/product5.jpg" class="product-gallery-item">
-                                            <img src="~/img/demos/shop/products/single/thumbs/product5.jpg" alt="product">
+                                            <img src="~/img/demos/shop/products/single/thumbs/product5.jpg" alt="product" style="object-fit: cover; width:100%; height:100px">
                                         </a>
                                     </div>
                                 </div>
@@ -117,7 +117,7 @@
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
                                                     <a>
-                                                        Kích thước
+                                                        Khối lượng
                                                     </a>
                                                 </h4>
                                             </div>
@@ -127,7 +127,7 @@
                                                         @foreach (var item in otherSizeProduct)
                                                         {
                                                             <li>
-                                                                <a href="@Url.Action("Detail", "Product", new { id = item.Id })">@item.SKU.Substring(6, 1)</a>
+                                                                <a href="@Url.Action("Detail", "Product", new { id = item.Id })">@item.SKU.Substring(7, 2)</a>
                                                             </li>
                                                         }
                                                     </ul>
@@ -146,7 +146,7 @@
                                         <span>Thêm vào giỏ</span>
                                     </a>
                                     <div class="actions-right">
-                                        <a href="@Url.Action("AddToWishList","Wish",new { id= currentProduct.Id})" class="addtowishlist" title="Yêu thích">
+                                        <a href="#" onclick="return AddProductToWishlist(@currentProduct.Id)" class="addtowishlist" title="Yêu thích">
                                             <i class="fa fa-heart"></i>
                                         </a>
                                     </div>
@@ -173,7 +173,7 @@
                         <div class="tab-content">
                             <div id="product-desc" class="tab-pane active">
                                 <div class="product-desc-area">
-                                    @Html.Raw(currentProduct.Specifications)
+                                    @Html.Raw(currentProduct.Content)
                                 </div>
                             </div>
                             <div id="product-add" class="tab-pane">
@@ -334,7 +334,7 @@
                                     <span class="product-price">@item.CurrentPrice</span>
                                 </div>
                                 <div class="product-actions">
-                                    <a href="@Url.Action("AddToWishList","Wish",new { id= item.Id})" class="addtowishlist" title="Yêu thích">
+                                    <a href="#" onclick="return AddProductToWishlist(@item.Id)" class="addtowishlist" title="Yêu thích">
                                         <i class="fa fa-heart"></i>
                                     </a>
                                     <a href="@Url.Action("AddToCart","Cart",new { id= item.Id})" onclick="return AreYouSureFunction(this)" class="addtocart" title="Thêm vào giỏ">
@@ -381,10 +381,10 @@
                 <hr class="mt-xlg">
                 <div class="owl-carousel owl-theme" data-plugin-options="{'items':1, 'margin': 5}">
                     <a href="#">
-                        <img class="img-responsive" src="~/img/banner/banner2-red.jpg" alt="Banner">
+                        <img class="img-responsive" src="~/img/adword/freeship_ad.png" alt="Banner">
                     </a>
                     <a href="#">
-                        <img class="img-responsive" src="~/img/banner/banner1-red.jpg" alt="Banner">
+                        <img class="img-responsive" src="~/img/adword/popup.png" alt="Banner">
                     </a>
                 </div>
                 <hr>
