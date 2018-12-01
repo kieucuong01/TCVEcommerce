@@ -165,12 +165,12 @@
                                 <p>
                                     Tham khảo chính sách vận chuyển của chúng tôi để được trợ giúp về đơn đặt hàng.
                                 </p>
-                                <a href="@Url.Action("Privacy","Home")">Chính sách vận chuyển></a>
+                                <a href="@Url.Action("ShippingPrivacy","Home")">Chính sách vận chuyển></a>
                             </div>
                             <div class="side-block side-feature">
                                 <h4><i class="fa fa-reply"></i>ĐỔI TRẢ MIỄN PHÍ</h4>
                                 <p>Chúng tôi đứng đằng sau hàng hóa và dịch vụ của chúng tôi và muốn bạn hài lòng với họ.</p>
-                                <a href="@Url.Action("Privacy","Home")">Chính sách đổi trả ></a>
+                                <a href="@Url.Action("WarrantyPrivacy","Home")">Chính sách đổi trả ></a>
                             </div>
                         </aside>
                     </div>
@@ -209,16 +209,16 @@
                         </a>
                         <a href="#" class="product-quickview" data-toggle="modal" data-target=".quickview-modal" id="@item.Id">
                             <i class="fa fa-share-square-o"></i>
-                            <span>Quick View</span>
+                            <span>Xem nhanh</span>
                         </a>
-                        <div class="product-label"><span class="new">New</span></div>
+                        <div class="product-label"><span class="new">Mới</span></div>
 
                     </figure>
                     <div class="product-details-area">
                         <h2 class="product-name"><a href="@Url.Action("Detail","Product",new { id = item.Id })" title="@item.Name">@item.Name</a></h2>
                         <div class="product-ratings">
                             <div class="ratings-box">
-                                <div class="rating" style="width:60%"></div>
+                                <div class="rating" >Mới<></div>
                             </div>
                         </div>
                         <div class="product-price-box">
@@ -234,12 +234,12 @@
             <div class="modal fade quickview-modal" tabindex="-1" role="dialog" aria-labelledby="myLoginModal" >
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
-                    @await Html.PartialAsync("_PartialQuickView", Model.Content[0])
+                    @*@await Html.PartialAsync("_PartialQuickView", Model.Content[0])*@
                     </div>
                 </div>
            </div>
 
-            <div class="newsletter-popup mfp-hide" id="newsletter-popup-form" style="background-image: url(/img/demos/shop/newsletter_popup_bg.jpg)">
+            <div class="newsletter-popup mfp-hide" id="newsletter-popup-form" style="background-image: url(/img/adword/popup_sale.png)">
                 <div class="newsletter-popup-content">
                 </div><!-- End .newsletter-popup-content -->
             </div><!-- End .newsletter-popup -->

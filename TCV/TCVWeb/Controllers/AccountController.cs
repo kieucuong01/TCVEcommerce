@@ -4,8 +4,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+//HEAD
+using Microsoft.AspNetCore.Authentication;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+//cd4f44d2c61f2a17ec907d90a0de78081c081231
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +17,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using TCVShared.Data;
 using TCVShared.Helpers;
+using TCVWeb.Areas.Admin.Controllers;
 using TCVWeb.Models;
 
 namespace TCVWeb.Controllers
@@ -35,67 +40,256 @@ namespace TCVWeb.Controllers
             _logger = logger;
         }
 
+
         [TempData]
         public string ErrorMessage { get; set; }
 
-        // GET: Account
-        public ActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Login(string returnUrl = null)
         {
+            // Clear the existing external cookie to ensure a clean login process
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
-        // GET: Account
-        public ActionResult Edit()
-        {
-            return View();
-        }
-
-        //
-        // GET: /Account/Login
-        public IActionResult Login(string returnUrl = null)
-        {
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
-        }
-
-        //
-        // POST: /Account/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                if (result.Succeeded)
+                {
+                    if(User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction(nameof(HomeAdminController.Index), "HomeAdmin", new { area = "Admin" });
+                    }
+                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                }
+                if (result.RequiresTwoFactor)
+                {
+                    return RedirectToAction(nameof(Login2fa), new { model.ReturnUrl, model.RememberMe });
+                }
+                if (result.IsLockedOut)
+                {
+                    ModelState.AddModelError(string.Empty, "Tài khoản bị khóa đăng nhập, xin thử lại sau 5 phút.");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Đăng nhập thất bại, xin kiểm tra lại.");
+                }
+            }
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> Login2fa(bool rememberMe, string returnUrl = null)
+        {
+            var appUser = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+            if (appUser == null)
+            {
+                throw new ApplicationException($"Unable to load two-factor authentication appUser.");
+            }
+
+            var model = new Login2faViewModel { RememberMe = rememberMe, ReturnUrl = returnUrl };
+            return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login2fa(Login2faViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to lockoutOnFailure: true
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+            var appUser = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+            if (appUser == null)
+            {
+                throw new ApplicationException($"Unable to load appUser with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var authenticatorCode = model.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
+
+            var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, model.RememberMe, model.RememberMachine);
+
             if (result.Succeeded)
             {
-                _logger.LogInformation("Logged in {userName}.", model.Email);
-
-                if (returnUrl == "/Checkout") {
-                    return RedirectToAction("Index", "Checkout");
-                }
-
-                return RedirectToAction("Index", "Home");
+                return RedirectToLocal(model.ReturnUrl);
             }
-            if (result.RequiresTwoFactor)
+            else if (result.IsLockedOut)
             {
-                return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-            }
-            if (result.IsLockedOut)
-            {
-                return View("Lockout");
+                ModelState.AddModelError(string.Empty, "Tài khoản bị khóa đăng nhập, xin thử lại sau 5 phút.");
+                return View(model);
             }
             else
             {
-                _logger.LogWarning("Failed to log in {userName}.", model.Email);
-                ModelState.AddModelError("", "Invalid login attempt.");
+                ModelState.AddModelError(string.Empty, "Mã xác thực không chính xác.");
                 return View(model);
             }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> LoginCode(string returnUrl = null)
+        {
+            // Ensure the user has gone through the username & password screen first
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load two-factor authentication user.");
+            }
+
+            var model = new LoginWithRecoveryCodeViewModel { ReturnUrl = returnUrl };
+            return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LoginCode(LoginWithRecoveryCodeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load two-factor authentication user.");
+            }
+
+            var recoveryCode = model.RecoveryCode.Replace(" ", string.Empty);
+
+            var result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
+
+            if (result.Succeeded)
+            {
+                return RedirectToLocal(model.ReturnUrl);
+            }
+            if (result.IsLockedOut)
+            {
+                ModelState.AddModelError(string.Empty, "Tài khoản bị khóa đăng nhập, xin thử lại sau 5 phút.");
+                return View(model);
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Mã cứu hộ không chính xác, vui lòng nhập mã khác.");
+                return View(model);
+            }
+        }
+
+        private async Task<string> GetUserName(ExternalLoginInfo loginInfo)
+        {
+            string defaultName = null;
+            if (loginInfo.LoginProvider == "Facebook")
+            {
+                var nameClaim = loginInfo.Principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+                if (nameClaim != null)
+                    defaultName = Common.NormalizeVietnamese(nameClaim.Value);
+            }
+
+            if (defaultName == null)
+                return null;
+
+            string newUserName = defaultName;
+            for (int i = 0; i < 30; i++)
+            {
+                AppUser newUser = await _userManager.FindByNameAsync(newUserName);
+                if (newUser == null)
+                    break;
+
+                int randNo = Common.Random(99) + 1;
+                newUserName = string.Format("{0}{1:D2}", defaultName, randNo);
+            }
+
+            return newUserName;
+        }
+
+        private async Task<AppUser> CreateUserEx(ExternalLoginInfo loginInfo)
+        {
+            string newUserName = await GetUserName(loginInfo);
+            if (newUserName == null)
+                return null;
+
+            var exEmail = loginInfo.Principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+            AppUser appUser = new AppUser
+            {
+                UserName = newUserName,
+                Email = exEmail?.Value,
+                EmailConfirmed = (exEmail != null),
+                CreateTime = DateTime.Now,
+                LastUpdate = DateTime.Now,
+                Status = EntityStatus.Enabled
+            };
+
+            var result = await _userManager.CreateAsync(appUser);
+            if (!result.Succeeded)
+            {
+                return null;
+            }
+
+            result = await _userManager.AddLoginAsync(appUser, loginInfo);
+            if (!result.Succeeded)
+            {
+                return null;
+            }
+
+            return appUser;
+        }
+
+        public IActionResult ExternalLogin(LoginExViewModel model)
+        {
+            var redirectUrl = Url.Action(nameof(LoginExCallback), "Account", new { model.ReturnUrl });
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(model.Provider, redirectUrl);
+            return Challenge(properties, model.Provider);
+        }
+
+        public async Task<IActionResult> LoginExCallback(string returnUrl = null, string remoteError = null)
+        {
+            if (remoteError != null)
+            {
+                ErrorMessage = $"Đăng nhập Facebook/Google lỗi: {remoteError}";
+                return RedirectToAction(nameof(Login));
+            }
+
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+                return RedirectToAction(nameof(Login));
+
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+            if (result.Succeeded)
+            {
+                return RedirectToLocal(returnUrl);
+            }
+            if (result.IsLockedOut)
+            {
+                ErrorMessage = "Tài khoản bị khóa đăng nhập, xin thử lại sau 5 phút.";
+                return RedirectToAction(nameof(Login));
+            }
+            else
+            {
+                var appUser = await CreateUserEx(info);
+                if (appUser == null)
+                {
+                    ErrorMessage = "Lỗi: Không thể tạo Tài khoản liên kết.";
+                    return RedirectToAction(nameof(Login));
+                }
+
+                await _signInManager.SignInAsync(appUser, true);
+                return RedirectToLocal(returnUrl);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            ErrorMessage = "Bạn không có quyền truy cập trang này.";
+            return RedirectToAction(nameof(Login));
         }
 
 
@@ -163,6 +357,58 @@ namespace TCVWeb.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
+        // GET: Account
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        // GET: Account
+        public ActionResult Edit()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Account/Login
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(model);
+        //    }
+
+        //    // This doesn't count login failures towards account lockout
+        //    // To enable password failures to trigger account lockout, change to lockoutOnFailure: true
+        //    var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+        //    if (result.Succeeded)
+        //    {
+        //        _logger.LogInformation("Logged in {userName}.", model.Email);
+
+        //        if (returnUrl == "/Checkout")
+        //        {
+        //            return RedirectToAction("Index", "Checkout");
+        //        }
+
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //    if (result.RequiresTwoFactor)
+        //    {
+        //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+        //    }
+        //    if (result.IsLockedOut)
+        //    {
+        //        return View("Lockout");
+        //    }
+        //    else
+        //    {
+        //        _logger.LogWarning("Failed to log in {userName}.", model.Email);
+        //        ModelState.AddModelError("", "Invalid login attempt.");
+        //        return View(model);
+        //    }
+        //}
 
         //
         // Get: /Account/Logout
@@ -236,10 +482,10 @@ namespace TCVWeb.Controllers
             return code == null ? View("Error") : View(resetPasswordViewModel);
         }
 
-        //
-        // POST: /Account/ResetPassword
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+
+        //POST: /Account/ResetPassword
+       [HttpPost]
+       [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
@@ -272,107 +518,107 @@ namespace TCVWeb.Controllers
 
         //
         // POST: /Account/ExternalLogin
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult ExternalLogin(string provider, string returnUrl = null)
-        {
-            // Request a redirect to the external login provider
-            var redirectUrl = Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl });
-            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
-            return new ChallengeResult(provider, properties);
-        }
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult ExternalLogin(string provider, string returnUrl = null)
+        //{
+        //    // Request a redirect to the external login provider
+        //    var redirectUrl = Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl });
+        //    var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+        //    return new ChallengeResult(provider, properties);
+        //}
 
-        //
-        // GET: /Account/ExternalLoginFailure
-        [AllowAnonymous]
-        public ActionResult ExternalLoginFailure()
-        {
-            return View();
-        }
+        ////
+        //// GET: /Account/ExternalLoginFailure
+        //[AllowAnonymous]
+        //public ActionResult ExternalLoginFailure()
+        //{
+        //    return View();
+        //}
 
-        //
-        // GET: /Account/ExternalLoginCallback
-        [AllowAnonymous]
-        public async Task<ActionResult> ExternalLoginCallback(string returnUrl = null)
-        {
-            var loginInfo = await _signInManager.GetExternalLoginInfoAsync();
-            if (loginInfo == null)
-            {
-                return RedirectToAction("Login");
-            }
+        ////
+        //// GET: /Account/ExternalLoginCallback
+        //[AllowAnonymous]
+        //public async Task<ActionResult> ExternalLoginCallback(string returnUrl = null)
+        //{
+        //    var loginInfo = await _signInManager.GetExternalLoginInfoAsync();
+        //    if (loginInfo == null)
+        //    {
+        //        return RedirectToAction("Login");
+        //    }
 
-            // Sign in the user with this external login provider if the user already has a login
-            var result = await _signInManager.ExternalLoginSignInAsync(loginInfo.LoginProvider, loginInfo.ProviderKey, isPersistent: false);
-            if (result.Succeeded)
-            {
-                return RedirectToLocal(returnUrl);
-            }
-            if (result.RequiresTwoFactor)
-            {
-                return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
-            }
-            if (result.IsLockedOut)
-            {
-                return View("Lockout");
-            }
-            else
-            {
-                // If the user does not have an account, then prompt the user to create an account
-                ViewBag.ReturnUrl = returnUrl;
-                ViewBag.LoginProvider = loginInfo.LoginProvider;
-                // REVIEW: handle case where email not in claims?
-                var email = loginInfo.Principal.FindFirstValue(ClaimTypes.Email);
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
-            }
-        }
+        //    // Sign in the user with this external login provider if the user already has a login
+        //    var result = await _signInManager.ExternalLoginSignInAsync(loginInfo.LoginProvider, loginInfo.ProviderKey, isPersistent: false);
+        //    if (result.Succeeded)
+        //    {
+        //        return RedirectToAction(returnUrl);
+        //    }
+        //    if (result.RequiresTwoFactor)
+        //    {
+        //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
+        //    }
+        //    if (result.IsLockedOut)
+        //    {
+        //        return View("Lockout");
+        //    }
+        //    else
+        //    {
+        //        // If the user does not have an account, then prompt the user to create an account
+        //        ViewBag.ReturnUrl = returnUrl;
+        //        ViewBag.LoginProvider = loginInfo.LoginProvider;
+        //        // REVIEW: handle case where email not in claims?
+        //        var email = loginInfo.Principal.FindFirstValue(ClaimTypes.Email);
+        //        return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
+        //    }
+        //}
 
-        //
-        // POST: /Account/ExternalLoginConfirmation
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl = null)
-        {
-            if (_signInManager.IsSignedIn(User))
-            {
-                return RedirectToAction("Index", "Manage");
-            }
+        ////
+        //// POST: /Account/ExternalLoginConfirmation
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl = null)
+        //{
+        //    if (_signInManager.IsSignedIn(User))
+        //    {
+        //        return RedirectToAction("Index", "Manage");
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                // Get the information about the user from the external login provider
-                var info = await _signInManager.GetExternalLoginInfoAsync();
-                if (info == null)
-                {
-                    return View("ExternalLoginFailure");
-                }
-                var user = new AppUser { UserName = model.Email, Email = model.Email };
-                var result = await _userManager.CreateAsync(user);
+        //    if (ModelState.IsValid)
+        //    {
+        //        // Get the information about the user from the external login provider
+        //        var info = await _signInManager.GetExternalLoginInfoAsync();
+        //        if (info == null)
+        //        {
+        //            return View("ExternalLoginFailure");
+        //        }
+        //        var user = new AppUser { UserName = model.Email, Email = model.Email };
+        //        var result = await _userManager.CreateAsync(user);
 
-                // NOTE: Used for end to end testing only
-                //Just for automated testing adding a claim named 'ManageStore' - Not required for production
-                var manageClaim = info.Principal.Claims.Where(c => c.Type == "ManageStore").FirstOrDefault();
-                if (manageClaim != null)
-                {
-                    await _userManager.AddClaimAsync(user, manageClaim);
-                }
+        //        // NOTE: Used for end to end testing only
+        //        //Just for automated testing adding a claim named 'ManageStore' - Not required for production
+        //        var manageClaim = info.Principal.Claims.Where(c => c.Type == "ManageStore").FirstOrDefault();
+        //        if (manageClaim != null)
+        //        {
+        //            await _userManager.AddClaimAsync(user, manageClaim);
+        //        }
 
-                if (result.Succeeded)
-                {
-                    result = await _userManager.AddLoginAsync(user, info);
-                    if (result.Succeeded)
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return RedirectToLocal(returnUrl);
-                    }
-                }
-                AddErrors(result);
-            }
+        //        if (result.Succeeded)
+        //        {
+        //            result = await _userManager.AddLoginAsync(user, info);
+        //            if (result.Succeeded)
+        //            {
+        //                await _signInManager.SignInAsync(user, isPersistent: false);
+        //                return RedirectToLocal(returnUrl);
+        //            }
+        //        }
+        //        AddErrors(result);
+        //    }
 
-            ViewBag.ReturnUrl = returnUrl;
-            return View(model);
-        }
+        //    ViewBag.ReturnUrl = returnUrl;
+        //    return View(model);
+        //}
 
 
         //
@@ -442,13 +688,20 @@ namespace TCVWeb.Controllers
 
             // Remove before production
 #if DEMO
-            if (user != null)
-            {
-                ViewBag.Code = await UserManager.GenerateTwoFactorTokenAsync(user, provider);
-            }
+                    if (user != null)
+                    {
+                        ViewBag.Code = await UserManager.GenerateTwoFactorTokenAsync(user, provider);
+                    }
 #endif
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
+        //public async Task<IActionResult> Login(string returnUrl = null)
+        //{
+        //    // Clear the existing external cookie to ensure a clean login process
+        //    await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+        //    return RedirectToAction(nameof(Login), new { area = "Admin" });
+        //}
 
         //
         // POST: /Account/VerifyCode
@@ -514,4 +767,9 @@ namespace TCVWeb.Controllers
 
         #endregion
     }
+
+
+
+
+
 }

@@ -8,8 +8,7 @@ namespace TCVShared.Helpers
 {
     public class PagedModel
     {
-        private static readonly SelectList pagesList;
-
+        private static SelectList pagesList;
         static PagedModel()
         {
             var pages = new SortedList<int, string>();
@@ -19,17 +18,11 @@ namespace TCVShared.Helpers
             pagesList = new SelectList(pages, "Key", "Value");
         }
 
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int? MinValue { get; set; }
-        public int? MaxValue { get; set; }
         public object Master { get; set; }
-
         public string Group { get; set; }
         public string Filter { get; set; }
         public string Search { get; set; }
 
-        [Display(Name = "Hiển thị")]
         public int PageSize { get; set; }
         public int CurPage { get; set; }
         public int TotalRows { get; set; }
@@ -47,24 +40,15 @@ namespace TCVShared.Helpers
         public PagedModel()
         {
             CurPage = 1;
-            PageSize = 20;
+            PageSize = 15;
         }
     }
 
     public class PagedList<T> : PagedModel
     {
+        public string Name { get; set; }
+        public int? MinValue { get; set; }
+        public int? MaxValue { get; set; }
         public List<T> Content { get; set; }
-
-        public void Clone(PagedModel other)
-        {
-            this.Filter = other.Filter;
-
-            this.PageSize = other.PageSize;
-            this.CurPage = other.CurPage;
-            this.TotalRows = other.TotalRows;
-
-            this.Id = other.Id;
-            this.Name = other.Name;
-        }
     }
 }

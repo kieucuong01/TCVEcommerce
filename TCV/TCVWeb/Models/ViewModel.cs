@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 namespace TCVWeb.Models
 {
 
-    public class SelectItemModel
-    {
-        public int id { get; set; }
-        public string text { get; set; }
-        public bool selected { get; set; }
-    }
+    //public class SelectItemModel
+    //{
+    //    public int id { get; set; }
+    //    public string text { get; set; }
+    //    public bool selected { get; set; }
+    //}
 
 }

@@ -55,6 +55,8 @@ namespace TCVShared.Data
         PostTag,
         ItemCat,
         ItemTag,
+        Export,
+        Size,
     }
     public enum PostFormat
     {

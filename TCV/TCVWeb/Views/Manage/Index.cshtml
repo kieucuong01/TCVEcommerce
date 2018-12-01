@@ -3,25 +3,25 @@
     <div class="container">
         <div class="row">
             <div class="col-md-9 col-md-push-3 my-account">
-                <h1 class="h2 heading-primary font-weight-normal">My Dashboard</h1>
+                <h1 class="h2 heading-primary font-weight-normal">Bảng điều khiển</h1>
                 @if (ViewData["StatusMessage"] != "")
                 {
                 <div class="alert alert-success success-msg mb-xl" role="alert">
                     @ViewData["StatusMessage"]
                 </div>
                 }
-                <h2 class="h3 mb-sm"><strong>Account Information</strong></h2>
+                <h2 class="h3 mb-sm"><strong>Thông tin tài khoản</strong></h2>
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="panel-box">
                             <div class="panel-box-title">
-                                <h3>Contact Information</h3>
-                                <a asp-controller="Manage" asp-action="ChangePassword" class="panel-box-edit">Edit</a>
+                                <h3>Thông tin liên hệ</h3>
+                                <a asp-controller="Manage" asp-action="ChangePassword" class="panel-box-edit">Chỉnh sửa</a>
                             </div>
                             <div class="panel-box-content">
                                 <p>
                                     @this.User.Identity.Name<br>
-                                    <a asp-controller="Manage" asp-action="ChangePassword">Change Password</a>
+                                    <a asp-controller="Manage" asp-action="ChangePassword">Đổi mật khẩu</a>
                                 </p>
                             </div>
                         </div>
@@ -29,19 +29,19 @@
                     <div class="col-sm-6">
                         <div class="panel-box">
                             <div class="panel-box-title">
-                                <h3>Two-Factor Authentication</h3>
+                                <h3>Xác thực 2 lớp</h3>
                             </div>
                             <div class="panel-box-content">
                                 @if (Model.TwoFactor)
                                 {
                                     <form asp-controller="Manage" asp-action="DisableTwoFactorAuthentication" method="post" class="form-horizontal" role="form">
-                                        Enabled [<button type="submit" class="btn-link">Disable</button>]
+                                        Bật [<button type="submit" class="btn-link">Tắt</button>]
                                     </form>
                                 }
                                 else
                                 {
                                     <form asp-controller="Manage" asp-action="EnableTwoFactorAuthentication" method="post" class="form-horizontal" role="form">
-                                        [<button type="submit" class="btn-link">Enable</button>] Disabled
+                                        [<button type="submit" class="btn-link">Bật</button>] Tắt
                                     </form>
                                 }
                             </div>
@@ -52,22 +52,22 @@
                     <div class="col-xs-12">
                         <div class="panel-box">
                             <div class="panel-box-title">
-                                <h3>ADDRESS BOOK</h3>
-                                <a href="@Url.Action("ChangePassword","Manage")" class="panel-box-edit">Manage Addresses</a>
+                                <h3>DANH SÁCH ĐỊA CHỈ</h3>
+                                <a href="@Url.Action("ChangePassword","Manage")" class="panel-box-edit">Quản lý địa chỉ</a>
                             </div>
                             <div class="panel-box-content">
                                 <div class="row">                                   
                                     <div class="col-sm-12">
-                                        <h4 class="h5 heading-text-color font-weight-semibold mb-xs">Default Shipping Address</h4>
+                                        <h4 class="h5 heading-text-color font-weight-semibold mb-xs">Địa chỉ giao hàng mặc định</h4>
                                         <address>
                                             @if (Model.ShippingAddress == null) {
-                                                <p>You have not set a default shipping ifdress.</p>
+                                                <p>Bạn chưa thiết lập địa chỉ giao hàng mặc định.</p>
                                             }
                                             else {
                                                 <p> @Model.ShippingAddress.Address, @Model.ShippingAddress.State, @Model.ShippingAddress.City </p>
                                             }
 
-                                            <a href="@Url.Action("ChangePassword","Manage")">Edit Address</a>
+                                            <a href="@Url.Action("ChangePassword","Manage")">Sửa địa chỉ</a>
                                         </address>
                                     </div>
                                 </div>
@@ -78,12 +78,12 @@
             </div>
             <div class="col-md-3 col-md-pull-9">
                 <aside class="sidebar">
-                    <h4>My Account</h4>
+                    <h4>Tài khoản của tôi</h4>
                     <ul class="nav nav-list">
-                        <li class="active"><a href="#">Account Dashboard</a></li>
-                        <li><a href="@Url.Action("ChangePassword","Manage")">Account Infomation</a></li>
-                        <li><a href="@Url.Action("GetMyOrder","Manage")">My Orders</a></li>
-                        <li><a href="@Url.Action("Index","Wish")">My Wishlist</a></li>
+                        <li class="active"><a href="#">Tổng quan</a></li>
+                        <li><a href="@Url.Action("ChangePassword","Manage")">Thông tin</a></li>
+                        <li><a href="@Url.Action("GetMyOrder","Manage")">Đơn hàng</a></li>
+                        <li><a href="@Url.Action("Index","Wish")">Yêu thích</a></li>
                     </ul>
                 </aside>
             </div>

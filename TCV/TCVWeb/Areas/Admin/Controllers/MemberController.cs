@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using TCVShared.Data;
 using TCVShared.Helpers;
 using TCVWeb.Areas.Admin.Models;
+using TCVWeb.Models;
 
 namespace TCVWeb.Areas.Admin.Controllers
 {
@@ -193,5 +194,21 @@ namespace TCVWeb.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        //[Authorize(Roles = "Admin")]
+        //public async Task<IActionResult> SetRole(string id, string roleName)
+        //{
+        //    AppUser appUser = await _userManager.FindByIdAsync(id);
+        //    if (appUser == null)
+        //        return NotFound();
+
+        //    var roleExist = await _roleManager.RoleExistsAsync(roleName);
+        //    if (!roleExist)
+        //        await _roleManager.CreateAsync(new IdentityRole(roleName));
+
+        //    await _userManager.AddToRoleAsync(appUser, roleName);
+
+        //    return RedirectToAction(nameof(Index));
+        //}
     }
 }

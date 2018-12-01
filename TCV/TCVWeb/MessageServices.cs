@@ -9,8 +9,8 @@ namespace TCVWeb
         public static Task SendEmailAsync(string email, string subject, string message)
         {
             // Plug in your email service
-            GMailer.GmailUsername = "51300456@hcmut.edu.vn";
-            GMailer.GmailPassword = "namesova";
+            GMailer.GmailUsername = "ticivicompany@gmail.com";
+            GMailer.GmailPassword = "ticivi123456";
 
             GMailer mailer = new GMailer();
             mailer.ToEmail = email;

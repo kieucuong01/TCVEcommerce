@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -31,6 +34,14 @@ namespace TCVWeb.Controllers
         // GET: FeatureProduct 
         public IActionResult Index(PagedList<ShopItem> model, int pageSize)
         {
+            var a = HttpContext.Session?.GetString("language");
+            if (a == null)
+            {
+                HttpContext.Session.SetString("language", "vi");
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("vi");
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo("vi");
+            }
+
             model.PageSize = pageSize != 0 ? pageSize : 12;
 
             var filterQuery = _dbContext.ShopItems.Where(x => model.Search == null && x.SKU.Substring(6,1) == "S");
@@ -82,7 +93,12 @@ namespace TCVWeb.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult WarrantyPrivacy()
+        {
+            return View();
+        }
+
+        public IActionResult ShippingPrivacy()
         {
             return View();
         }
@@ -90,6 +106,16 @@ namespace TCVWeb.Controllers
         public IActionResult Help()
         {
             return View();
+        }
+
+        public IActionResult ChangeLanguage(string language, string returnURL)
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+            HttpContext.Session.SetString("language", language);
+
+
+            return RedirectToAction("Index", "Home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

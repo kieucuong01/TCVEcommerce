@@ -16,7 +16,7 @@
             <div class="product-rating-container">
                 <div class="product-ratings">
                     <div class="ratings-box">
-                        <div class="rating" style="width:60%"></div>
+                        <div class="rating" >Mới<></div>
                     </div>
                 </div>
                 <div class="review-link">
@@ -43,12 +43,12 @@
                 <div class="product-detail-qty">
                     <input type="text" value="1" class="vertical-spinner" id="product-vqty">
                 </div>
-                <a href="" onclick="return AddToCartWithQuantity(@Model.Id)" class="addtocart" title="Add to Cart">
+                <a href="" onclick="return AddToCartWithQuantity(@Model.Id)" class="addtocart" title="Thêm vào giỏ">
                     <i class="fa fa-shopping-cart"></i>
-                    <span>Add to Cart</span>
+                    <span>Thêm vào giỏ</span>
                 </a>
                 <div class="actions-right">
-                    <a href="@Url.Action("AddToWishList","Wish",new { id= Model.Id})" class="addtowishlist" title="Add to Wishlist">
+                    <a href="@Url.Action("AddToWishList","Wish",new { id= Model.Id})" class="addtowishlist" title="Yêu thích">
                         <i class="fa fa-heart"></i>
                     </a>
                 </div>

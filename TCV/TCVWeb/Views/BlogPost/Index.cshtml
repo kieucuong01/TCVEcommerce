@@ -5,16 +5,13 @@
     ViewBag.Title = "Bài Viết";
 }
 
-@*@Html.DetailsLink("Details", new { id = item.Id })
-    @Html.UpdateLink("Update", new { id = item.Id }, true)
-    @Html.DeleteLink("Delete", new { id = item.Id }, true)*@
 <div role="main" class="main">
     <section class="page-header">
         <div class="container">
             <ul class="breadcrumb">
-                <li><a href="#">Home</a></li>
+                <li><a href="#">Trang chủ</a></li>
 
-                <li class="active">Blog</li>
+                <li class="active">Bài viết</li>
             </ul>
         </div>
     </section>
@@ -25,10 +22,10 @@
                 <div class="toolbar">
                     <div class="sorter">
                         <div class="sort-by">
-                            <label>Sort by:</label>
+                            <label>Sắp theo:</label>
                             <select>
-                                <option value="Created At">Created At</option>
-                                <option value="Added By">Added By</option>
+                                <option value="Created At">Ngày tạo</option>
+                                <option value="Added By">Tác giả</option>
                             </select>
                             <a href="#" title="Set Desc Direction">
                                 <img src="../img/demos/shop/i_desc_arrow.gif" alt="Set Desc Direction">
@@ -36,7 +33,7 @@
                         </div>
 
                         <div class="limiter">
-                            <label>Show:</label>
+                            <label>Hiển thị:</label>
                             <select onchange="SelectPageSize()" id="page-size">
                                 <option value="12">12</option>
                                 <option value="24">24</option>
@@ -89,7 +86,7 @@
                                 <h2><a href="@Url.Action("Details","BlogPost",new { id = item.Id })">@Html.DisplayFor(m => item.Title)</a></h2>
                                 <p>@Html.DisplayFor(m => item.Preview)</p>
 
-                                <a href="@Url.Action("Details","BlogPost",new { id = item.Id })" class="btn btn-xs btn-link">Read more</a>
+                                <a href="@Url.Action("Details","BlogPost",new { id = item.Id })" class="btn btn-xs btn-link">Đọc tiếp</a>
 
                                 <div class="post-meta">
                                     <span><i class="fa fa-calendar"></i>@Html.DisplayFor(m => item.CreateTime) </span>
@@ -105,10 +102,10 @@
                 <div class="toolbar">
                     <div class="sorter">
                         <div class="sort-by">
-                            <label>Sort by:</label>
+                            <label>Sắp theo:</label>
                             <select>
-                                <option value="Created At">Created At</option>
-                                <option value="Added By">Added By</option>
+                                <option value="Created At">Ngày tạo</option>
+                                <option value="Added By">Tác giả</option>
                             </select>
                             <a href="#" title="Set Desc Direction">
                                 <img src="../img/demos/shop/i_desc_arrow.gif" alt="Set Desc Direction">
@@ -120,7 +117,7 @@
                         </ul>
                        
                         <div class="limiter">
-                            <label>Show:</label>
+                            <label>Hiển thị:</label>
                             <select onchange="SelectPageSize()" id="page-size">
                                 <option value="12">12</option>
                                 <option value="24">24</option>

@@ -27,8 +27,8 @@ namespace TCVShared.Helpers
         public PaginationTagHelper()
         {
             CssStyle = "pagination";
-            PrevText = "« Prev";
-            NextText = "Next »";
+            PrevText = "« Trước";
+            NextText = "Sau »";
             ShowRecords = false;
             PagesCount = 7;
         }

@@ -7,7 +7,7 @@
                     success: function (partialView)
                     {
                         $('#cartdetails').html(partialView);
-                        alert("Item Added!");
+                        alert("Thêm vào giỏ hàng thành công!");
                     }
                 });
 
@@ -25,7 +25,7 @@ function AddToCartWithQuantity(id){
                     success: function (partialView)
                     {
                         $('#cartdetails').html(partialView);
-                        alert("Item Added!");
+                        alert("Thêm vào giỏ hàng thành công!");
                     }
                 });
                 //This prevents the default behavior of the actual link (it will hit your controller action)

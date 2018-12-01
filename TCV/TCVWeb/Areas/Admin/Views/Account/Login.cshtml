@@ -1,10 +1,9 @@
-﻿@using TCVWeb.Areas.Admin.Models
-@model TCVWeb.Areas.Admin.Models.LoginViewModel
+﻿@*@using TCVWeb.Areas.Admin.Models
 @{
     ViewBag.Title = "Đăng nhập Tài khoản";
     string errorMsg = (string)TempData["TempDataProperty-ErrorMessage"];
-}
-<div class="panel-body">
+}*@
+@*<div class="panel-body">
     @if (errorMsg != null)
     {
         <div class="alert alert-danger">@errorMsg</div>
@@ -59,4 +58,4 @@
 </div>
 @section Scripts {
     <partial name="_PartialValidation" />
-}
+}*@

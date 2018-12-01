@@ -9,21 +9,21 @@
             <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewBag.ReturnUrl" method="post">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times"></i></span></button>
-                    <h4 class="modal-title" id="myLoginModal">Login to your Account</h4>
+                    <h4 class="modal-title" id="myLoginModal"> Đăng nhập</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="mb-xs">Email Address <span class="required">*</span></label>
+                        <label class="mb-xs">Email  <span class="required">*</span></label>
                         <input type="email" asp-for="Email" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label class="mb-xs">Password <span class="required">*</span></label>
+                        <label class="mb-xs">Mật khẩu <span class="required">*</span></label>
                         <input type="password" asp-for="Password" class="form-control" required>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="#" class="btn btn-link pull-left" data-toggle="modal" data-target=".shop-fpass-modal" data-dismiss="modal">Forget Your Password?</a>
-                    <input type="submit" class="btn btn-primary" value="Login">
+                    <a href="#" class="btn btn-link pull-left" data-toggle="modal" data-target=".shop-fpass-modal" data-dismiss="modal">Quên mật khẩu?</a>
+                    <input type="submit" class="btn btn-primary" value="Đăng nhập">
                 </div>
             </form>
         </div>

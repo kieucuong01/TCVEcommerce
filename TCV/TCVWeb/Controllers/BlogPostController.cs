@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using TCVWeb.Models;
+using TCVWeb.Areas.Admin.Models;
 
 namespace TCVWeb.Controllers
 {

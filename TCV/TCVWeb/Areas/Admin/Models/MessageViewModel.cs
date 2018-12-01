@@ -26,23 +26,13 @@ namespace TCVWeb.Areas.Admin.Models
         public bool selected { get; set; }
     }
 
-    public class CheckCodeModel
+    public class SelectExportModel
     {
-        [Display(Name = "Số ĐT")]
-        public string Sender { get; set; }
-
-        [Display(Name = "Mã Code")]
-        public string CodeText { get; set; }
-    }
-
-    public class SendNotiModel
-    {
-        [Required, StringLength(40)]
-        [Display(Name = "Tiêu đề")]
-        public string Title { get; set; }
-
-        [Required, StringLength(250)]
-        [Display(Name = "Nội dung")]
-        public string Message { get; set; }
+        public int id { get; set; }
+        public string text { get; set; }
+        public int? parentId { get; set; }
+        public string parentText { get; set; }
+        public bool selected { get; set; }
+        public bool selectedParent { get; set; }
     }
 }

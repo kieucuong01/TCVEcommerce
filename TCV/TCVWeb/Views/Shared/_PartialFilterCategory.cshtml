@@ -5,7 +5,7 @@
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-category">
-                        Categories
+                        Danh mục
                     </a>
                 </h4>
             </div>
@@ -24,7 +24,7 @@
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-price">
-                        Price
+                        Giá 
                     </a>
                 </h4>
             </div>
@@ -33,12 +33,12 @@
                     <div class="filter-price">
                         <form action="Category" autocomplete="on">
                             <div class="filter-price-details">
-                                <span>from</span>
+                                <span>Từ</span>
                                 <input type="text" id="price-range-low" class="form-control" placeholder="Min" name="minPrice">
-                                <span>to</span>
+                                <span>Đến</span>
                                 <input type="text" id="price-range-high" class="form-control" placeholder="Max" name="maxPrice">
 
-                                <input class="btn btn-primary" type="submit" value="FILTER"/>
+                                <input class="btn btn-primary" type="submit" value="LỌC"/>
                             </div>
                         </form>
                     </div>
@@ -49,7 +49,7 @@
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-size">
-                        Size
+                        Khối lượng
                     </a>
                 </h4>
             </div>
@@ -80,7 +80,7 @@
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-origin">
-                        Origin
+                        Nước sản xuất
                     </a>
                 </h4>
             </div>
@@ -98,15 +98,15 @@
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a class="accordion-toggle" data-toggle="collapse" href="#panel-filter-from">
-                        Product From
+                        Xuất xứ
                     </a>
                 </h4>
             </div>
             <div id="panel-filter-from" class="accordion-body collapse in">
                 <div class="panel-body">
                     <ul>
-                        <li><a href="@Url.Action("Category", "Product",new {from = "D"})">Domestic</a></li>
-                        <li><a href="@Url.Action("Category", "Product",new {from = "F"})">Foreign</a></li>
+                        <li><a href="@Url.Action("Category", "Product",new {from = "D"})">Nội địa</a></li>
+                        <li><a href="@Url.Action("Category", "Product",new {from = "F"})">Ngoại nhập</a></li>
                     </ul>
                 </div>
             </div>
