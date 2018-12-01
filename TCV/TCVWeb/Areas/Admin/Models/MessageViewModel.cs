@@ -25,4 +25,14 @@ namespace TCVWeb.Areas.Admin.Models
         public string text { get; set; }
         public bool selected { get; set; }
     }
+
+    public class SelectExportModel
+    {
+        public int id { get; set; }
+        public string text { get; set; }
+        public int? parentId { get; set; }
+        public string parentText { get; set; }
+        public bool selected { get; set; }
+        public bool selectedParent { get; set; }
+    }
 }

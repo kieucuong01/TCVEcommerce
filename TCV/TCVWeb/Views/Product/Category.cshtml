@@ -5,15 +5,14 @@
     var viewType = ViewData["style"] as String;
 }
 <div role="main" class="main">
-    @*<section class="page-header">
+    <section class="page-header">
         <div class="container">
             <ul class="breadcrumb">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Fashion</a></li>
-                <li class="active">Dresses</li>
+                <li><a href="#">Trang chủ</a></li>
+                <li class="active">Danh mục</li>
             </ul>
         </div>
-    </section>*@
+    </section>
     <div class="container">
         <div class="row">
             <div class="col-md-9 col-md-push-3">
@@ -31,11 +30,10 @@
                 <div class="toolbar mb-none">
                     <div class="sorter">
                         <div class="sort-by">
-                            <label>Sort by:</label>
+                            <label>Sắp theo:</label>
                             <select>
-                                <option value="Position">Position</option>
-                                <option value="Name">Name</option>
-                                <option value="Price">Price</option>
+                                <option value="Name">Tên sản phẩm</option>
+                                <option value="Price">Giá cả</option>
                             </select>
                             <a href="#" title="Set Desc Direction">
                                 <img src="~/img/demos/shop/i_asc_arrow.gif" alt="Set Desc Direction">
@@ -65,7 +63,7 @@
                         </ul>
                        
                         <div class="limiter">
-                            <label>Show:</label>
+                            <label>Hiển thị:</label>
                             <select onchange="SelectPageSize()" id="page-size">
                                 <option value="12">12</option>
                                 <option value="24">24</option>
@@ -94,7 +92,7 @@
                                         }
                                         @if (item.NewProduct)
                                         {
-                                            <div class="product-label"><span class="new">New</span></div>
+                                            <div class="product-label"><span class="new">Mới</span></div>
                                         }
 
                                     </figure>
@@ -102,7 +100,7 @@
                                         <h2 class="product-name"><a href="@Url.Action("Detail", "Product", new { id = item.Id })" title="@item.Name">@item.Name</a></h2>
                                         <div class="product-ratings">
                                             <div class="ratings-box">
-                                                <div class="rating" style="width:60%"></div>
+                                                <div class="rating" style="width: 90%"></div>
                                             </div>
                                         </div>
 
@@ -120,14 +118,14 @@
                                         </div>
 
                                         <div class="product-actions">
-                                            <a href="@Url.Action("AddToCart","Cart",new { id= item.Id})" onclick ="return AreYouSureFunction(this)" class="addtocart" title="Add to Cart">
+                                            <a href="@Url.Action("AddToCart","Cart",new { id= item.Id})" onclick ="return AreYouSureFunction(this)" class="addtocart" title="Thêm vào giỏ">
                                                 <i class="fa fa-shopping-cart"></i>
-                                                <span>Add to Cart</span>
+                                                <span>Thêm vào giỏ</span>
                                             </a>
-                                            <a href="@Url.Action("AddToWishList","Wish",new { id= item.Id})" class="addtowishlist" title="Add to Wishlist">
+                                            <a href="@Url.Action("AddToWishList","Wish",new { id= item.Id})" class="addtowishlist" title="Yêu thích">
                                                 <i class="fa fa-heart"></i>
                                             </a>
-                                            <a href="#" class="quickview" title="Quick View" data-toggle="modal" data-target=".quickview-modal" id="@item.Id">
+                                            <a href="#" class="quickview" title="Xem nhanh" data-toggle="modal" data-target=".quickview-modal" id="@item.Id">
                                                 <i class="fa fa-search"></i>
                                             </a>
 
@@ -152,7 +150,7 @@
                                         </a>
                                         <a href="#" class="product-quickview" data-toggle="modal" data-target=".quickview-modal" id="@item.Id">
                                             <i class="fa fa-share-square-o"></i>
-                                            <span>Quick View</span>
+                                            <span>Xem nhanh</span>
                                         </a>
 
                                         @if (item.SalePrice != item.RegularPrice)
@@ -161,7 +159,7 @@
                                         }
                                         @if (item.NewProduct)
                                         {
-                                            <div class="product-label"><span class="new">New</span></div>
+                                            <div class="product-label"><span class="new">Mới</span></div>
                                         }
                                     </figure>
                                     <div class="product-details-area">
@@ -180,14 +178,14 @@
                                             <span class="product-price">@item.CurrentPrice</span>
                                         </div>
                                         <div class="product-actions">
-                                            <a href="@Url.Action("AddToWishList","Wish",new { id= item.Id})" class="addtowishlist" title="Add to Wishlist">
+                                            <a href="@Url.Action("AddToWishList","Wish",new { id= item.Id})" class="addtowishlist" title="Yêu thích">
                                                 <i class="fa fa-heart"></i>
                                             </a>
-                                            <a href="@Url.Action("AddToCart","Cart",new { id= item.Id})" onclick="return AreYouSureFunction(this)" class="addtocart" title="Add to Cart">
+                                            <a href="@Url.Action("AddToCart","Cart",new { id= item.Id})" onclick="return AreYouSureFunction(this)" class="addtocart" title="Thêm vào giỏ">
                                                 <i class="fa fa-shopping-cart"></i>
-                                                <span>Add to Cart</span>
+                                                <span>Thêm vào giỏ</span>
                                             </a>
-                                              <a href="#" class="comparelink" title="Quick View" data-toggle="modal" data-target=".quickview-modal" id="@item.Id">
+                                              <a href="#" class="comparelink" title="Xem nhanh" data-toggle="modal" data-target=".quickview-modal" id="@item.Id">
                                                 <i class="fa fa-search"></i>
                                             </a>
 
@@ -203,7 +201,7 @@
                         <div class="sorter">                           
                             <pagination model="@Model" query-string="@Context.Request.QueryString" css-style="pagination pagination-sm"></pagination>                           
                             <div class="limiter">
-                                <label>Show:</label>
+                                <label>Hiển thị:</label>
                                 <select onchange="SelectPageSize()" id="page-size">
                                     <option value="12">12</option>
                                     <option value="24">24</option>

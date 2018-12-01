@@ -13,7 +13,7 @@
                             <li><a href="#"><i class="fa fa-caret-right"></i></a></li>
                         </ul>
                         <div class="limiter">
-                            <label>Show:</label>
+                            <label>Hiển thị:</label>
                             <select>
                                 <option value="12">12</option>
                                 <option value="24">24</option>
@@ -34,7 +34,7 @@
                                     </a>
                                     <a href="#" class="product-quickview" data-toggle="modal" data-target=".quickview-modal" id="@item.ShopItem.Id">
                                         <i class="fa fa-share-square-o"></i>
-                                        <span>Quick View</span>
+                                        <span>Xem nhanh</span>
                                     </a>
 
                                     @if (item.ShopItem.SalePrice != item.ShopItem.RegularPrice)
@@ -43,7 +43,7 @@
                                     }
                                     @if (item.ShopItem.NewProduct)
                                     {
-                                        <div class="product-label"><span class="new">New</span></div>
+                                        <div class="product-label"><span class="new">Mới</span></div>
                                     }
                                 </figure>
                                 <div class="product-details-area">
@@ -62,14 +62,14 @@
                                         <span class="product-price">@item.ShopItem.CurrentPrice</span>
                                     </div>
                                     <div class="product-actions">
-                                        <a href="#" onclick="return RemoveProductFromWishlist(@item.ShopItem.Id)" class="addtowishlist" title="Remove from Wishlist">
-                                            <i class="fa fa-heart"></i>
+                                        <a href="#" onclick="return RemoveProductFromWishlist(@item.ShopItem.Id)" class="addtowishlist" title="Xóa yêu thích">
+                                            <i class="fa fa-remove"></i>
                                         </a>
-                                        <a href="@Url.Action("AddToCart","Cart",new { id= item.Id})" onclick="return AreYouSureFunction(this)" class="addtocart" title="Add to Cart">
+                                        <a href="@Url.Action("AddToCart","Cart",new { id= item.Id})" onclick="return AreYouSureFunction(this)" class="addtocart" title="Thêm vào giỏ">
                                             <i class="fa fa-shopping-cart"></i>
-                                            <span>Add to Cart</span>
+                                            <span>Thêm vào giỏ</span>
                                         </a>
-                                        <a href="#" class="comparelink" title="Quick View" data-toggle="modal" data-target=".quickview-modal" id="@item.ShopItem.Id">
+                                        <a href="#" class="comparelink" title="Xem nhanh" data-toggle="modal" data-target=".quickview-modal" id="@item.ShopItem.Id">
                                             <i class="fa fa-search"></i>
                                         </a>
 
@@ -88,7 +88,7 @@
                                 <li><a href="#"><i class="fa fa-caret-right"></i></a></li>
                             </ul>
                             <div class="limiter">
-                                <label>Show:</label>
+                                <label>Hiển thị:</label>
                                 <select>
                                     <option value="12">12</option>
                                     <option value="24">24</option>
@@ -101,12 +101,12 @@
             </div>
             <div class="col-md-3 col-md-pull-9">
                 <aside class="sidebar">
-                    <h4>My Account</h4>
+                    <h4>Tài khoản của tôi</h4>
                     <ul class="nav nav-list">
-                        <li><a href="@Url.Action("Index","Manage")">Account Dashboard</a></li>
-                        <li><a href="@Url.Action("ChangePassword","Manage")">Account Infomation</a></li>
-                        <li><a href="@Url.Action("GetMyOrder","Manage")">My Orders</a></li>
-                        <li class="active"><a href="#">My Wishlist</a></li>
+                        <li><a href="@Url.Action("Index","Manage")">Tổng quan</a></li>
+                        <li><a href="@Url.Action("ChangePassword","Manage")">Thông tin</a></li>
+                        <li><a href="@Url.Action("GetMyOrder","Manage")">Đơn hàng</a></li>
+                        <li class="active"><a href="#">Yêu thích</a></li>
                     </ul>
                 </aside>
             </div>

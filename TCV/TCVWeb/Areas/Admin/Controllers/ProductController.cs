@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -37,18 +39,18 @@ namespace TCVWeb.Areas.Admin.Controllers
 
             return View(model);
         }
-        public ActionResult DetailsProduct(int id)
-        {
-            var model = _dbContext.ShopItems.Find(id);
-            if (model == null)
-                return BadRequest();
-
-            return View(model);
-        }
 
         public ActionResult CreateProduct()
         {
             ViewBag.ItemCats = _dbContext.ItemCats.Select(x => new SelectItemModel() { id = x.Id, text = x.Name }).ToList();
+            var export = _dbContext.Exports.Where(x => x.ParentId!=null).Select(x => new SelectExportModel() { id = x.Id, text = x.Name, parentId = x.ParentId, parentText = x.ParentName }).ToList();
+            foreach(var item in export)
+            {
+                item.parentText = _dbContext.Taxonomies.FirstOrDefault(x => x.Id == item.parentId).Name;
+            }
+            ViewBag.Export = export;
+            ViewBag.SizeList = _dbContext.Sizes.Select(x => new SelectItemModel() { id = x.Id, text = x.Name }).ToList();
+            ViewBag.IdLast = _dbContext.ShopItems.Select(x => x.Id).Last();
             return View(new ShopItem());
         }
 
@@ -56,7 +58,33 @@ namespace TCVWeb.Areas.Admin.Controllers
         public ActionResult CreateProduct(ShopItem model)
         {
             if (!ModelState.IsValid)
-                return View(model);
+            {
+                ViewBag.ItemCats = _dbContext.ItemCats.Select(x => new SelectItemModel() { id = x.Id, text = x.Name }).ToList();
+                var export = _dbContext.Exports.Where(x => x.ParentId != null).Select(x => new SelectExportModel() { id = x.Id, text = x.Name, parentId = x.ParentId, parentText = x.ParentName }).ToList();
+                foreach (var item in export)
+                {
+                    item.parentText = _dbContext.Taxonomies.FirstOrDefault(x => x.Id == item.parentId).Name;
+                }
+                ViewBag.Export = export;
+                ViewBag.SizeList = _dbContext.Sizes.Select(x => new SelectItemModel() { id = x.Id, text = x.Name }).ToList();
+                ViewBag.IdLast = _dbContext.ShopItems.Select(x => x.Id).Last();
+                ModelState.AddModelError("Thông tin sản phẩm lỗi. Vui lòng nhập lại.", "Error");
+                return RedirectToAction("CreateProduct", "Product", new { area = "Admin" });
+            }
+            if (model.SKU == null)
+            {
+                ViewBag.ItemCats = _dbContext.ItemCats.Select(x => new SelectItemModel() { id = x.Id, text = x.Name }).ToList();
+                var export = _dbContext.Exports.Where(x => x.ParentId != null).Select(x => new SelectExportModel() { id = x.Id, text = x.Name, parentId = x.ParentId, parentText = x.ParentName }).ToList();
+                foreach (var item in export)
+                {
+                    item.parentText = _dbContext.Taxonomies.FirstOrDefault(x => x.Id == item.parentId).Name;
+                }
+                ViewBag.Export = export;
+                ViewBag.SizeList = _dbContext.Sizes.Select(x => new SelectItemModel() { id = x.Id, text = x.Name }).ToList();
+                ViewBag.IdLast = _dbContext.ShopItems.Select(x => x.Id).Last();
+                ModelState.AddModelError("Thông tin sản phẩm lỗi. Vui lòng nhập lại.", "Error");
+                return RedirectToAction("CreateProduct", "Product", new { area = "Admin" });
+            }
             try
             {
                 model.CreateTime = DateTime.Now;
@@ -74,7 +102,42 @@ namespace TCVWeb.Areas.Admin.Controllers
                         _dbContext.ShopItemTaxoes.Add(newCat);
                     }
                 }
-
+                if (model.Exports != null)
+                {
+                    foreach (var catId in model.Exports)
+                    {
+                        ShopItemTaxo newCat = new ShopItemTaxo()
+                        {
+                            TaxoId = catId,
+                            ItemId = model.Id,
+                        };
+                        _dbContext.ShopItemTaxoes.Add(newCat);
+                    }
+                }
+                if (model.ExportsPlace != null)
+                {
+                    foreach (var catId in model.ExportsPlace)
+                    {
+                        ShopItemTaxo newCat = new ShopItemTaxo()
+                        {
+                            TaxoId = catId,
+                            ItemId = model.Id,
+                        };
+                        _dbContext.ShopItemTaxoes.Add(newCat);
+                    }
+                }
+                if (model.SizeProduct != null)
+                {
+                    foreach (var catId in model.SizeProduct)
+                    {
+                        ShopItemTaxo newCat = new ShopItemTaxo()
+                        {
+                            TaxoId = catId,
+                            ItemId = model.Id,
+                        };
+                        _dbContext.ShopItemTaxoes.Add(newCat);
+                    }
+                }
                 if (!string.IsNullOrEmpty(model.ItemTags))
                 {
                     string[] itemTags = model.ItemTags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
@@ -97,9 +160,11 @@ namespace TCVWeb.Areas.Admin.Controllers
                         _dbContext.ShopItemTaxoes.Add(newTag);
                     }
                 }
+
+
                 _dbContext.SaveChanges();
-                model = new ShopItem();
-                return Redirect(Url.Action("Index", "Product"));
+                //model = new ShopItem();
+                return Redirect(Url.Action("DetailsProduct", "Product", new { id = model.Id }));
             }
             catch (Exception ex)
             {
@@ -108,29 +173,61 @@ namespace TCVWeb.Areas.Admin.Controllers
             }
         }
 
-        public ActionResult ProductDetails(int? id)
+        public ActionResult DetailsProduct(int? id)
         {
             ShopItem model = _dbContext.ShopItems.Find(id);
+            model.Attributes = _dbContext.ShopItemAttribs.Where(x => x.ItemId == id).ToList();
             if (model == null)
                 return BadRequest();
 
             return View(model);
         }
 
-        public ActionResult ProductUpdate(int? id)
+        public ActionResult UpdateProduct(int? id)
         {
             ShopItem model = _dbContext.ShopItems.Find(id);
             if (model == null)
                 return BadRequest();
 
-            model.ItemCats = model.Taxonomies.Where(x => x.ItemId == model.Id && x.Taxonomy.Type == TaxoType.ItemCat).Select(x => x.TaxoId).ToArray();
-            model.ItemTags = string.Join(", ", model.Taxonomies.Where(x => x.ItemId == model.Id && x.Taxonomy.Type == TaxoType.ItemTag).Select(x => x.Taxonomy.Name).ToArray());
+            model.ItemCats = (from x in _dbContext.Taxonomies
+                              join y in _dbContext.ShopItemTaxoes on x.Id equals y.TaxoId
+                              where y.ItemId == id && x.Type == TaxoType.ItemCat
+                              select x.Id).ToArray();
+            model.Exports = (from x in _dbContext.Taxonomies
+                              join y in _dbContext.ShopItemTaxoes on x.Id equals y.TaxoId
+                              where y.ItemId == id && x.Type == TaxoType.Export
+                             select x.Id).ToArray();
+            model.ExportsPlace = (from x in _dbContext.Taxonomies
+                             join y in _dbContext.ShopItemTaxoes on x.Id equals y.TaxoId
+                             where y.ItemId == id && x.Type == TaxoType.Export
+                             select x.Id).ToArray();
+            model.SizeProduct = (from x in _dbContext.Taxonomies
+                             join y in _dbContext.ShopItemTaxoes on x.Id equals y.TaxoId
+                             where y.ItemId == id && x.Type == TaxoType.Size
+                             select x.Id).ToArray();
+
+            var itemTags = (from x in _dbContext.Taxonomies
+                            join y in _dbContext.ShopItemTaxoes on x.Id equals y.TaxoId
+                            where y.ItemId == id && x.Type == TaxoType.ItemTag
+                            select x.Name).ToArray();
+
+            model.ItemTags = string.Join(", ", itemTags);
+
+            model.Status = model.Status;
+
             ViewBag.ItemCats = _dbContext.ItemCats.Select(x => new SelectItemModel() { id = x.Id, text = x.Name, selected = model.ItemCats.Contains(x.Id) }).ToList();
-            return View("ProductEdit", model);
+            var export = _dbContext.Exports.Where(x => x.ParentId != null).Select(x => new SelectExportModel() { id = x.Id, text = x.Name, parentId = x.ParentId, parentText = x.ParentName, selected = model.ExportsPlace.Contains(x.Id), selectedParent = model.Exports.Contains(x.Id) }).ToList();
+            foreach (var item in export)
+            {
+                item.parentText = _dbContext.Taxonomies.FirstOrDefault(x => x.Id == item.parentId).Name;
+            }
+            ViewBag.Export = export;
+            ViewBag.SizeList = _dbContext.Sizes.Select(x => new SelectItemModel() { id = x.Id, text = x.Name, selected = model.SizeProduct.Contains(x.Id) }).ToList();
+            return View(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ProductUpdate(ShopItem model)
+        public ActionResult UpdateProduct(ShopItem model)
         {
             if (ModelState.IsValid)
             {
@@ -164,7 +261,42 @@ namespace TCVWeb.Areas.Admin.Controllers
                             _dbContext.ShopItemTaxoes.Add(newCat);
                         }
                     }
-
+                    if (model.Exports != null)
+                    {
+                        foreach (var catId in model.Exports)
+                        {
+                            ShopItemTaxo newCat = new ShopItemTaxo()
+                            {
+                                TaxoId = catId,
+                                ItemId = model.Id,
+                            };
+                            _dbContext.ShopItemTaxoes.Add(newCat);
+                        }
+                    }
+                    if (model.ExportsPlace != null)
+                    {
+                        foreach (var catId in model.ExportsPlace)
+                        {
+                            ShopItemTaxo newCat = new ShopItemTaxo()
+                            {
+                                TaxoId = catId,
+                                ItemId = model.Id,
+                            };
+                            _dbContext.ShopItemTaxoes.Add(newCat);
+                        }
+                    }
+                    if (model.SizeProduct != null)
+                    {
+                        foreach (var catId in model.SizeProduct)
+                        {
+                            ShopItemTaxo newCat = new ShopItemTaxo()
+                            {
+                                TaxoId = catId,
+                                ItemId = model.Id,
+                            };
+                            _dbContext.ShopItemTaxoes.Add(newCat);
+                        }
+                    }
                     // Add tags
                     if (!string.IsNullOrEmpty(model.ItemTags))
                     {
@@ -191,7 +323,7 @@ namespace TCVWeb.Areas.Admin.Controllers
                     }
 
                     _dbContext.SaveChanges();
-                    return RedirectToAction("Index", "Product");
+                    return RedirectToAction("DetailsProduct", "Product", new { id = model.Id });
                 }
                 catch (Exception ex)
                 {
@@ -200,6 +332,32 @@ namespace TCVWeb.Areas.Admin.Controllers
             }
 
             ViewBag.ItemCats = _dbContext.ItemCats.Select(x => new SelectItemModel() { id = x.Id, text = x.Name, selected = model.ItemCats.Contains(x.Id) }).ToList();
+            return View(model);
+        }
+
+        public ActionResult DeleteProduct(int? id)
+        {
+            ShopItem model = _dbContext.ShopItems.Find(id);
+            if (model == null)
+                return BadRequest();
+
+            return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult DeleteProduct(ShopItem model)
+        {
+            try
+            {
+                _dbContext.Entry(model).State = EntityState.Deleted;
+                _dbContext.SaveChanges();
+                return Json(new ModalFormResult() { Code = 1 });
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+            }
+
             return View(model);
         }
 
@@ -223,6 +381,7 @@ namespace TCVWeb.Areas.Admin.Controllers
             return View("ItemCatEdit", new Taxonomy());
         }
 
+
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult ItemCatCreate(Taxonomy model)
         {
@@ -231,6 +390,8 @@ namespace TCVWeb.Areas.Admin.Controllers
                 try
                 {
                     model.Type = TaxoType.ItemCat;
+                    if(model.Parent!=null)
+                        model.Parent.Name = _dbContext.Taxonomies.Find(model.ParentId).Name;
                     _dbContext.Taxonomies.Add(model);
                     _dbContext.SaveChanges();
                     return Json(new ModalFormResult() { Code = 1 });
@@ -278,5 +439,365 @@ namespace TCVWeb.Areas.Admin.Controllers
         }
 
         #endregion
+
+
+
+        #region Export
+
+        public ActionResult ExportList(PagedList<Taxonomy> model)
+        {
+            var filterQuery = _dbContext.Exports.Where(x => model.Search == null || x.Name.Contains(model.Search));
+            var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+
+            model.TotalRows = filterQuery.Count();
+            model.Content = selectQuery.ToList();
+
+            return View(model);
+        }
+
+        public ActionResult ExportCreate()
+        {
+            ViewBag.ParentId = new SelectList(_dbContext.Exports, "Id", "Name");
+            return View("ExportEdit", new Taxonomy());
+        }
+
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ExportCreate(Taxonomy model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    model.Type = TaxoType.Export;
+                    if(model.Parent!=null)
+                        model.Parent.Name = _dbContext.Taxonomies.Find(model.ParentId).Name;
+                    _dbContext.Taxonomies.Add(model);
+                    _dbContext.SaveChanges();
+                    return Json(new ModalFormResult() { Code = 1 });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+
+            ViewBag.ParentId = new SelectList(_dbContext.Exports, "Id", "Name");
+            return View("ExportEdit", model);
+        }
+
+        public ActionResult ExportUpdate(int? id)
+        {
+            Taxonomy model = _dbContext.Taxonomies.Find(id);
+            if (model == null)
+                return BadRequest();
+
+            ViewBag.ParentId = new SelectList(_dbContext.Exports, "Id", "Name");
+            return View("ExportEdit", model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ExportUpdate(Taxonomy model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _dbContext.Entry(model).State = EntityState.Modified;
+                    model.Type = TaxoType.Export;
+                    _dbContext.SaveChanges();
+                    return Json(new ModalFormResult() { Code = 1 });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+
+            ViewBag.ParentId = new SelectList(_dbContext.Exports, "Id", "Name");
+            return View("ExportEdit", model);
+        }
+
+        #endregion
+
+
+        #region SizeProduct
+
+        public ActionResult SizeProductList(PagedList<Taxonomy> model)
+        {
+            var filterQuery = _dbContext.Sizes.Where(x => model.Search == null || x.Name.Contains(model.Search));
+            var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+
+            model.TotalRows = filterQuery.Count();
+            model.Content = selectQuery.ToList();
+
+            return View(model);
+        }
+
+        public ActionResult SizeProductCreate()
+        {
+            ViewBag.ParentId = new SelectList(_dbContext.Sizes, "Id", "Name");
+            return View("SizeProductEdit", new Taxonomy());
+        }
+
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult SizeProductCreate(Taxonomy model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    model.Type = TaxoType.Size;
+                    if (model.Parent != null)
+                        model.Parent.Name = _dbContext.Taxonomies.Find(model.ParentId).Name;
+                    _dbContext.Taxonomies.Add(model);
+                    _dbContext.SaveChanges();
+                    return Json(new ModalFormResult() { Code = 1 });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+
+            ViewBag.ParentId = new SelectList(_dbContext.Sizes, "Id", "Name");
+            return View("SizeProductEdit", model);
+        }
+
+        public ActionResult SizeProductUpdate(int? id)
+        {
+            Taxonomy model = _dbContext.Taxonomies.Find(id);
+            if (model == null)
+                return BadRequest();
+
+            ViewBag.ParentId = new SelectList(_dbContext.Sizes, "Id", "Name");
+            return View("SizeProductEdit", model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult SizeProductUpdate(Taxonomy model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _dbContext.Entry(model).State = EntityState.Modified;
+                    model.Type = TaxoType.Size;
+                    _dbContext.SaveChanges();
+                    return Json(new ModalFormResult() { Code = 1 });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+
+            ViewBag.ParentId = new SelectList(_dbContext.Sizes, "Id", "Name");
+            return View("SizeProductEdit", model);
+        }
+
+        #endregion
+
+        #region ItemAttr
+
+        public ActionResult ItemAttrList(PagedList<ShopAttrib> model)
+        {
+            var filterQuery = _dbContext.ShopAttribs.Where(x => model.Search == null || x.Name.Contains(model.Search));
+            var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+
+            model.TotalRows = filterQuery.Count();
+            model.Content = selectQuery.ToList();
+
+            return View(model);
+        }
+
+        public ActionResult ItemAttrCreate()
+        {
+            return View("ItemAttrEdit", new ShopAttrib());
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ItemAttrCreate(ShopAttrib model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _dbContext.ShopAttribs.Add(model);
+                    _dbContext.SaveChanges();
+                    return Json(new ModalFormResult() { Code = 1 });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+
+            return View("ItemAttrEdit", model);
+        }
+
+        public ActionResult ItemAttrUpdate(int? id)
+        {
+            ShopAttrib model = _dbContext.ShopAttribs.Find(id);
+            if (model == null)
+                return BadRequest();
+
+            return View("ItemAttrEdit", model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ItemAttrUpdate(ShopAttrib model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _dbContext.Entry(model).State = EntityState.Modified;
+                    _dbContext.SaveChanges();
+                    return Json(new ModalFormResult() { Code = 1 });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+
+            return View("ItemAttrEdit", model);
+        }
+
+        #endregion
+
+        #region ShopItemAttrib
+
+        public ActionResult ShopItemAttrCreate(int? id)
+        {
+            ShopItem item = _dbContext.ShopItems.Find(id);
+            if (item == null)
+                return BadRequest();
+
+            //ViewBag.MediaAlbum = item.MediaAlbum;
+            var mediaAlbum = _dbContext.MediaAlbums.Where(x => x.Id == item.AlbumId).Include(x => x.MediaFiles).SingleOrDefault();
+            var mediaFile = mediaAlbum.MediaFiles;
+            foreach (var item1 in mediaAlbum.MediaFiles)
+                item1.FileLink = Path.Combine("https://localhost:44336/media", item1.FullPath);
+
+            ViewBag.MediaAlbum = mediaAlbum;
+            
+            ShopItemAttrib model = new ShopItemAttrib() { ItemId = item.Id, Values = "[]" };
+
+            ViewBag.AttrId = new SelectList(_dbContext.ShopAttribs, "Id", "Title");
+            return View("ShopItemAttrEdit", model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ShopItemAttrCreate(ShopItemAttrib model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    ShopAttrib attr = _dbContext.ShopAttribs.Find(model.AttrId);
+                    if (attr != null)
+                    {
+                        foreach (var item in model.ValuesList)
+                            item.Name = attr.Name;
+                        model.OnUpdateValues();
+                    }
+
+                    _dbContext.ShopItemAttribs.Add(model);
+                    _dbContext.SaveChanges();
+
+                    return Json(new ModalFormResult() { Code = 1 });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+
+            ViewBag.AttrId = new SelectList(_dbContext.ShopAttribs, "Id", "Title");
+            return View("ShopItemAttrEdit", model);
+        }
+
+        public ActionResult ShopItemAttrUpdate(int? id)
+        {
+            ShopItemAttrib model = _dbContext.ShopItemAttribs.Find(id);
+            if (model == null)
+                return BadRequest();
+
+            //ViewBag.MediaAlbum = model.ShopItem.MediaAlbum;
+            ViewBag.AttrId = new SelectList(_dbContext.ShopAttribs, "Id", "Title");
+            return View("ShopItemAttrEdit", model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ShopItemAttrUpdate(ShopItemAttrib model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    ShopAttrib attr = _dbContext.ShopAttribs.Find(model.AttrId);
+                    if (attr != null)
+                    {
+                        foreach (var item in model.ValuesList)
+                            item.Name = attr.Name;
+                        model.OnUpdateValues();
+                    }
+
+                    _dbContext.Entry(model).State = EntityState.Modified;
+                    _dbContext.SaveChanges();
+
+                    return Json(new ModalFormResult() { Code = 1 });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+
+            ViewBag.AttrId = new SelectList(_dbContext.ShopAttribs, "Id", "Title");
+            return View("ShopItemAttrEdit", model);
+        }
+
+        public ActionResult ShopItemAttrDelete(int? id)
+        {
+            ShopItemAttrib model = _dbContext.ShopItemAttribs.Find(id);
+            if (model == null)
+                return BadRequest();
+
+            return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ShopItemAttrDelete(ShopItemAttrib model)
+        {
+            try
+            {
+                _dbContext.Entry(model).State = EntityState.Deleted;
+                _dbContext.SaveChanges();
+                return Json(new ModalFormResult() { Code = 1 });
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+            }
+
+            return View(model);
+        }
+
+        #endregion
+
+        public ActionResult Orders(PagedList<ShopOrder> model)
+        {
+            var filterQuery = _dbContext.ShopOrders.Where(x => model.Search == null || x.AppUser.UserName.Contains(model.Search));
+            var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+
+            model.TotalRows = filterQuery.Count();
+            model.Content = selectQuery.ToList();
+
+            return View(model);
+        }
     }
 }

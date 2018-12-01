@@ -10,11 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TCVShared.Data;
 using TCVWeb.Areas.Admin.Models;
+using TCVWeb.Models;
 
 namespace TCVWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Operator")]
+    [Authorize(Roles = "Manager,Operator")]
     public class HomeAdminController : Controller
     {
         private readonly UserManager<AppUser> _userManager;

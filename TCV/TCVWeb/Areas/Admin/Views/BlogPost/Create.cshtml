@@ -1,7 +1,14 @@
-﻿@model BlogPost
+﻿@using Newtonsoft.Json
+@using TCVShared.Helpers
+@using Microsoft.AspNetCore.Html
+@model BlogPost
 @{
     ViewBag.Icon = "fas fa-newspaper-o";
     ViewBag.Title = "Danh mục bài viết";
+    string[] previewData = Model.MediaAlbum == null ? new string[0] : Model.MediaAlbum.MediaFiles.Select(x => x.FileLink).ToArray();
+    object[] previewConfig = Model.MediaAlbum == null ? new object[0] : Model.MediaAlbum.MediaFiles.Select(x => new { key = x.Id, caption = x.FileName, size = x.FileSize, showDrag = false, width = "120px" }).ToArray();
+    var x1 = new HtmlString(JsonConvert.SerializeObject(previewData));
+    var x2 = new HtmlString(JsonConvert.SerializeObject(previewConfig));
 }
 
 <section role="main" class="content-body">

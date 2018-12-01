@@ -15,7 +15,7 @@
 
                         <a href="#" class="product-quickview" data-toggle="modal" data-target=".quickview-modal" id="@item.Id">
                             <i class="fa fa-share-square-o"></i>
-                            <span>Quick View</span>
+                            <span>Xem nhanh</span>
                         </a>
                         @if (item.SalePrice != item.RegularPrice)
                         {
@@ -23,14 +23,14 @@
                         }
                         @if (item.NewProduct)
                         {
-                            <div class="product-label"><span class="new">New</span></div>
+                            <div class="product-label"><span class="new">Mới</span></div>
                         }
 
                         <div class="product-actions">
-                            <a href="#" onclick="return AddProductToWishlist(@item.Id)" class="addtowishlist" title="Add to Wishlist">
+                            <a href="#" onclick="return AddProductToWishlist(@item.Id)" class="addtowishlist" title="Yêu thích">
                                 <i class="fa fa-heart"></i>
                             </a>
-                            <a href="@Url.Action("AddToCart","Cart",new { id= item.Id})" onclick="return AreYouSureFunction(this)" class="addtocart" title="Add to Cart">
+                            <a href="@Url.Action("AddToCart","Cart",new { id= item.Id})" onclick="return AreYouSureFunction(this)" class="addtocart" title="Thêm vào giỏ">
                                 <i class="fa fa-shopping-cart"></i>
                             </a>
                         </div>
@@ -39,7 +39,7 @@
                         <h2 class="product-name"><a href="@Url.Action("Detail","Product",new { id = item.Id })" title="@item.Name">@item.Name</a></h2>
                         <div class="product-ratings">
                             <div class="ratings-box">
-                                <div class="rating" style="width:90%"></div>
+                                <div class="rating" style="width: 90%"></div>
                             </div>
                         </div>
                         <div class="product-price-box">

@@ -32,7 +32,7 @@ namespace TCVShared.Data
             {
                 if (ParentId == null)
                     return "NULL";
-
+                Parent = new Taxonomy();
                 return Parent.Name;
             }
         }

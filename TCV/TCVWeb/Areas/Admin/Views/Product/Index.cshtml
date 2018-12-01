@@ -87,9 +87,9 @@
                     <td>@Html.DisplayFor(m => item.CreateTime)</td>
                     <td>@Html.DisplayFor(m => item.LastUpdate)</td>
                     <td>
-                        @Html.DetailsLink("Details", new { id = item.Id })
-                        @Html.UpdateLink("Update", new { id = item.Id })
-                        @Html.DeleteLink("Delete", new { id = item.Id }, true)
+                        @Html.DetailsLink("DetailsProduct", new { id = item.Id })
+                        @Html.UpdateLink("UpdateProduct", new { id = item.Id })
+                        @Html.DeleteLink("DeleteProduct", new { id = item.Id }, true)
                     </td>
                 </tr>
                 }

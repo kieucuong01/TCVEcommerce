@@ -30,7 +30,7 @@ namespace TCVWeb.Areas.Admin.Controllers
             _logger = logger;
             _dbContext = dbContext;
 
-            mediaUrl = AppSettings.Strings["MediaUrl"] ?? "https://localhost:44336/media";
+            mediaUrl = AppSettings.Strings["MediaUrl"] ?? "http://www.ticivi.com/media";
             mediaPath = AppSettings.Strings["MediaPath"] ?? "./wwwroot/media";
         }
 
@@ -79,6 +79,7 @@ namespace TCVWeb.Areas.Admin.Controllers
                 {
                     string fileName = file.FileName.ToLower();
                     string fileExt = Path.GetExtension(fileName);
+                    string fullPath = Path.Combine(album.ShortName, fileName);
 
                     while (true)
                     {
@@ -127,6 +128,66 @@ namespace TCVWeb.Areas.Admin.Controllers
                 return BadRequest("Could not create Default Album!");
 
             return await DoUploadFile(album, files, _dbContext);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FileUploadBlog(int? id, IEnumerable<IFormFile> files)
+        {
+            ShopItem model = _dbContext.ShopItems.Find(id);
+            if (model == null)
+                return BadRequest();
+
+            if (model.MediaAlbum == null)
+            {
+                try
+                {
+                    model.MediaAlbum = new MediaAlbum()
+                    {
+                        UserId = 1,
+                        ShortName = string.Format("Blog{0:D4}", model.Id),
+                        FullName = "Album " + model.Name,
+                        CreateTime = DateTime.Now,
+                    };
+
+                    _dbContext.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+
+            return await DoUploadFile(model.MediaAlbum, files, _dbContext);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FileUploadProduct(int? id, IEnumerable<IFormFile> files)
+        {
+            ShopItem model = _dbContext.ShopItems.Find(id);
+            if (model == null)
+                return BadRequest();
+
+            if (model.MediaAlbum == null)
+            {
+                try
+                {
+                    model.MediaAlbum = new MediaAlbum()
+                    {
+                        UserId = 1,
+                        ShortName = string.Format("Item{0:D4}", model.Id),
+                        FullName = "Album " + model.Name,
+                        CreateTime = DateTime.Now,
+                    };
+
+                    _dbContext.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+
+            return await DoUploadFile(model.MediaAlbum, files, _dbContext);
         }
 
         [HttpPost]
