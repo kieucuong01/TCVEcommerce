@@ -41,7 +41,7 @@
                                         <td class="product-name-td">
                                             <h2 class="product-name"><a href="@Url.Action("Detail","Product",new { id = cartItem.ShopItem.Id})" title="@cartItem.ShopItem.Name">@cartItem.ShopItem.Name</a></h2>
                                         </td>
-                                        <td>@cartItem.ShopItem.CurrentPrice</td>
+                                        <td> @Convert.ToDecimal(cartItem.ShopItem.CurrentPrice).ToString("#,#đ")</td>
                                         <td>
                                             <div class="qty-holder">
                                                 <a href="#" class="qty-dec-btn" title="Dec" onclick="return DecreaseQuantity(@cartItem.ShopItem.Id)">-</a>
@@ -50,7 +50,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <span class="text-primary" id="sub-total-@cartItem.ShopItem.Id">@cartItem.ItemTotal</span>
+                                            <span class="text-primary" id="sub-total-@cartItem.ShopItem.Id"> @cartItem.ItemTotal</span>
                                         </td>
                                     </tr>
                                 }

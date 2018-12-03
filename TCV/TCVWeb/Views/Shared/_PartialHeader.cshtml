@@ -103,14 +103,14 @@
                                                             <h2 class="product-name"><a href="@Url.Action("Detail", "Product", new { id = item.ShopItem.Id })" title="@item.ShopItem.Name">@item.ShopItem.Name</a></h2>
                                                             <div class="cart-qty-price">
                                                                 @item.Quantity X
-                                                                <span class="product-price">@item.ShopItem.CurrentPrice</span>
+                                                                <span class="product-price">@Convert.ToDecimal(item.ShopItem.CurrentPrice).ToString("#,#đ")</span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 }
                                             </div>
                                             <div class="cart-totals">
-                                                Tổng cộng: <span>@cart.GrandTotal</span>
+                                                Tổng cộng: <span> @Convert.ToDecimal(cart.GrandTotal).ToString("#,#đ")</span>
                                             </div>
                                             <div class="cart-actions">
                                                 <a href="@Url.Action("Index", "Cart")" class="btn btn-primary">Xem giỏ hàng</a>

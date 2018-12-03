@@ -1,4 +1,4 @@
 ﻿@model ShopOrder
-    <h4>Tạm tính  : <span>@Model.AdjustPrice</span></h4>
-    <h4>Phí ship  : <span>@Model.ShippingFee</span></h4>
-    <h4>Tổng cộng : <span>@Model.GrandTotalPrice</span></h4>
+    <h4 class="mainbox-title"> Tạm tính  : <span>@Convert.ToDecimal(Model.AdjustPrice).ToString("#,#đ")</span></h4>
+    <h4 class="mainbox-title"> Phí ship  : <span>@Convert.ToDecimal(Model.ShippingFee).ToString("#,#đ")</span></h4>
+    <h4 class="mainbox-title"> Tổng cộng : <span>@Convert.ToDecimal(Model.GrandTotalPrice).ToString("#,#đ")</span></h4>

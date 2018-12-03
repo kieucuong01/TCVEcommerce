@@ -51,15 +51,11 @@ namespace TCVWeb.Controllers
             model.Content = selectQuery.ToList();
 
             var supplier = new Supplier();
-            supplier.Name = "Kinh Do";
-            supplier.Address = "https://i.doanhnhansaigon.vn/2015/07/16/mondelez-kinh-o-doanhnhans-1508412719.jpg";
-
-            var supplier4 = new Supplier();
-            supplier4.Name = "Kinh Do";
-            supplier4.Address = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSstGYeLddZ4B5W6AKFFq-GUBFyobEcvrnBTht5TD7IQ0-kPdqn";
+            supplier.Name = "Ticivi Agriculture";
+            supplier.Address = "/img/icon/logo.png";
 
 
-            ViewData["brands"] = new Supplier[] { supplier, supplier, supplier, supplier, supplier4, supplier4, supplier4, supplier4 };
+            ViewData["brands"] = new Supplier[] { supplier, supplier, supplier, supplier, supplier, supplier, supplier };
 
             return View(model);
         }
