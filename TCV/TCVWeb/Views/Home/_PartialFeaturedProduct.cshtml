@@ -3,7 +3,7 @@
        <span class="inline-title">SẢN PHẨM NỔI BẬT</span>
         <span class="line"></span>
 </h2>
-<ul class="products-grid columns6">
+<ul class="products-grid columns5">
     @foreach (var item in Model.Content)
     {
 
@@ -21,7 +21,7 @@
                     </a>
                     @if (item.SalePrice != item.RegularPrice)
                     {
-                        <div class="product-label"><span class="discount">-10%</span></div>
+                        <div class="product-label"><span class="discount">@item.DiscountPercent</span></div>
                     }
                     @if (item.NewProduct)
                     {
@@ -47,9 +47,9 @@
                     <div class="product-price-box">
                         @if (item.SalePrice != item.RegularPrice)
                         {
-                            <span class="old-price">@item.RegularPrice</span>
+                            <span class="old-price"> @Convert.ToDecimal(item.RegularPrice).ToString("#,#đ") </span>
                         }
-                        <span class="product-price">@item.CurrentPrice</span>
+                        <span class="product-price">@Convert.ToDecimal(item.CurrentPrice).ToString("#,#đ")</span>
                     </div>
                 </div>
             </div>

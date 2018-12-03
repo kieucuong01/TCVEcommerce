@@ -88,7 +88,7 @@
                                         </a>
                                         @if (item.CurrentPrice != item.RegularPrice)
                                         {
-                                            <div class="product-label"><span class="discount">-10%</span></div>
+                                            <div class="product-label"><span class="discount">@item.DiscountPercent</span></div>
                                         }
                                         @if (item.NewProduct)
                                         {
@@ -111,10 +111,10 @@
                                         <div class="product-price-box">
                                             @if (item.SalePrice != item.CurrentPrice)
                                             {
-                                                <span class="old-price">@item.RegularPrice</span>
+                                                <span class="old-price">@Convert.ToDecimal(item.RegularPrice).ToString("#,#đ")</span>
                                             }
 
-                                            <span class="product-price">@item.CurrentPrice</span>
+                                             <span> @Convert.ToDecimal(item.CurrentPrice).ToString("#,#đ")</span>
                                         </div>
 
                                         <div class="product-actions">
@@ -155,7 +155,7 @@
 
                                         @if (item.SalePrice != item.RegularPrice)
                                         {
-                                            <div class="product-label"><span class="discount">-10%</span></div>
+                                            <div class="product-label"><span class="discount">@item.DiscountPercent</span></div>
                                         }
                                         @if (item.NewProduct)
                                         {
@@ -166,16 +166,15 @@
                                         <h2 class="product-name"><a href="@Url.Action("Detail", "Product", new { id = item.Id })" title="@item.Name">@item.Name</a></h2>
                                         <div class="product-ratings">
                                             <div class="ratings-box">
-                                                <div class="rating" style="width:@(item.TotalRating * 100)%"></div>
+                                                <div class="rating" style="width:100%"></div>
                                             </div>
                                         </div>
                                         <div class="product-price-box">
                                             @if (item.SalePrice != item.CurrentPrice)
                                             {
-                                                <span class="old-price">@item.RegularPrice</span>
+                                                <span class="old-price"> @Convert.ToDecimal(item.RegularPrice).ToString("#,#đ")  </span>
                                             }
-
-                                            <span class="product-price">@item.CurrentPrice</span>
+                                                <span class="product-price">@Convert.ToDecimal(item.CurrentPrice).ToString("#,#đ")</span>
                                         </div>
                                         <div class="product-actions">
                                             <a href="#" onclick="return AddProductToWishlist(@item.Id)" class="addtowishlist" title="Yêu thích">

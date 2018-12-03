@@ -27,11 +27,6 @@ namespace TCVWeb.Controllers
             _userManager = userManager;
 
         }
-        // GET: /<controller>/
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         //GET: Product/Detail/5
         public ActionResult Detail(int id)
@@ -86,22 +81,10 @@ namespace TCVWeb.Controllers
         public IActionResult Category(PagedList<ShopItem> model, int pageSize, int id, string from, string origin, int maxPrice, int minPrice, string style)
         {
             // Filter products  by category 
-            var filterQuery = _dbContext.ShopItems.Where(x => model.Search == null && x.SKU.Substring(6,1) == "S");
+            var filterQuery = _dbContext.ShopItems.Where(x => model.Search == null);
             var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
-            if (id == 0) {
-                selectQuery = filterQuery.Where(x => x.SKU.Substring(0, 3) == "NUT").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
-            }
-            else if (id == 1){
-                selectQuery = filterQuery.Where(x => x.SKU.Substring(0, 3) == "VEG").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
-            }
-            else if (id == 3){
-                selectQuery = filterQuery.Where(x => x.SKU.Substring(0, 3) == "SEE").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
-
-            }
-            else if (id == 2){
-                selectQuery = filterQuery.Where(x => x.SKU.Substring(0, 3) == "FRU").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
-            }
-            else {
+            if (id != 0) {
+                selectQuery = filterQuery.Where(x => x.SKU.Substring(0, 3) == @Convert.ToDecimal(id).ToString("00#")).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
             }
 
             // Filter products by export or import  
@@ -142,7 +125,7 @@ namespace TCVWeb.Controllers
             else {
                 ViewData["style"] = "grid";
             }
-            ViewData["categories"] = new String[] { "Hạt", "Thực phẩm", "Hoa quả sấy", "Nấm" };
+            ViewData["categories"] = new String[] { "Hạt", "Rau củ", "Trái cây", "Nấm", "Socola", "Chùm ngây", "Thực phẩm sấy" };
 
             return View(model);
         }

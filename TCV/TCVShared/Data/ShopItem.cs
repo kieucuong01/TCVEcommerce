@@ -178,6 +178,7 @@ namespace TCVShared.Data
                 return RegularPrice;
             }
         }
+
         [NotMapped]
         public virtual bool NewProduct
         {
@@ -190,5 +191,21 @@ namespace TCVShared.Data
                 return (diff.TotalHours < 168);
             }
         }
+
+        [NotMapped]
+        public virtual string DiscountPercent
+        {
+            get
+            {
+                if (this.SalePrice != this.RegularPrice) {
+                    double number = (this.RegularPrice - this.SalePrice) / this.RegularPrice;
+                    return Convert.ToDecimal(number).ToString("#.#%");
+                }
+                else {
+                    return "";
+                }
+            }
+        }
+
     }
 }
