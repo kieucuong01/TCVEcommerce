@@ -43,7 +43,7 @@
                             }
                             else
                             {
-                                if ( User.IsInRole("Manager"))
+                                if ( User.IsInRole("Manager") || User.IsInRole("Operator"))
                                 {
                                     <li><a href="@Url.Action("Index", "HomeAdmin", new { area = "Admin"})">@emailLogined</a></li>
                                 }

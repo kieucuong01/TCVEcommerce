@@ -14,7 +14,7 @@ using TCVWeb.Models;
 namespace TCVWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Operator")]
+    [Authorize(Roles = "Manager")]
     public class MemberController : Controller
     {
         private readonly ILogger _logger;
