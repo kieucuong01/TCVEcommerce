@@ -16,7 +16,7 @@ using TCVWeb.Areas.Admin.Models;
 namespace TCVWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager,Operator")]
     public class ProductController : Controller
     {
         private readonly ILogger _logger;

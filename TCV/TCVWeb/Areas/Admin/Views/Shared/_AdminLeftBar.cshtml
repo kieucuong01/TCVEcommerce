@@ -15,19 +15,19 @@
                     <li class="@(Html.IsActive("HomeAdmin") ? "nav-active" : "")">
                         <a href="@Url.Action("Index", "HomeAdmin")"><i class="fa fa-home"></i> <span>Dashboard</span></a>
                     </li>
-                    <li class="@(Html.IsActive("Member") ? "nav-parent nav-expanded nav-active" : "nav-parent")">
-                        <a href="#"><i class="fa fa-users"></i> <span>Thành Viên</span></a>
-                        <ul class="nav nav-children">
-                            <li class="@(Html.IsActive("Member", "Index") ? "nav-active" : "")">
-                                <a href="@Url.Action("Index", "Member")"><i class="fa fa-tasks"></i> Danh sách</a>
-                            </li>
-                            <li class="@(Html.IsActive("Member", "Search") ? "nav-active" : "")">
-                                <a href="@Url.Action("Search", "Member")"><i class="fa fa-search"></i> Tìm kiếm</a>
-                            </li>
-                        </ul>
-                    </li>
                     @if (User.IsInRole("Manager"))
                     {
+                        <li class="@(Html.IsActive("Member") ? "nav-parent nav-expanded nav-active" : "nav-parent")">
+                            <a href="#"><i class="fa fa-users"></i> <span>Thành Viên</span></a>
+                            <ul class="nav nav-children">
+                                <li class="@(Html.IsActive("Member", "Index") ? "nav-active" : "")">
+                                    <a href="@Url.Action("Index", "Member")"><i class="fa fa-tasks"></i> Danh sách</a>
+                                </li>
+                                <li class="@(Html.IsActive("Member", "Search") ? "nav-active" : "")">
+                                    <a href="@Url.Action("Search", "Member")"><i class="fa fa-search"></i> Tìm kiếm</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="@(Html.IsActive("Media") ? "nav-parent nav-expanded nav-active" : "nav-parent")">
                             <a href="#"><i class="fa fa-image"></i> <span>Thư viện</span></a>
                             <ul class="nav nav-children">
