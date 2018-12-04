@@ -89,24 +89,20 @@ namespace TCVWeb.Controllers
 
             // Filter products by export or import  
             if (from == "D") {
-                selectQuery = filterQuery.Where(x => x.SKU.Substring(3, 1) == "D").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+                selectQuery = filterQuery.Where(x => x.SKU.Substring(3, 1) == "1").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
             }
             else if (from == "F") {
-                selectQuery = filterQuery.Where(x => x.SKU.Substring(3, 1) == "F").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+                selectQuery = filterQuery.Where(x => x.SKU.Substring(3, 1) == "2").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
             }
 
             // Filter products by Origin
             if (origin == "VN")
             {
-                selectQuery = filterQuery.Where(x => x.SKU.Substring(4, 2) == "VN").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
-            }
-            else if (origin == "AU")
-            {
-                selectQuery = filterQuery.Where(x => x.SKU.Substring(4, 2) == "AU").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+                selectQuery = filterQuery.Where(x => x.SKU.Substring(4, 3) == "003").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
             }
             else if (origin == "IL")
             {
-                selectQuery = filterQuery.Where(x => x.SKU.Substring(4, 2) == "IL").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+                selectQuery = filterQuery.Where(x => x.SKU.Substring(4, 3) == "004").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
             }
             // Filter product by prices 
 
