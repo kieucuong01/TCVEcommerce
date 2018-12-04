@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using TCVWeb.Models;
 using TCVShared.Data;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace TCVWeb.Controllers
 {
@@ -96,9 +97,13 @@ namespace TCVWeb.Controllers
             return RedirectToAction("Index", new { Message = ManageMessageId.UnsetTwoFactorSuccess });
         }
 
-        public ActionResult GetMyOrder(){
+        public async Task<IActionResult> GetMyOrder(MyOrdersViewModel model){
+            var user = await GetCurrentUserAsync();
+            var orders = DBContext.ShopOrders.Where(order => order.UserId == user.Id).ToList();
 
-            return View();
+            model.orders = orders;
+
+            return View(model);
         }
 
         //

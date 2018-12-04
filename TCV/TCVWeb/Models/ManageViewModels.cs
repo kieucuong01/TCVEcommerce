@@ -56,6 +56,11 @@ namespace TCVWeb.Models
         public Shipping ShippingAddress { get; set; }
     }
 
+    public class MyOrdersViewModel
+    {
+        public ICollection<ShopOrder> orders { get; set; }
+    }
+
     public class ConfigureTwoFactorViewModel
     {
         public string SelectedProvider { get; set; }

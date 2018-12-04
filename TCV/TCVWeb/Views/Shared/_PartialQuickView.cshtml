@@ -29,8 +29,8 @@
             </div>
             <div class="product-detail-info">
                 <div class="product-price-box">
-                    <span class="old-price">@Model.RegularPrice</span>
-                    <span class="product-price">@Model.SalePrice</span>
+                    <span class="old-price"> @Convert.ToDecimal(Model.RegularPrice).ToString("#,#đ") </span>
+                    <span class="product-price">@Convert.ToDecimal(Model.SalePrice).ToString("#,#đ")</span>
                 </div>
                 <p class="availability">
                     <span class="font-weight-semibold">Tình trạng: </span>

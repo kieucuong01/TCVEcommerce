@@ -53,16 +53,16 @@ namespace TCVWeb.Controllers
 
             ViewData["otherSizeProduct"] = otherSizeProduct;
 
-            int productId = int.Parse(currentProduct.SKU.Substring(12, 3));
-            if (_dbContext.ShopItems.Any(o => int.Parse(o.SKU.Substring(12,3)) == productId + 1) == true) {
-                ViewData["nextProduct"] = _dbContext.ShopItems.FirstOrDefault(o => int.Parse(o.SKU.Substring(12, 3)) == productId + 1);
+            int productId = int.Parse(currentProduct.SKU.Substring(12, currentProduct.SKU.Length - 12));
+            if (_dbContext.ShopItems.Any(o => int.Parse(o.SKU.Substring(12, o.SKU.Length - 12)) == productId + 1) == true) {
+                ViewData["nextProduct"] = _dbContext.ShopItems.FirstOrDefault(o => int.Parse(o.SKU.Substring(12, o.SKU.Length - 12)) == productId + 1);
             }
             else {
                 ViewData["nextProduct"] = currentProduct;
             }
 
-            if (_dbContext.ShopItems.Any(o => int.Parse(o.SKU.Substring(12, 3)) == productId - 1) == true){
-                ViewData["previousProduct"] = _dbContext.ShopItems.FirstOrDefault(o => int.Parse(o.SKU.Substring(12, 3)) == productId - 1);
+            if (_dbContext.ShopItems.Any(o => int.Parse(o.SKU.Substring(12, o.SKU.Length - 12)) == productId - 1) == true){
+                ViewData["previousProduct"] = _dbContext.ShopItems.FirstOrDefault(o => int.Parse(o.SKU.Substring(12, currentProduct.SKU.Length - 12)) == productId - 1);
             }
             else {
                 ViewData["previousProduct"] = currentProduct;
@@ -83,8 +83,19 @@ namespace TCVWeb.Controllers
             // Filter products  by category 
             var filterQuery = _dbContext.ShopItems.Where(x => model.Search == null);
             var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
-            if (id != 0) {
-                selectQuery = filterQuery.Where(x => x.SKU.Substring(0, 3) == @Convert.ToDecimal(id).ToString("00#")).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+
+            if (id == -1){
+                selectQuery = filterQuery.Where(x => x.SKU.Substring(0, 3) == "011" 
+                                                    || x.SKU.Substring(0, 3) == "012"
+                                                    || x.SKU.Substring(0, 3) == "013"
+                                                    || x.SKU.Substring(0, 3) == "014").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+            else if (id == -2) {
+                selectQuery = filterQuery.Where(x => x.SKU.Substring(0, 3) == "015"
+                                                    || x.SKU.Substring(0, 3) == "016").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+            else {
+                selectQuery = filterQuery.Where(x => x.SKU.Substring(0, 3) == id.ToString("D3")).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
             }
 
             // Filter products by export or import  
