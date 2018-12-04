@@ -122,11 +122,11 @@ namespace TCVShared.Data
         public string ItemTags { get; set; }
 
         [NotMapped]
-        [Display(Name = "Nơi xuất hàng")]
+        [Display(Name = "Xuất xứ")]
         public int[] Exports { get; set; }
 
         [NotMapped]
-        [Display(Name = "Nước xuất hàng")]
+        [Display(Name = "Nước sản xuất")]
         public int[] ExportsPlace { get; set; }
 
         [NotMapped]

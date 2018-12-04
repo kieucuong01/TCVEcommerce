@@ -90,29 +90,55 @@
             });
 
             $("#ItemCats, #Exports, #ExportsPlace, #SizeProduct").change(function () {
-                var itemCat = $("#ItemCats").val()[0];
-                var exportPlace = $("#ExportsPlace").val()[0];
-                var size = $("#SizeProduct").val()[0];
-                if (itemCat.length == 1 || exportPlace.length ==1) {
-                    itemCat = '00' + $("#ItemCats").val()[0];
-                    exportPlace = '00' + $("#ExportsPlace").val()[0];
-                    size = '0' + $("#SizeProduct").val()[0];
+                console.log( @Model.Id);
+                var idLast = @Model.Id;
+                var itemCat = $("#ItemCats").val();
+                var exportPlace = $("#ExportsPlace").val();
+                var size = $("#SizeProduct").val();
+                var exports = $("#Exports").val();
+                var stringLengthCat = 0
+                var stringLengExportPlace = 0;
+                var stringLengthSize = 0;
+                if (itemCat != null) {
+                    stringLengthCat = itemCat[0].length;
+                    if (stringLengthCat === 1) {
+                        itemCat = '00' + $("#ItemCats").val();
+                    }
+                    else if (stringLengthCat == 2) {
+                        itemCat = '0' + $("#ItemCats").val();
+                    }
                 }
-                else if (itemCat.length == 2 || exportPlace.length == 2) {
-                    itemCat = '0' + $("#ItemCats").val()[0];
-                    exportPlace = '0' + $("#ExportsPlace").val()[0];
+                if (exportPlace != null)
+                {
+                    stringLengExportPlace = exportPlace[0].length;
+                    if (stringLengExportPlace === 1) {
+                        exportPlace = '00' + $("#ExportsPlace").val();
+                    }
+                    else if (stringLengExportPlace == 2) {
+                        exportPlace = '0' + $("#ExportsPlace").val();
+                    }
                 }
-                else {
-                    itemCat = $("#ItemCats").val(0);
-                    exportPlace = $("#ExportsPlace").val(0);
-                    size = $("#SizeProduct").val()[0];
+                if (size != null) {
+                    stringLengthSize = size[0].length;
+                    if (stringLengthSize === 1) {
+                        size = '0' + $("#SizeProduct").val();
+                    }
+                    else if (stringLengthSize == 2) {
+                        size = $("#SizeProduct").val();
+                    }
                 }
+                if (idLast > 0 && idLast < 10)
+                    idLast = '00' + idLast;
+                else if (idLast > 10 && idLast < 100)
+                    idLast = '0' + idLast;
                 if ($("#ItemCats").val() != null && $("#Exports").val() != null && $("#ExportsPlace").val() != null && $("#SizeProduct").val() != null)
                     $("#SKU").val(itemCat + exports + exportPlace + size + "001" + idLast);
                 else {
                     $("#SKU").val('');
                 }
             });
+            
+
         });
         
     </script>
