@@ -62,7 +62,7 @@ namespace TCVWeb.Controllers
             }
 
             if (_dbContext.ShopItems.Any(o => int.Parse(o.SKU.Substring(12, o.SKU.Length - 12)) == productId - 1) == true){
-                ViewData["previousProduct"] = _dbContext.ShopItems.FirstOrDefault(o => int.Parse(o.SKU.Substring(12, currentProduct.SKU.Length - 12)) == productId - 1);
+                ViewData["previousProduct"] = _dbContext.ShopItems.FirstOrDefault(o => int.Parse(o.SKU.Substring(12, o.SKU.Length - 12)) == productId - 1);
             }
             else {
                 ViewData["previousProduct"] = currentProduct;
