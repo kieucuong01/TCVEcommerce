@@ -127,10 +127,6 @@
                         size = $("#SizeProduct").val();
                     }
                 }
-                if (idLast > 0 && idLast < 10)
-                    idLast = '00' + idLast;
-                else if (idLast > 10 && idLast < 100)
-                    idLast = '0' + idLast;
                 if ($("#ItemCats").val() != null && $("#Exports").val() != null && $("#ExportsPlace").val() != null && $("#SizeProduct").val() != null)
                     $("#SKU").val(itemCat + exports + exportPlace + size + "001" + idLast);
                 else {
