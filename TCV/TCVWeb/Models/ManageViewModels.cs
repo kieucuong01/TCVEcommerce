@@ -40,7 +40,7 @@ namespace TCVWeb.Models
     public class ChangePasswordViewModel
     {
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "Mật khẩu hiện tại")]
         public string OldPassword { get; set; }
 
         [StringLength(100, ErrorMessage = "{0} phải có độ dài ít nhât {2} kí tự.", MinimumLength = 6)]

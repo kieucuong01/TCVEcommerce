@@ -122,6 +122,16 @@ namespace TCVShared.Data
 
         [ForeignKey("ItemId")]
         public virtual ShopItem ShopItem { get; set; }
+
+        [NotMapped]
+        public virtual string SubTotal
+        {
+            get
+            {   
+                double number = this.Quantity * this.ShopItem.CurrentPrice;
+                return Convert.ToDecimal(number).ToString("#,### đ");
+            }
+        }
     }
 
     public class ShopOrder
@@ -176,5 +186,14 @@ namespace TCVShared.Data
 
         [Display(Name = "Sản phẩm")]
         public virtual ICollection<OrderItem> Items { get; set; }
+
+        [NotMapped]
+        public virtual string FormatedGrandTotalPrice
+        {
+            get
+            {
+                return Convert.ToDecimal(this.GrandTotalPrice).ToString("#,# đ");
+            }
+        }
     }
 }
