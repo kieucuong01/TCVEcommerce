@@ -30,7 +30,7 @@ namespace TCVWeb.Areas.Admin.Controllers
             _logger = logger;
             _dbContext = dbContext;
 
-            mediaUrl = AppSettings.Strings["MediaUrl"] ?? "http://www.ticivi.com/media";
+            mediaUrl = AppSettings.Strings["MediaUrl"] ?? "https://www.ticivi.com/media";
             mediaPath = AppSettings.Strings["MediaPath"] ?? "./wwwroot/media";
         }
 
