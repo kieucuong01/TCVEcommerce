@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace TCVWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager,Operator")]
     public class MediaController : Controller
     {
         private readonly string mediaUrl;
