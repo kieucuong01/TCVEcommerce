@@ -50,6 +50,11 @@ namespace TCVWeb.Controllers
             model.TotalRows = filterQuery.Count();
             model.Content = selectQuery.ToList();
 
+            foreach (var shopItem in model.Content)
+            {
+                shopItem.MediaFiles = _dbContext.MediaFiles.Where(file => file.AlbumId == shopItem.AlbumId).ToList();
+            }
+
             var supplier = new Supplier();
             supplier.Name = "Ticivi Agriculture";
             supplier.Address = "/img/icon/logo.png";

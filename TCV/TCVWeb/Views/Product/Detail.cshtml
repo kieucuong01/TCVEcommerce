@@ -40,26 +40,14 @@
                                             <img src="@currentProduct.Image" alt="product" style="object-fit: cover; width:100%; height:100px">
                                         </a>
                                     </div>
+                                    @foreach (var mediafile in currentProduct.MediaFiles)
+                                    {
                                     <div class="product-img-wrapper">
-                                        <a href="#" data-image="@currentProduct.Preview" data-zoom-image="@currentProduct.Preview" class="product-gallery-item">
-                                            <img src="@currentProduct.Preview" alt="product" style="object-fit: cover; width:100%; height:100px">
+                                        <a href="#" data-image="http://www.ticivi.com/media/@mediafile.FullPath" data-zoom-image="http://www.ticivi.com/media/@mediafile.FullPath" class="product-gallery-item">
+                                            <img src="http://www.ticivi.com/media/@mediafile.FullPath" alt="product" style="object-fit: cover; width:100%; height:100px">
                                         </a>
                                     </div>
-                                    <div class="product-img-wrapper">
-                                        <a href="#" data-image="~/img/demos/shop/products/single/product3.jpg" data-zoom-image="~/img/demos/shop/products/single/product3.jpg" class="product-gallery-item">
-                                            <img src="~/img/demos/shop/products/single/thumbs/product3.jpg" alt="product" style="object-fit: cover; width:100%; height:100px">
-                                        </a>
-                                    </div>
-                                    <div class="product-img-wrapper">
-                                        <a href="#" data-image="~/img/demos/shop/products/single/product4.jpg" data-zoom-image="~/img/demos/shop/products/single/product4.jpg" class="product-gallery-item">
-                                            <img src="~/img/demos/shop/products/single/thumbs/product4.jpg" alt="product" style="object-fit: cover; width:100%; height:100px">
-                                        </a>
-                                    </div>
-                                    <div class="product-img-wrapper">
-                                        <a href="#" data-image="~/img/demos/shop/products/single/product5.jpg" data-zoom-image="~/img/demos/shop/products/single/product5.jpg" class="product-gallery-item">
-                                            <img src="~/img/demos/shop/products/single/thumbs/product5.jpg" alt="product" style="object-fit: cover; width:100%; height:100px">
-                                        </a>
-                                    </div>
+                                    }
                                 </div>
                             </div>
                             <div class="product-details-box col-sm-7">

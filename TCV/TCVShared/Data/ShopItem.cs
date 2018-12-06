@@ -7,6 +7,7 @@ using System.Text;
 
 namespace TCVShared.Data
 {
+
     public class ShopItemTaxo
     {
         public int Id { get; set; }
@@ -177,7 +178,8 @@ namespace TCVShared.Data
 
                 return RegularPrice;
             }
-        }
+        }               
+
 
         [NotMapped]
         public virtual bool NewProduct
@@ -206,6 +208,37 @@ namespace TCVShared.Data
                 }
             }
         }
+
+        [NotMapped]
+        public virtual string FormatedCurrentPrice
+        {
+            get
+            {
+                return Convert.ToDecimal(this.CurrentPrice).ToString("#,#đ");
+            }
+        }
+
+        [NotMapped]
+        public virtual string FormatedSalePrice
+        {
+            get
+            {
+                return Convert.ToDecimal(this.SalePrice).ToString("#,#đ");
+            }
+        }
+
+        [NotMapped]
+        public virtual string FormatedRegularPrice
+        {
+            get
+            {
+                return Convert.ToDecimal(this.RegularPrice).ToString("#,#đ");
+            }
+        }
+
+        [NotMapped]
+        public virtual List<MediaFile>  MediaFiles {
+            get; set;        }
 
     }
 }

@@ -84,7 +84,7 @@
                                     <figure class="product-image-area">
                                         <a href="@Url.Action("Detail", "Product", new { id = item.Id })" title="@item.Name" class="product-image">
                                             <img src="@item.Image" alt="@item.Name" style="object-fit:cover; width:100%; height:200px">
-                                            <img src="@item.Preview" alt="@item.Name" class="product-hover-image" style="object-fit:cover; width:100%; height:200px">
+                                            @*<img src="@item.Preview" alt="@item.Name" class="product-hover-image" style="object-fit:cover; width:100%; height:200px">*@
                                         </a>
                                         @if (item.CurrentPrice != item.RegularPrice)
                                         {
@@ -144,7 +144,7 @@
                                     <figure class="product-image-area">
                                         <a href="@Url.Action("Detail", "Product", new { id = item.Id })" title="@item.Name" class="product-image">
                                             <img src="@item.Image" alt="Product Name" style="object-fit:cover; width:100%; height:200px">
-                                            <img src="@item.Preview" alt="Product Name" class="product-hover-image" style="object-fit:cover; width:100%; height:200px">
+                                            @*<img src="@item.Preview" alt="Product Name" class="product-hover-image" style="object-fit:cover; width:100%; height:200px">*@
                                         </a>
                                         <a href="#" class="product-quickview" data-toggle="modal" data-target=".quickview-modal" id="@item.Id">
                                             <i class="fa fa-share-square-o"></i>

@@ -32,6 +32,8 @@ namespace TCVWeb.Controllers
         public ActionResult Detail(int id)
         {
             ShopItem currentProduct = _dbContext.ShopItems.FirstOrDefault(product => product.Id == id);
+            currentProduct.MediaFiles = _dbContext.MediaFiles.Where(file => file.AlbumId == currentProduct.AlbumId).ToList();
+
             ShopItem[] otherSizeProduct = _dbContext.ShopItems.Where(product => product.SKU.Substring(10, 3) == currentProduct.SKU.Substring(10, 3)).ToArray();
 
             var additionalInfomation = new List<AdditionInfo>();

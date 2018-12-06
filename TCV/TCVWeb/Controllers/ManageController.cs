@@ -100,6 +100,14 @@ namespace TCVWeb.Controllers
         public async Task<IActionResult> GetMyOrder(MyOrdersViewModel model){
             var user = await GetCurrentUserAsync();
             var orders = DBContext.ShopOrders.Where(order => order.UserId == user.Id).ToList();
+            
+            foreach (var order in orders) {
+                var orderItems = DBContext.OrderItems.Where(orderItem => orderItem.OrderId == order.Id).ToList();
+                foreach (var orderItem in orderItems) {
+                    orderItem.ShopItem = DBContext.ShopItems.Find(orderItem.ItemId);
+                }
+                order.Items = orderItems;
+            }
 
             model.orders = orders;
 
