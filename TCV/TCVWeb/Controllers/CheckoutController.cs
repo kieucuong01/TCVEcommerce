@@ -91,7 +91,6 @@ namespace TCVWeb.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> PlaceOrder(ShopOrder model, CancellationToken requestAborted)
         {
-            var user = _userManager.GetUserAsync(HttpContext.User);
             ShopCart cart = HttpContext.Session.GetObjectFromJson<ShopCart>("Cart");
 
             model.AdjustPrice = cart.SubTotal;
@@ -100,8 +99,10 @@ namespace TCVWeb.Controllers
             model.ShippingFee = cart.ShippingFee;
             model.CreateTime = DateTime.Now;
 
-            if (this.User.Identity.IsAuthenticated){
-                model.UserId = user.Id;
+            var userID = _userManager.GetUserId(HttpContext.User);
+            if (userID != null)
+            {
+                model.UserId = userID;
             }
             else {
                 model.UserId = -1;
