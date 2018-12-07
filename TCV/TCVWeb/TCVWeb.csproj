@@ -24,4 +24,7 @@
   <ItemGroup>
     <Compile Remove="Resources\Home.Designer.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="media\" />
+  </ItemGroup>
 </Project>

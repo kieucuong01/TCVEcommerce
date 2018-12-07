@@ -99,10 +99,10 @@ namespace TCVWeb.Controllers
             model.ShippingFee = cart.ShippingFee;
             model.CreateTime = DateTime.Now;
 
-            var userID = _userManager.GetUserId(HttpContext.User);
+            var userID = _userManager.GetUserId(User);
             if (userID != null)
             {
-                model.UserId = userID;
+                model.UserId = int.Parse(userID);
             }
             else {
                 model.UserId = -1;

@@ -67,18 +67,17 @@
             <tbody>
                 @foreach (var item in Model.Content)
                 {
-                    <tr>
-                        <td>@Html.DisplayFor(m => @item.AppUser.UserName)</td>
-                        <td>@Html.DisplayFor(m => item.GrandTotalPrice)</td>
-                        <td>@Html.DisplayFor(m => item.OrderStatus)</td>
-                        <td>@Html.DisplayFor(m => item.PaymentStatus)</td>
-                        <td>@Html.DisplayFor(m => item.DeliveryTime)</td>
-                        <td>
-                            @Html.DetailsLink("DetailsProduct", new { id = item.Id })
-                            @Html.UpdateLink("UpdateProduct", new { id = item.Id })
-                            @Html.DeleteLink("DeleteProduct", new { id = item.Id }, true)
-                        </td>
-                    </tr>
+                <tr>
+                    <td>@Html.DisplayFor(m => @item.AppUser.UserName)</td>
+                    <td>@Html.DisplayFor(m => item.GrandTotalPrice)</td>
+                    <td>@Html.DisplayFor(m => item.OrderStatus)</td>
+                    <td>@Html.DisplayFor(m => item.PaymentStatus)</td>
+                    <td>@Html.DisplayFor(m => item.PaymentStatus)</td>
+                    <td>@Html.DisplayFor(m => item.DeliveryTime)</td>
+                    <td>
+                        @Html.DetailsLink("DetailsOrder", new { id = item.Id }, true)
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
