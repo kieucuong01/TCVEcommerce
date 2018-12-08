@@ -43,7 +43,7 @@
             <div class="form-group">
                 <label asp-for="ItemCats" class="col-sm-3 control-label"></label><span style="color:red;">*</span>
                 <div class="col-sm-9">
-                    <select id="ItemCats" name="ItemCats" class="form-control", required>
+                    <select multiple id="ItemCats" name="ItemCats" class="form-control", required>
                         @if (catList != null)
                         {
                             @foreach (var item in catList)
@@ -64,7 +64,7 @@
             <div class="form-group">
                 <label asp-for="Exports" class="col-sm-3 control-label"></label><span style="color:red;">*</span>
                 <div class="col-sm-9">
-                    <select id="Exports" name="Exports" class="form-control", required>
+                    <select multiple id="Exports" name="Exports" class="form-control", required>
                         @if (exportList != null)
                         {
                             @foreach (var item in exportList)
@@ -86,7 +86,7 @@
             <div class="form-group">
                 <label asp-for="ExportsPlace" class="col-sm-3 control-label"></label><span style="color:red;">*</span>
                 <div class="col-sm-9">
-                    <select id="ExportsPlace" name="ExportsPlace" class="form-control", required>
+                    <select multiple id="ExportsPlace" name="ExportsPlace" class="form-control", required>
                         @if (exportList != null)
                         {
                             @foreach (var item in exportList)
@@ -107,7 +107,7 @@
             <div class="form-group">
                 <label asp-for="SizeProduct" class="col-sm-3 control-label"></label><span style="color:red;">*</span>
                 <div class="col-sm-9">
-                    <select id="SizeProduct" name="SizeProduct" class="form-control", required>
+                    <select multiple id="SizeProduct" name="SizeProduct" class="form-control", required>
                         @if (exportList != null)
                         {
                             @foreach (var item in sizeList)

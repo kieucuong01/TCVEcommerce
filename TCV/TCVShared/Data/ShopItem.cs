@@ -35,7 +35,7 @@ namespace TCVShared.Data
         [Display(Name = "Tên gọi")]
         public string Name { get; set; }
 
-        [Required, StringLength(64)]
+        [StringLength(64)]
         [Display(Name = "Tên gọi English")]
         public string NameEn { get; set; }
 
