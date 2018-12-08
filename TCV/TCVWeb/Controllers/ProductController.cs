@@ -147,5 +147,54 @@ namespace TCVWeb.Controllers
             return PartialView("_PartialQuickView", model);
         }
 
+        public IActionResult Search(PagedList<ShopItem> model, string keyword, int pageSize, int id, string from, string origin, int maxPrice, int minPrice, string style) {
+        
+            var filterQuery = _dbContext.ShopItems.Where(x => x.Name.Contains(keyword));
+            var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+
+            // Filter products by export or import  
+            if (from == "D")
+            {
+                selectQuery = filterQuery.Where(x => x.SKU.Substring(3, 1) == "1").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+            else if (from == "F")
+            {
+                selectQuery = filterQuery.Where(x => x.SKU.Substring(3, 1) == "2").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+
+            // Filter products by Origin
+            if (origin == "VN")
+            {
+                selectQuery = filterQuery.Where(x => x.SKU.Substring(4, 3) == "003").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+            else if (origin == "IL")
+            {
+                selectQuery = filterQuery.Where(x => x.SKU.Substring(4, 3) == "004").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+            // Filter product by prices 
+
+            if (maxPrice != 0)
+            {
+                selectQuery = filterQuery.Where(x => x.CurrentPrice >= minPrice && x.CurrentPrice <= maxPrice).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+
+            model.TotalRows = filterQuery.Count();
+            model.Content = selectQuery.ToList();
+            model.PageSize = pageSize != 0 ? pageSize : 12;
+
+            ViewData["keyword"] = keyword;
+            if (style == "list")
+            {
+                ViewData["style"] = "list";
+            }
+            else
+            {
+                ViewData["style"] = "grid";
+            }
+            ViewData["categories"] = new String[] { "Hạt", "Rau củ", "Trái cây", "Nấm", "Socola", "Chùm ngây", "Thực phẩm sấy" };
+
+            return View(model);
+        }
+
     }
 }

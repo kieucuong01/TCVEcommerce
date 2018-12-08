@@ -99,18 +99,18 @@ namespace TCVWeb.Controllers
             model.ShippingFee = cart.ShippingFee;
             model.CreateTime = DateTime.Now;
 
-            var userID = _userManager.GetUserId(User);
+            var userID = _userManager.GetUserId(HttpContext.User);
             if (userID != null)
             {
                 model.UserId = int.Parse(userID);
             }
-            else {
-                model.UserId = -1;
+            else
+            {
+                model.UserId = 0;
             }
 
             _dbContext.ShopOrders.Add(model);
 
-            await _dbContext.SaveChangesAsync(requestAborted);
 
             List<OrderItem> listOrder = new List<OrderItem>();
 
@@ -122,7 +122,6 @@ namespace TCVWeb.Controllers
                 orderItem.Quantity = cartItem.Quantity;
                 orderItem.ItemId = cartItem.ShopItem.Id;
                 orderItem.OrderId = model.Id;
-
                 //orderItem.ShopOrder = model;
 
                 listOrder.Add(orderItem);
@@ -131,7 +130,9 @@ namespace TCVWeb.Controllers
             }
             //model.Items = listOrder;
 
-            _dbContext.SaveChanges();
+
+            await _dbContext.SaveChangesAsync(requestAborted);
+
 
             return View(model);
         }
