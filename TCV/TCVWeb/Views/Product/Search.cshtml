@@ -51,17 +51,7 @@
                         </div>
                         <ul class="pagination">
                             <pagination model="@Model" query-string="@Context.Request.QueryString" css-style="pagination pagination-sm"></pagination>
-                        </ul>
-                       
-                        <div class="limiter">
-                            <label>Hiển thị:</label>
-                            <select onchange="SelectPageSize()" id="page-size">
-                                <option value="12">12</option>
-                                <option value="24">24</option>
-                                <option value="36">36</option>
-                            </select>
-                        </div>
-
+                        </ul>                       
                     </div>
                 </div>
                 @if (viewType == "list")
@@ -188,14 +178,6 @@
                     <div class="toolbar">
                         <div class="sorter">                           
                             <pagination model="@Model" query-string="@Context.Request.QueryString" css-style="pagination pagination-sm"></pagination>                           
-                            <div class="limiter">
-                                <label>Hiển thị:</label>
-                                <select onchange="SelectPageSize()" id="page-size">
-                                    <option value="12">12</option>
-                                    <option value="24">24</option>
-                                    <option value="36">36</option>
-                                </select>
-                            </div>
                         </div>
                     </div>
                 </div>

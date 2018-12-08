@@ -83,7 +83,7 @@ namespace TCVWeb.Controllers
         public IActionResult Category(PagedList<ShopItem> model, int pageSize, int id, string from, string origin, int maxPrice, int minPrice, string style)
         {
             // Filter products  by category 
-            var filterQuery = _dbContext.ShopItems.Where(x => model.Search == null);
+            var filterQuery = _dbContext.ShopItems.AsEnumerable();
             var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
 
             if (id == -1){
