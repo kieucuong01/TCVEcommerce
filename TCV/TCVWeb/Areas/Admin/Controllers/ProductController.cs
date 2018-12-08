@@ -793,9 +793,23 @@ namespace TCVWeb.Areas.Admin.Controllers
         {
             var filterQuery = _dbContext.ShopOrders.Where(x => model.Search == null || x.AppUser.UserName.Contains(model.Search));
             var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
-
+            
             model.TotalRows = filterQuery.Count();
             model.Content = selectQuery.ToList();
+            foreach(var user in model.Content)
+            {
+                user.AppUser = _dbContext.Users.FirstOrDefault(x => x.Id == user.UserId);
+            }
+
+            return View(model);
+        }
+
+        public ActionResult DetailsOrder(int? id)
+        {
+            ShopOrder model = _dbContext.ShopOrders.Find(id);
+
+            if (model == null)
+                return BadRequest();
 
             return View(model);
         }
