@@ -319,8 +319,13 @@ namespace TCVWeb.Controllers
                     // Send an email with this link
                     string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                    await MessageServices.SendEmailAsync(model.Email, "Confirm your account",
-                        "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+                    await MessageServices.SendEmailAsync(model.Email, "TiCiVi - Xác nhận tài khoản",
+                                                         "<div> <p> Xin chào, cám ơn bạn đã đăng ký tài khoản trên TiCiVi ! </p> " + 
+                                                                "<p> Vì lý do bảo mật, hãy ấn vào link dưới đây để xác thực địa chỉ email của ban. </p>" +
+                                                                "<a href=\"" + callbackUrl + "\"> Ấn vào đây </a> " +
+                                                                "<p> Cám ơn bạn! </p> </br>" +
+                                                                "<p> Đội ngũ TiCiVi </p>" +
+                                                                " </div>");
 
                     return RedirectToAction("RegisterConfirmation", "Account", new { link = callbackUrl });
                 }
