@@ -135,6 +135,7 @@ namespace TCVWeb.Controllers
                 ViewData["style"] = "grid";
             }
             ViewData["categories"] = new String[] { "Hạt", "Rau củ", "Trái cây", "Nấm", "Socola", "Chùm ngây", "Thực phẩm sấy" };
+            ViewData["catID"] = id;
 
             return View(model);
         }

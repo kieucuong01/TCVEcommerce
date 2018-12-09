@@ -8,6 +8,7 @@
     <meta name="keywords" content="ticivi" />
     <meta name="description" content="Mua nông sản chất lượng cao">
     <meta name="author" content="ticivicompany">
+    <meta name="theme-color" content="#317EFB" />
     <!-- Favicon -->
     <link rel="shortcut icon" href="~/img/icon/logo.png" type="image/x-icon" />
     <link rel="apple-touch-icon" href="~/img/icon/logo.png">
@@ -90,6 +91,14 @@
         }(document, 'script', 'facebook-jssdk'));
     </script>
 
+    <script>
+        if('serviceWorker' in navigator) {
+          navigator.serviceWorker
+                   .register('/js/sw.js')
+                   .then(function() { console.log("Service Worker Registered"); });
+        }
+    </script>
+
 
     <!-- Category view -->
     @*<script src="~/vendor/nouislider/nouislider.min.js"></script>*@
@@ -112,7 +121,7 @@
          logged_in_greeting="Chat với Admin Ticivi"
          logged_out_greeting="Chat với Admin Ticivi">
     </div>
-    
+
     @RenderSection("Scripts", false)
 
 

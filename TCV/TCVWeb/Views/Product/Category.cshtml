@@ -3,6 +3,7 @@
 @{
     var categories = ViewData["categories"] as String[];
     var viewType = ViewData["style"] as String;
+    var catID = ViewData["catID"] as int?;
 }
 <div role="main" class="main">
     <section class="page-header">
@@ -18,14 +19,54 @@
             <div class="col-md-9 col-md-push-3">
                 <div class="owl-carousel boxed-banner-carosel owl-theme" data-plugin-options="{'items':1}">
                     <div class="boxed-banner">
-                        <img src="~/img/banner/banner4.jpg" alt="Banner">
-                        <div class="banner-content">
+                        @if (catID == null || catID == -1)
+                        {
+                            <img src="~/img/banner/banner4.jpg" alt="Banner">
+                        }
+                        else if(catID == -2)
+                        {
+                            <img src="~/img/banner/banner4.jpg" alt="Banner">
+                        }
+                        else if(catID == 11)
+                        {
+                            <img src="~/img/banner/banner4.jpg" alt="Banner">
+                        }
+                        else if(catID == 12)
+                        {
+                            <img src="~/img/banner/banner_raucu.png" alt="Banner">
+                        }
+                        else if(catID == 13)
+                        {
+                            <img src="~/img/banner/banner_traicay.png" alt="Banner">
+                        }
+                        else if(catID == 14)
+                        {
+                            <img src="~/img/banner/banner_nam.png" alt="Banner">
+                        }
+                         else if(catID == 15)
+                        {
+                            <img src="~/img/banner/banner_socola.png" alt="Banner">
+                        }
+                        else if(catID == 16)
+                        {
+                            <img src="~/img/banner/banner_chumngay.png" alt="Banner">
+                        }
+                        else if(catID == 17)
+                        {
+                            <img src="~/img/banner/banner_thucphamsay.png" alt="Banner">
+                        }
+                        else
+                        {
+                            <img src="~/img/banner/banner4.jpg" alt="Banner">
+                        }
+
+                         <div class="banner-content">
                             @* TODO *@
                         </div>
                     </div>
-                    <div class="boxed-banner">
+                    @*<div class="boxed-banner">
                         <img src="~/img/banner/banner2.jpg" alt="Banner">
-                    </div>
+                    </div>*@
                 </div>
                 <div class="toolbar mb-none">
                     <div class="sorter">
