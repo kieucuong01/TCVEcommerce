@@ -19,6 +19,7 @@
   <ItemGroup>
     <Content Remove="wwwroot\index.html" />
     <Content Remove="wwwroot\manifest.json" />
+    <Content Remove="wwwroot\lib\manifest.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Views\Home\About.cshtml">
@@ -33,6 +34,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\index.html" />
-    <None Include="wwwroot\manifest.json" />
+    <None Include="wwwroot\lib\manifest.json" />
   </ItemGroup>
 </Project>
