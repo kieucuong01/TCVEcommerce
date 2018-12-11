@@ -59,7 +59,7 @@
                                 <li class="@(Html.IsActive("Product", "CreateProduct") ? "nav-active" : "")">
                                     <a href="@Url.Action("CreateProduct", "Product")"><i class="fa fa-plus"></i> Thêm mới</a>
                                 </li>
-                                @if (User.IsInRole("Manager"))
+                                @if (User.IsInRole("Admin"))
                                 {
                                     <li class="@(Html.IsActive("Product", "ItemCatList") ? "nav-active" : "")">
                                         <a href="@Url.Action("ItemCatList", "Product")"><i class="fa fa-cubes"></i> Phân loại</a>
@@ -70,11 +70,14 @@
                                     <li class="@(Html.IsActive("Product", "ExportList") ? "nav-active" : "")">
                                         <a href="@Url.Action("ExportList", "Product")"><i class="fa fa-cubes"></i> Nơi xuất hàng</a>
                                     </li>
-                                    <li class="@(Html.IsActive("Product", "Orders") ? "nav-active" : "")">
-                                        <a href="@Url.Action("Orders", "Product")"><i class="fa fa-shopping-cart"></i> Đơn hàng</a>
-                                    </li>
                                     <li class="@(Html.IsActive("Product", "SizeProductList") ? "nav-active" : "")">
                                         <a href="@Url.Action("SizeProductList", "Product")"><i class="fa fa-cubes"></i> Kích thước</a>
+                                    </li>
+                                }
+                                @if (User.IsInRole("Manager"))
+                                {
+                                    <li class="@(Html.IsActive("Product", "Orders") ? "nav-active" : "")">
+                                        <a href="@Url.Action("Orders", "Product")"><i class="fa fa-shopping-cart"></i> Đơn hàng</a>
                                     </li>
                                 }
                             </ul>

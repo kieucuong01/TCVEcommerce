@@ -55,6 +55,10 @@
     <script src="~/js/summernote-vi-VN.js"></script>
     <script>
         $(document).ready(function () {
+            document.getElementById("ItemCats").selectedIndex = "-1";
+            document.getElementById("Exports").selectedIndex = "-1";
+            document.getElementById("ExportsPlace").selectedIndex = "-1";
+            document.getElementById("SizeProduct").selectedIndex = "-1";
             $("#ItemCats").select2({
                 language: "vi",
                 theme: "bootstrap",
