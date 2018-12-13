@@ -45,7 +45,6 @@ namespace TCVWeb.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            cart.ShippingFee = 30000;
             HttpContext.Session.SetObjectAsJson("Cart", cart);
 
             if (cart == null){
