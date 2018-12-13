@@ -58,14 +58,14 @@ namespace TCVShared.Data
         public string ContentEn { get; set; }
 
         [Display(Name = "Giá ban đầu")]
-        [DisplayFormat(DataFormatString = "{0:#,#.000} VNĐ")]
+        [DisplayFormat(DataFormatString = "{0:#,#} VNĐ")]
         public double RegularPrice { get; set; }
         [Display(Name = "Giá ban đầu English")]
         [DisplayFormat(DataFormatString = "$ {0:#,#.00}")]
         public double RegularPriceEn { get; set; }
 
         [Display(Name = "Giá khuyến mãi")]
-        [DisplayFormat(DataFormatString = "{0:#,#.000} VNĐ")]
+        [DisplayFormat(DataFormatString = "{0:#,#} VNĐ")]
         public double SalePrice { get; set; }
         [Display(Name = "Giá khuyến mãi English")]
         [DisplayFormat(DataFormatString = "$ {0:#,#.00}")]
