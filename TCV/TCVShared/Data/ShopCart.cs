@@ -112,11 +112,7 @@ namespace TCVShared.Data
         {
             get
             {
-                if (Items != null)
-                {
-                    return Items.Sum(x => x.ItemTotal);
-                }
-                return 0.0;
+                return Items != null ? Items.Sum(x => x.ItemTotal) : 0.0;
             }
         }
 
@@ -124,7 +120,14 @@ namespace TCVShared.Data
         [DisplayFormat(DataFormatString = "{0:#,#.000} VNĐ")]
         public double ShippingFee
         {
-            get; set;
+            get
+            {
+                if (this.SubTotal < 400000)
+                {
+                    return 20000;
+                }
+                else { return 0; }
+            }
         }
 
         [NotMapped]
