@@ -807,6 +807,7 @@ namespace TCVWeb.Areas.Admin.Controllers
         public ActionResult DetailsOrder(int? id)
         {
             ShopOrder model = _dbContext.ShopOrders.Find(id);
+            model.AppUser = _dbContext.Users.Where(x => x.Id == model.UserId).SingleOrDefault();
 
             if (model == null)
                 return BadRequest();

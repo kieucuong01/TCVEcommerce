@@ -153,6 +153,7 @@ namespace TCVShared.Data
         public double ShippingFee { get; set; }
 
         [Display(Name = "Tổng cộng")]
+        [DisplayFormat(DataFormatString = "{0:#,#} VNĐ")]
         public double GrandTotalPrice { get; set; }
 
         [Display(Name = "Thanh toán")]
@@ -192,7 +193,7 @@ namespace TCVShared.Data
         {
             get
             {
-                return Convert.ToDecimal(this.GrandTotalPrice).ToString("#,# đ");
+                return Convert.ToDecimal(this.GrandTotalPrice).ToString("#,### đ");
             }
         }
     }
