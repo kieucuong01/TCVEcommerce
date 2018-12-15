@@ -4,10 +4,15 @@
 }
 
 <div role="main" class="main">
-
     <section class="form-section">
         <div class="container">
             <h1 class="h2 heading-primary font-weight-normal mb-md mt-xlg">Đăng nhập</h1>
+                @if (ViewData["StatusMessage"] != null)
+            {
+                <div class="alert alert-success success-msg mb-xl" role="alert">
+                    @ViewData["StatusMessage"]
+                </div>
+            }
 
             <div class="featured-box featured-box-primary featured-box-flat featured-box-text-left mt-md">
                 <div class="box-content">

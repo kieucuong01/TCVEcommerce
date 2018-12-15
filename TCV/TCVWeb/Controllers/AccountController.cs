@@ -67,7 +67,15 @@ namespace TCVWeb.Controllers
                     {
                         return RedirectToAction(nameof(HomeAdminController.Index), "HomeAdmin", new { area = "Admin" });
                     }
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                    else {
+                        if (_dbContext.Users.Where(user => user.Email == model.Email).FirstOrDefault().EmailConfirmed == false)
+                        {
+                            await _signInManager.SignOutAsync();
+                            ViewData["StatusMessage"] = "Đăng nhập thất bại, bạn phải kích hoạt tài khoản sau khi đăng ký.";
+                            return View(model);
+                        }
+                        return RedirectToAction(nameof(HomeController.Index), "Home");
+                    }
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -75,11 +83,11 @@ namespace TCVWeb.Controllers
                 }
                 if (result.IsLockedOut)
                 {
-                    ModelState.AddModelError(string.Empty, "Tài khoản bị khóa đăng nhập, xin thử lại sau 5 phút.");
+                    ViewData["StatusMessage"] = "Tài khoản bị khóa đăng nhập, xin thử lại sau 5 phút.";
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Đăng nhập thất bại, xin kiểm tra lại.");
+                    ViewData["StatusMessage"] = "Đăng nhập thất bại, xin kiểm tra lại.";
                 }
             }
 
