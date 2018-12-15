@@ -32,11 +32,11 @@ namespace TCVWeb.Models
         public string Provider { get; set; }
 
         [Required]
-        [Display(Name = "Code")]
+        [Display(Name = "Mã")]
         public string Code { get; set; }
         public string ReturnUrl { get; set; }
 
-        [Display(Name = "Remember this browser?")]
+        [Display(Name = "Ghi nhớ trên trình duyệt này?")]
         public bool RememberBrowser { get; set; }
 
         public bool RememberMe { get; set; }
