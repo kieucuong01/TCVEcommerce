@@ -11,7 +11,7 @@
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
                 <li>
-                    <a asp-action="Index" asp-controller="Home">
+                    <a asp-action="Index" asp-controller="HomeAdmin">
                         <i class="fa fa-home"></i>
                     </a>
                 </li>
@@ -75,7 +75,7 @@
                     <td>@Html.DisplayFor(m => item.PaymentStatus)</td>
                     <td>@Html.DisplayFor(m => item.DeliveryTime)</td>
                     <td>
-                        @Html.DetailsLink("DetailsOrder", new { id = item.Id }, true)
+                        @Html.DetailsLink("DetailsOrder", new { id = item.Id })
                     </td>
                 </tr>
                 }
