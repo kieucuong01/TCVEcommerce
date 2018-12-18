@@ -13,7 +13,24 @@
 
                 //This prevents the default behavior of the actual link (it will hit your controller action)
                 return false;
-        }
+    }
+
+function AddToCart(id) {
+            //Prompt for confirmation
+    
+    $.ajax(
+        {
+            url: "/Cart/AddToCart/"+id+"?quantity=1",
+            success: function (partialView)
+            {
+
+                $('#cartdetails').html(partialView);
+            }
+        });
+
+        //This prevents the default behavior of the actual link (it will hit your controller action)
+        return false;
+}
 
 function AddToCartWithQuantity(id){
     //Get
