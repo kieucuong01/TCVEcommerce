@@ -1,35 +1,35 @@
-﻿    function AreYouSureFunction(source) {
+﻿function AddToCart(id,qt) {
             //Prompt for confirmation
+    
+    $.ajax(
+        {
+            url: "/Cart/AddToCart/"+id+"?quantity="+qt,
+            success: function (partialView)
+            {
 
-            $.ajax(
-                {
-                    url: source,
-                    success: function (partialView)
-                    {
-                        $('#cartdetails').html(partialView);
-                        alert("Thêm vào giỏ hàng thành công!");
-                    }
-                });
+                $('#cartdetails').html(partialView);
+            }
+        });
 
-                //This prevents the default behavior of the actual link (it will hit your controller action)
-                return false;
-        }
+        //This prevents the default behavior of the actual link (it will hit your controller action)
+        return false;
+}
 
 function AddToCartWithQuantity(id){
     //Get
     var qt = $('#product-vqty').val();
 
-            $.ajax(
-                {
-                    url: "/Cart/AddToCart/"+id+"?quantity="+qt,
-                    success: function (partialView)
-                    {
-                        $('#cartdetails').html(partialView);
-                        alert("Thêm vào giỏ hàng thành công!");
-                    }
-                });
-                //This prevents the default behavior of the actual link (it will hit your controller action)
-                return false;
+    $.ajax(
+        {
+            url: "/Cart/AddToCart/"+id+"?quantity="+qt,
+            success: function (partialView)
+            {
+
+                $('#cartdetails').html(partialView);
+            }
+        });
+        //This prevents the default behavior of the actual link (it will hit your controller action)
+        return false;
 }
 
 function RemoveProduct(id){

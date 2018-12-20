@@ -91,7 +91,10 @@
                                 </div>
                                 <div class="product-detail-info">
                                     <div class="product-price-box">
-                                        <span class="old-price">@Convert.ToDecimal(currentProduct.RegularPrice).ToString("#,#đ")</span>
+                                        @if(currentProduct.RegularPrice != currentProduct.CurrentPrice)
+                                        {
+                                            <span class="old-price">@Convert.ToDecimal(currentProduct.RegularPrice).ToString("#,#đ")</span>
+                                        }
                                         <span class="product-price"> @Convert.ToDecimal(currentProduct.SalePrice).ToString("#,#đ")</span>
                                     </div>
                                     <p class="availability">
@@ -129,7 +132,7 @@
                                     <div class="product-detail-qty">
                                         <input type="text" value="1" class="vertical-spinner" id="product-vqty">
                                     </div>
-                                    <a href="" onclick="return AddToCartWithQuantity(@currentProduct.Id)" class="addtocart" title="Thêm vào giỏ">
+                                    <a href="#" onclick="return AddToCartWithQuantity(@currentProduct.Id)" class="addtocart" title="Thêm vào giỏ" data-toggle="modal" data-target=".addtocart-modal">
                                         <i class="fa fa-shopping-cart"></i>
                                         <span>Thêm vào giỏ</span>
                                     </a>
@@ -231,25 +234,7 @@
                                                     <td>
                                                         <input type="radio" name="value[1]" id="Value_5" value="5" class="radio">
                                                     </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Giá cả</td>
-                                                    <td>
-                                                        <input type="radio" name="price[1]" id="Price_1" value="1" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="price[1]" id="Price_2" value="2" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="price[1]" id="Price_3" value="3" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="price[1]" id="Price_4" value="4" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="price[1]" id="Price_5" value="5" class="radio">
-                                                    </td>
-                                                </tr>
+                                                </tr>                                       
                                             </tbody>
                                         </table>
 
@@ -325,7 +310,7 @@
                                     <a href="#" onclick="return AddProductToWishlist(@item.Id)" class="addtowishlist" title="Yêu thích">
                                         <i class="fa fa-heart"></i>
                                     </a>
-                                    <a href="@Url.Action("AddToCart","Cart",new { id= item.Id})" onclick="return AreYouSureFunction(this)" class="addtocart" title="Thêm vào giỏ">
+                                    <a href="#" onclick="return AddToCart(@item.Id, 1)" class="addtocart" title="Thêm vào giỏ" data-toggle="modal" data-target=".addtocart-modal">
                                         <i class="fa fa-shopping-cart"></i>
                                         <span>Thêm vào giỏ</span>
                                     </a>
@@ -345,7 +330,7 @@
                     </div>
                     <div class="feature-box-info">
                         <h4>MIỄN PHÍ GIAO HÀNG</h4>
-                        <p class="mb-none">Miễn phí giao hàng vơi tất cả đơn hàng trên 400 ngàn VNĐ</p>
+                        <p class="mb-none">Miễn phí giao hàng với đơn hàng trên 400,000 VNĐ</p>
                     </div>
                 </div>
                 <div class="feature-box feature-box-style-3">
@@ -388,5 +373,12 @@
         </div>
     </div>
 
+    <div class="modal fade addtocart-modal" tabindex="-1" role="dialog" aria-labelledby="myLoginModal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                @await Html.PartialAsync("_PartialAddToCart")
+            </div>
+        </div>
+    </div>
 
 </div>

@@ -67,83 +67,31 @@ namespace TCVWeb.Controllers
                     {
                         return RedirectToAction(nameof(HomeAdminController.Index), "HomeAdmin", new { area = "Admin" });
                     }
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                    else {
+                        if (_dbContext.Users.Where(user => user.Email == model.Email).FirstOrDefault().EmailConfirmed == false)
+                        {
+                            await _signInManager.SignOutAsync();
+                            ViewData["StatusMessage"] = "Đăng nhập thất bại, bạn phải kích hoạt tài khoản sau khi đăng ký.";
+                            return View(model);
+                        }
+                        return RedirectToAction(nameof(HomeController.Index), "Home");
+                    }
                 }
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToAction(nameof(Login2fa), new { model.ReturnUrl, model.RememberMe });
+                    return RedirectToAction("SendCode", new { returnUrl = model.ReturnUrl, rememberMe = false });
+
                 }
                 if (result.IsLockedOut)
                 {
-                    ModelState.AddModelError(string.Empty, "Tài khoản bị khóa đăng nhập, xin thử lại sau 5 phút.");
+                    ViewData["StatusMessage"] = "Tài khoản bị khóa đăng nhập, xin thử lại sau 5 phút.";
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Đăng nhập thất bại, xin kiểm tra lại.");
+                    ViewData["StatusMessage"] = "Đăng nhập thất bại, xin kiểm tra lại.";
                 }
             }
 
-            return View(model);
-        }
-
-        public async Task<IActionResult> Login2fa(bool rememberMe, string returnUrl = null)
-        {
-            var appUser = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            if (appUser == null)
-            {
-                throw new ApplicationException($"Unable to load two-factor authentication appUser.");
-            }
-
-            var model = new Login2faViewModel { RememberMe = rememberMe, ReturnUrl = returnUrl };
-            return View(model);
-        }
-
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login2fa(Login2faViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var appUser = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            if (appUser == null)
-            {
-                throw new ApplicationException($"Unable to load appUser with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            var authenticatorCode = model.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
-
-            var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, model.RememberMe, model.RememberMachine);
-
-            if (result.Succeeded)
-            {
-                return RedirectToLocal(model.ReturnUrl);
-            }
-            else if (result.IsLockedOut)
-            {
-                ModelState.AddModelError(string.Empty, "Tài khoản bị khóa đăng nhập, xin thử lại sau 5 phút.");
-                return View(model);
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Mã xác thực không chính xác.");
-                return View(model);
-            }
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> LoginCode(string returnUrl = null)
-        {
-            // Ensure the user has gone through the username & password screen first
-            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load two-factor authentication user.");
-            }
-
-            var model = new LoginWithRecoveryCodeViewModel { ReturnUrl = returnUrl };
             return View(model);
         }
 
@@ -475,7 +423,7 @@ namespace TCVWeb.Controllers
         // GET: /Account/ForgotPasswordConfirmation
         public ActionResult ForgotPasswordConfirmation()
         {
-            return View();
+            return View();////
         }
 
         //

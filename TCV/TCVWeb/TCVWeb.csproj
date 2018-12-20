@@ -20,6 +20,7 @@
     <Content Remove="wwwroot\index.html" />
     <Content Remove="wwwroot\manifest.json" />
     <Content Remove="wwwroot\lib\manifest.json" />
+    <Content Remove="Views\Account\LoginCodeView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Views\Home\About.cshtml">

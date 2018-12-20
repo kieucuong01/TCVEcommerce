@@ -32,7 +32,7 @@
                         <a href="#" onclick="return AddProductToWishlist(@item.Id)" class="addtowishlist" title="Yêu thích">
                             <i class="fa fa-heart"></i>
                         </a>
-                        <a href="@Url.Action("AddToCart","Cart",new { id= item.Id})" onclick="return AreYouSureFunction(this)" class="addtocart" title="Thêm vào giỏ">
+                        <a href="#" onclick="return AddToCart(@item.Id, 1)" class="addtocart" title="Thêm vào giỏ" data-toggle="modal" data-target=".addtocart-modal">
                             <i class="fa fa-shopping-cart"></i>
                         </a>
                     </div>

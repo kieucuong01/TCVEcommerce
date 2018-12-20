@@ -1,21 +1,21 @@
 ﻿@model SendCodeViewModel
 @{
-    ViewBag.Title = "Send Verification Code";
+    ViewBag.Title = "Gửi mã xác minh";
 }
 
-<h2>@ViewBag.Title.</h2>
-
-<form asp-controller="Account" asp-action="SendCode" asp-route-returnurl="@Model.ReturnUrl" method="post" class="form-horizontal" role="form">
-    <input asp-for="RememberMe" type="hidden" />
-    <div class="row">
-        <div class="col-md-8">
-            Select Two-Factor Authentication Provider:
-            <select asp-for="SelectedProvider" asp-items="Model.Providers"></select>
-            <input type="submit" value="Submit" class="btn btn-default" />
+<div class="container">
+    <h2>@ViewBag.Title.</h2>
+    <form asp-controller="Account" asp-action="SendCode" asp-route-returnurl="@Model.ReturnUrl" method="post" class="form-horizontal" role="form">
+        <input asp-for="RememberMe" type="hidden" />
+        <div class="row">
+            <div class="col-md-8">
+                Chọn cách gửi mã xác minh:
+                <select asp-for="SelectedProvider" asp-items="Model.Providers"></select>
+                <input type="submit" value="Gửi" class="btn btn-default" />
+            </div>
         </div>
-    </div>
-</form>
-
+    </form>
+</div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
