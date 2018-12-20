@@ -30,8 +30,8 @@ namespace TCVWeb.Areas.Admin.Controllers
             _logger = logger;
             _dbContext = dbContext;
 
-            mediaUrl = AppSettings.Strings["MediaUrl"] ?? "https://localhost:44336/media";
-            mediaPath = AppSettings.Strings["MediaPath1"] ?? "./wwwroot/media";
+            mediaUrl = AppSettings.Strings["MediaUrl"] ?? "media";
+            mediaPath = AppSettings.Strings["MediaPath"] ?? "./wwwroot/media";
         }
 
         public IActionResult FileBrowser(PagedList<MediaFile> model)
