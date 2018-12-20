@@ -60,7 +60,7 @@
                                         <a href="#" onclick="return RemoveProductFromWishlist(@item.ShopItem.Id)" class="addtowishlist" title="Xóa yêu thích">
                                             <i class="fa fa-remove"></i>
                                         </a>
-                                        <a href="@Url.Action("AddToCart","Cart",new { id= item.Id})" onclick="return AreYouSureFunction(this)" class="addtocart" title="Thêm vào giỏ">
+                                        <a href="#" onclick="return AddToCart(@item.Id, 1)" class="addtocart" title="Thêm vào giỏ" data-toggle="modal" data-target=".addtocart-modal">
                                             <i class="fa fa-shopping-cart"></i>
                                             <span>Thêm vào giỏ</span>
                                         </a>
@@ -117,4 +117,11 @@
         </div>
     </div>
 
+   <div class="modal fade addtocart-modal" tabindex="-1" role="dialog" aria-labelledby="myLoginModal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                @await Html.PartialAsync("_PartialAddToCart")
+            </div>
+        </div>
+    </div>
 </div>
