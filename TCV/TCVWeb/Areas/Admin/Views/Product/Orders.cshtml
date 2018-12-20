@@ -29,7 +29,7 @@
     </header>
     <div class="row">
         <div class="col-sm-4">
-            <a class="btn btn-primary" href="@Url.Action("CreateProduct")"><i class="fa fa-plus"></i> Tạo mới</a>
+            @*<a class="btn btn-primary" href="@Url.Action("CreateProduct")"><i class="fa fa-plus"></i> Tạo mới</a>*@
         </div>
         <div class="col-sm-8 text-right">
             <form method="get" class="form-horizontal">
@@ -44,7 +44,7 @@
                             </select>
                         </td>
                         <td><input asp-for="Search" class="form-control" @style="width:240px;" @placeholder="Search" /></td>
-                        <td><button class="btn btn-default" type="submit"><i class="fas fa-search"></i> Search</button></td>
+                        <td><button class="btn btn-default" type="submit"><i class="fa fa-search"></i> Search</button></td>
                     </tr>
                 </table>
             </form>

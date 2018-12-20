@@ -30,8 +30,8 @@ namespace TCVWeb.Areas.Admin.Controllers
             _logger = logger;
             _dbContext = dbContext;
 
-            mediaUrl = AppSettings.Strings["MediaUrl"] ?? "/media";
-            mediaPath = AppSettings.Strings["MediaPath"] ?? "./wwwroot/media";
+            mediaUrl = AppSettings.Strings["MediaUrl"] ?? "https://localhost:44336/media";
+            mediaPath = AppSettings.Strings["MediaPath1"] ?? "./wwwroot/media";
         }
 
         public IActionResult FileBrowser(PagedList<MediaFile> model)
@@ -66,7 +66,17 @@ namespace TCVWeb.Areas.Admin.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> DoUploadFile(MediaAlbum album, IEnumerable<IFormFile> files, AppDBContext dbContext)
+        [HttpPost]
+        public async Task<IActionResult> FileUpload(int? id, IEnumerable<IFormFile> files)
+        {
+            MediaAlbum album = GetDefaultAlbum(id);
+            if (album == null)
+                return BadRequest("Could not create Default Album!");
+
+            return await DoUploadFile(album, files, _dbContext);
+        }
+
+        private async Task<IActionResult> DoUploadFile(MediaAlbum album, IEnumerable<IFormFile> files, AppDBContext dbContext)
         {
             try
             {
@@ -79,7 +89,6 @@ namespace TCVWeb.Areas.Admin.Controllers
                 {
                     string fileName = file.FileName.ToLower();
                     string fileExt = Path.GetExtension(fileName);
-                    string fullPath = Path.Combine(album.ShortName, fileName);
 
                     while (true)
                     {
@@ -121,13 +130,67 @@ namespace TCVWeb.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> FileUpload(int? id, IEnumerable<IFormFile> files)
+        public async Task<IActionResult> FileUploadCrop(FileUploadModel model)
         {
-            MediaAlbum album = GetDefaultAlbum(id);
+            MediaAlbum album = GetDefaultAlbum(model.Id);
             if (album == null)
                 return BadRequest("Could not create Default Album!");
 
-            return await DoUploadFile(album, files, _dbContext);
+            var fileData = model.FileData;
+            var pos = fileData.IndexOf(";base64,");
+            if (pos <= 0)
+                return BadRequest("Invalid FileData");
+
+            fileData = fileData.Substring(pos + 8);
+            var fileBytes = Convert.FromBase64String(fileData);
+
+            return await DoUploadFileCrop(album, model.FileName, fileBytes, _dbContext);
+        }
+
+        private async Task<IActionResult> DoUploadFileCrop(MediaAlbum album, string fileName, byte[] fileData, AppDBContext dbContext)
+        {
+            try
+            {
+                string albumDir = Path.Combine(mediaPath, album.ShortName);
+                if (!Directory.Exists(albumDir))
+                    Directory.CreateDirectory(albumDir);
+
+                string fileExt = string.IsNullOrEmpty(fileName) ? ".jpg" : Path.GetExtension(fileName);
+
+                string newName = "";
+                while (true)
+                {
+                    newName = Common.Random_Mix(6).ToLower() + fileExt;
+                    string filePath = Path.Combine(albumDir, newName);
+                    if (!System.IO.File.Exists(filePath))
+                    {
+                        await System.IO.File.WriteAllBytesAsync(filePath, fileData);
+                        break;
+                    }
+                }
+
+                MediaFile newFile = new MediaFile()
+                {
+                    AlbumId = album.Id,
+                    FullPath = Path.Combine(album.ShortName, newName),
+                    FileSize = fileData.Length,
+                    CreateTime = DateTime.Now
+                };
+
+                dbContext.MediaFiles.Add(newFile);
+                dbContext.SaveChanges();
+
+                var newFiles = new List<MediaFile> { newFile };
+                return new JsonResult(new FileUploadResult
+                {
+                    initialPreview = newFiles.Select(x => Path.Combine(mediaUrl, x.FullPath)).ToArray(),
+                    initialPreviewConfig = newFiles.Select(x => new { key = x.Id, caption = x.FileName, size = x.FileSize, showDrag = false }).ToArray(),
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]

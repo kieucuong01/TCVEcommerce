@@ -34,8 +34,8 @@
                     <div class="top-menu-area">
                         <a href="#">Links <i class="fa fa-caret-down"></i></a>
                         <ul class="top-menu">
-                            <li><a href="@Url.Action("About", "Home")">Về ticivi</a></li>
-                            <li><a href="@Url.Action("Help", "Home")">Trợ giúp</a></li>
+                            <li><a href="@Url.Action("About", "Home")" title="Giới thiệu về công ty TiCiVi">Về ticivi</a></li>
+                            <li><a href="@Url.Action("Help", "Home")" title="Câu hỏi thường gặp">Trợ giúp</a></li>
                             @if (isAuthenticated == false)
                             {
                                 <li><a href="@Url.Action("Register", "Account")">Đăng ký</a></li>
@@ -43,14 +43,8 @@
                             }
                             else
                             {
-                                if ( User.IsInRole("Manager") || User.IsInRole("Operator"))
-                                {
-                                    <li><a href="@Url.Action("Index", "HomeAdmin", new { area = "Admin"})">@emailLogined</a></li>
-                                }
-                                else
-                                {
-                                    <li><a href="@Url.Action("Index", "Manage")">@emailLogined</a></li>
-                                }
+                                <li><a href="@Url.Action("Index", "Manage")" title="Thông tin tài khoản">@emailLogined</a></li>
+                                <li><a href="@Url.Action("Index", "HomeAdmin", new { area = "Admin"})" title="Trang quản lý">Quản lý</a></li>
                                 <li><a href="@Url.Action("Logout", "Account")">Đăng xuất</a></li>
                             }
                         </ul>
