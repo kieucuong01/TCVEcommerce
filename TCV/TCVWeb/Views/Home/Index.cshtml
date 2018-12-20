@@ -7,7 +7,7 @@
     <div class="body">
         <div role="main" class="main">
             <div class="container">
-                <div class="slider-container rev_slider_wrapper" style="height: 521px;">
+                <div class="slider-container rev_slider_wrapper">
                     <div id="revolutionSlider" class="slider rev_slider manual">
                         <ul>
                             <li data-transition="fade">
@@ -115,7 +115,7 @@
                     </div>
                 </div>
             </div>
-            <div class="container">
+            @*<div class="container">
                 <div class="homepage-bar">
                     <div class="row">
                         <div class="col-md-4">
@@ -142,8 +142,8 @@
 
                     </div>
                 </div>
-            </div>
-            <div class="container mb-xs">
+            </div>*@
+            <div class="container mb-xs" style="padding-top:20px">
                 @Html.Partial("_PartialFeaturedProduct", Model)
 
                 <div class="row" style="text-align: right">

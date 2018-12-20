@@ -91,7 +91,10 @@
                                 </div>
                                 <div class="product-detail-info">
                                     <div class="product-price-box">
-                                        <span class="old-price">@Convert.ToDecimal(currentProduct.RegularPrice).ToString("#,#đ")</span>
+                                        @if(currentProduct.RegularPrice != currentProduct.CurrentPrice)
+                                        {
+                                            <span class="old-price">@Convert.ToDecimal(currentProduct.RegularPrice).ToString("#,#đ")</span>
+                                        }
                                         <span class="product-price"> @Convert.ToDecimal(currentProduct.SalePrice).ToString("#,#đ")</span>
                                     </div>
                                     <p class="availability">
@@ -231,25 +234,7 @@
                                                     <td>
                                                         <input type="radio" name="value[1]" id="Value_5" value="5" class="radio">
                                                     </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Giá cả</td>
-                                                    <td>
-                                                        <input type="radio" name="price[1]" id="Price_1" value="1" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="price[1]" id="Price_2" value="2" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="price[1]" id="Price_3" value="3" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="price[1]" id="Price_4" value="4" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="price[1]" id="Price_5" value="5" class="radio">
-                                                    </td>
-                                                </tr>
+                                                </tr>                                       
                                             </tbody>
                                         </table>
 
@@ -345,7 +330,7 @@
                     </div>
                     <div class="feature-box-info">
                         <h4>MIỄN PHÍ GIAO HÀNG</h4>
-                        <p class="mb-none">Miễn phí giao hàng vơi tất cả đơn hàng trên 400 ngàn VNĐ</p>
+                        <p class="mb-none">Miễn phí giao hàng với đơn hàng trên 400,000 VNĐ</p>
                     </div>
                 </div>
                 <div class="feature-box feature-box-style-3">
