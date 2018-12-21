@@ -78,48 +78,48 @@ namespace TCVShared.Data
 
     public enum PostStatus
     {
-        [Display(Name = "Tin đã khóa")]
+        [Display(Name = "Tin đã khóa"), StatusCss("danger")]
         Suspended = -1,
 
-        [Display(Name = "Chờ đăng tin")]
+        [Display(Name = "Chờ đăng tin"), StatusCss("warning")]
         Pending,
 
-        [Display(Name = "Tin thường")]
+        [Display(Name = "Tin thường"), StatusCss("default")]
         Normal,
 
-        [Display(Name = "Đặc biệt")]
+        [Display(Name = "Đặc biệt"), StatusCss("info")]
         Special,
     }
     public enum PaymentStatus
     {
-        [Display(Name = "Chưa có")]
+        [Display(Name = "Chưa thanh toán"), StatusCss("danger")]
         None,
 
-        [Display(Name = "Một phần")]
+        [Display(Name = "Một phần"), StatusCss("warning")]
         Partly,
 
-        [Display(Name = "Hoàn toàn")]
+        [Display(Name = "Thanh toán đủ"), StatusCss("success")]
         Fully,
 
-        [Display(Name = "Đã hoàn tiền")]
+        [Display(Name = "Đã hoàn tiền"), StatusCss("info")]
         Refunded,
     }
 
     public enum OrderStatus
     {
-        [Display(Name = "Đang treo")]
+        [Display(Name = "Đang treo"), StatusCss("default")]
         Pending,
 
-        [Display(Name = "Đang xử lý")]
+        [Display(Name = "Đang xử lý"), StatusCss("warning")]
         Processing,
 
-        [Display(Name = "Đang giao hàng")]
+        [Display(Name = "Đang giao hàng"), StatusCss("info")]
         Delivering,
 
-        [Display(Name = "Đã giao hàng")]
+        [Display(Name = "Đã giao hàng"), StatusCss("success")]
         Delivered,
 
-        [Display(Name = "Đã hủy bỏ")]
+        [Display(Name = "Đã hủy bỏ"), StatusCss("danger")]
         Canceled,
     }
 }

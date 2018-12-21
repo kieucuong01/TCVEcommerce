@@ -70,9 +70,9 @@
                 <tr>
                     <td>@Html.DisplayFor(m => @item.AppUser.UserName)</td>
                     <td>@Html.DisplayFor(m => item.GrandTotalPrice)</td>
-                    <td>@Html.DisplayFor(m => item.OrderStatus)</td>
-                    <td>@Html.DisplayFor(m => item.PaymentStatus)</td>
-                    <td>@Html.DisplayFor(m => item.PaymentStatus)</td>
+                    <td>@Html.EnumStatusFor(m => item.OrderStatus)</td>
+                    <td>@Html.EnumStatusFor(m => item.PaymentStatus)</td>
+                    <td>@Html.DisplayFor(m => item.CreateTime)</td>
                     <td>@Html.DisplayFor(m => item.DeliveryTime)</td>
                     <td>
                         @Html.DetailsLink("DetailsOrder", new { id = item.Id })

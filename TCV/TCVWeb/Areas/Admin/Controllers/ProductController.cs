@@ -789,6 +789,7 @@ namespace TCVWeb.Areas.Admin.Controllers
 
         #endregion
 
+        #region Order
         public ActionResult Orders(PagedList<ShopOrder> model)
         {
             var filterQuery = _dbContext.ShopOrders.Where(x => model.Search == null || x.AppUser.UserName.Contains(model.Search));
@@ -813,46 +814,36 @@ namespace TCVWeb.Areas.Admin.Controllers
                 var item1 = _dbContext.OrderItems.Include(x => x.ShopItem).Where(x => x.Id == item.Id).SingleOrDefault();
                 item.ShopItem = item1.ShopItem;
             }
-            //OrderItem ori = _dbContext.OrderItems.Include(x => x.ShopItem).Where(x => x.ShopItem.Id == id).ToList();
-            //List<ShopItem> itemlist = List<ShopItem>();
-            //foreach(var item in orderItem)
-            //{
-            //    itemlist.Add(item.)
-            //}
-            //ShopOrder model = _dbContext.ShopOrders.Find(id);
-            //model.AppUser = _dbContext.Users.Where(x => x.Id == model.UserId).SingleOrDefault();
-
-            //var orderItems = _dbContext.OrderItems.Where(x => x.OrderId == id).ToList();
-            //List<ShopItem> itemList = new List<ShopItem>();
-            //foreach (var item in orderItems)
-            //{
-            //    ShopItem shopItem = _dbContext.ShopItems.Where(x => x.Id == item.ItemId).SingleOrDefault();
-
-            //    var itemCats = (from x in _dbContext.Taxonomies
-            //                      join y in _dbContext.ShopItemTaxoes on x.Id equals y.TaxoId
-            //                      where y.ItemId == id && x.Type == TaxoType.ItemCat
-            //                      select x.Name).FirstOrDefault();
-
-            //    var exports = (from x in _dbContext.Taxonomies
-            //                     join y in _dbContext.ShopItemTaxoes on x.Id equals y.TaxoId
-            //                     where y.ItemId == id && x.Type == TaxoType.Export
-            //                   select x.Name).FirstOrDefault();
-            //    var exportsPlace = (from x in _dbContext.Taxonomies
-            //                          join y in _dbContext.ShopItemTaxoes on x.Id equals y.TaxoId
-            //                          where y.ItemId == id && x.Type == TaxoType.Export
-            //                             select x.Name).FirstOrDefault();
-            //    var sizeProduct = (from x in _dbContext.Taxonomies
-            //                         join y in _dbContext.ShopItemTaxoes on x.Id equals y.TaxoId
-            //                         where y.ItemId == id && x.Type == TaxoType.Size
-            //                            select x.Name).FirstOrDefault();
-            //    itemList.Add(shopItem); 
-            //}
-            //ViewBag.ItemList = itemList;
 
             if (model == null)
                 return BadRequest();
 
             return View(model);
         }
+
+        public ActionResult UpdateOrderItem(int id)
+        {
+            OrderItem orderItem = _dbContext.OrderItems.Where(x => x.Id == id).Include(x => x.ShopItem).Include(x => x.ShopOrder).SingleOrDefault();
+            return View(orderItem);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateOrderItem(OrderItem model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _dbContext.Entry(model).State = EntityState.Modified;
+                    _dbContext.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            return View(model);
+        }
+        #endregion
     }
 }

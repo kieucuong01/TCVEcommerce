@@ -55,9 +55,9 @@
                         <dt>@Html.DisplayNameFor(m => m.CreateTime)</dt>
                         <dd>@Html.DisplayFor(m => m.CreateTime)</dd>
                         <dt>@Html.DisplayNameFor(m => m.OrderStatus)</dt>
-                        <dd>@Html.DisplayFor(m => m.OrderStatus)</dd>
+                        <dd>@Html.EnumStatusFor(m => m.OrderStatus)</dd>
                         <dt>@Html.DisplayNameFor(m => m.PaymentStatus)</dt>
-                        <dd>@Html.DisplayFor(m => m.PaymentStatus)</dd>
+                        <dd>@Html.EnumStatusFor(m => m.PaymentStatus)</dd>
                     </dl>
                     <hr />
                 </div>
@@ -108,7 +108,7 @@
                         <td>@Html.DisplayFor(m => item.ShopItem.Name)</td>
                         <td>@Html.DisplayFor(m => item.Quantity)</td>
                         <td>@Html.DisplayFor(m => item.SubTotal)</td>
-                        <td><a class="btn btn-xs btn-info" data-modal="" href="@Url.Action("ChargeDetails", "CashLog", new { id= item.Id })" title="Details"><i class="fa fa-search"></i></a></td>
+                        <td>@Html.UpdateLink("UpdateOrderItem", new { @id = item.Id }, true)</td>
                     </tr>
                     }
                 </table>
