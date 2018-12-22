@@ -1,4 +1,5 @@
-﻿@model OrderItem
+﻿@using TCVWeb.Areas.Admin.Models
+@model UpdateOrderItemModel
 
 @{
     Layout = null;
@@ -7,9 +8,15 @@
     <div asp-validation-summary="All" class="text-danger"></div>
     @Html.HiddenFor(m => m.Id)
     <div class="form-group">
-        <label asp-for="ShopItem.Name" class="col-sm-3 control-label"></label>
+        <label asp-for="ItemName" class="col-sm-3 control-label"></label>
         <div class="col-sm-9">
-            <input asp-for="ShopItem.Name" class="form-control" min="1" , readonly="" />
+            <input asp-for="ItemName" class="form-control" min="1" , readonly="" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="CurrentPrice" class="col-sm-3 control-label"></label>
+        <div class="col-sm-9">
+            <input asp-for="CurrentPrice" class="form-control" , readonly=""  />
         </div>
     </div>
     <div class="form-group">
@@ -18,10 +25,10 @@
             <input asp-for="Quantity" class="form-control" />
         </div>
     </div>
-    <div class="form-group">
+    @*<div class="form-group">
         <label asp-for="SubTotal" class="col-sm-3 control-label"></label>
         <div class="col-sm-9">
             <input asp-for="SubTotal" class="form-control" , readonly="" />
         </div>
-    </div>
+    </div>*@
 </div>

@@ -821,21 +821,30 @@ namespace TCVWeb.Areas.Admin.Controllers
             return View(model);
         }
 
-        public ActionResult UpdateOrderItem(int id)
+        public ActionResult UpdateOrder(int id)
         {
-            OrderItem orderItem = _dbContext.OrderItems.Where(x => x.Id == id).Include(x => x.ShopItem).Include(x => x.ShopOrder).SingleOrDefault();
-            return View(orderItem);
+            ShopOrder order = _dbContext.ShopOrders.Where(x => x.Id == id).SingleOrDefault();
+            UpdateOrderModel orderItemModel = new UpdateOrderModel
+            {
+                Id = order.Id,
+                OrderStatus = order.OrderStatus,
+                PaymentStatus = order.PaymentStatus
+            };
+            return View(orderItemModel);
         }
 
         [HttpPost]
-        public ActionResult UpdateOrderItem(OrderItem model)
+        public ActionResult UpdateOrder(UpdateOrderModel model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _dbContext.Entry(model).State = EntityState.Modified;
+                    ShopOrder order = _dbContext.ShopOrders.Where(x => x.Id == model.Id).SingleOrDefault();
+                    order.OrderStatus = model.OrderStatus;
+                    order.PaymentStatus = model.PaymentStatus;
                     _dbContext.SaveChanges();
+                    return Json(new ModalFormResult() { Code = 1 });
                 }
                 catch (Exception ex)
                 {
@@ -844,6 +853,50 @@ namespace TCVWeb.Areas.Admin.Controllers
             }
             return View(model);
         }
+
+        public ActionResult UpdateOrderItem(int id)
+        {
+            OrderItem orderItem = _dbContext.OrderItems.Where(x => x.Id == id).Include(x => x.ShopItem).Include(x => x.ShopOrder).SingleOrDefault();
+            UpdateOrderItemModel orderItemModel = new UpdateOrderItemModel {
+                Id = orderItem.Id,
+                ItemName = orderItem.ShopItem.Name,
+                CurrentPrice = orderItem.ShopItem.CurrentPrice,
+                Quantity = orderItem.Quantity,
+            };
+            return View(orderItemModel);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateOrderItem(UpdateOrderItemModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if(model.Quantity <=0)
+                    {
+                        ModelState.AddModelError("", "Số lượng không hợp lệ");
+                        return View(model);
+                    }
+                    OrderItem orderItem = _dbContext.OrderItems.Where(x => x.Id == model.Id).Include(x => x.ShopItem).Include(x => x.ShopOrder).SingleOrDefault();
+                    orderItem.Quantity = model.Quantity;
+                    _dbContext.SaveChanges();
+                    return Json(new ModalFormResult() { Code = 1 });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            return View(model);
+        }
+
+        public ActionResult SearchItem(int id)
+        {
+            ShopItem model = _dbContext.ShopItems.Where(x => x.Id == id).SingleOrDefault();
+            return View(model);
+        }
+
         #endregion
     }
 }
