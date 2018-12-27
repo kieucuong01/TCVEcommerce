@@ -68,7 +68,6 @@
                             </div>
 
                             <div class="post-content">
-
                                 <h2><a href="@Url.Action("Details","BlogPost",new { id = item.Id })">@Html.DisplayFor(m => item.Title)</a></h2>
                                 <p>@Html.DisplayFor(m => item.Preview)</p>
 
@@ -79,7 +78,6 @@
                                     <span><i class="fa fa-user"></i> By <a href="#">@Html.DisplayFor(m => item.CreateUser)</a> </span>
                                     <span><i class="fa fa-tag"></i> <a href="#">News</a> </span>
                                 </div>
-
                             </div>
                         </article>
                     }
