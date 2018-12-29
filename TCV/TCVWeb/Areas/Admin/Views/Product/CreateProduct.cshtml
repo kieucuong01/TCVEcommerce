@@ -85,7 +85,7 @@
             });
 
             $("#ItemCats, #Exports, #ExportsPlace, #SizeProduct").change(function () {
-                var idLast = parseInt(@(ViewBag.IdLast)) + 1;
+                var idLast = parseInt(@ViewBag.IdLast) + 1;
                 var itemCat = $("#ItemCats").val();
                 var exportPlace = $("#ExportsPlace").val();
                 var size = $("#SizeProduct").val();

@@ -44,13 +44,17 @@ namespace TCVWeb.Areas.Admin.Controllers
         {
             ViewBag.ItemCats = _dbContext.ItemCats.Select(x => new SelectItemModel() { id = x.Id, text = x.Name }).ToList();
             var export = _dbContext.Exports.Where(x => x.ParentId != null).Select(x => new SelectExportModel() { id = x.Id, text = x.Name, parentId = x.ParentId, parentText = x.ParentName }).ToList();
+            //List<string> exportPlace = new List<string>();
             foreach (var item in export)
             {
                 item.parentText = _dbContext.Taxonomies.FirstOrDefault(x => x.Id == item.parentId).Name;
+                //exportPlace.Add(item.parentText);
             }
             ViewBag.Export = export;
+            //ViewBag.ExportPlace = exportPlace.Distinct();
             ViewBag.SizeList = _dbContext.Sizes.Select(x => new SelectItemModel() { id = x.Id, text = x.Name }).ToList();
-            ViewBag.IdLast = _dbContext.ShopItems.Select(x => x.Id).Last();
+            ViewBag.IdLast = _dbContext.ShopItems.OrderByDescending(x=>x.Id).Select(x => x.Id).FirstOrDefault();
+            var test = _dbContext.ShopItems.LastOrDefault();
             return View(new ShopItem());
         }
 
@@ -67,7 +71,8 @@ namespace TCVWeb.Areas.Admin.Controllers
                 }
                 ViewBag.Export = export;
                 ViewBag.SizeList = _dbContext.Sizes.Select(x => new SelectItemModel() { id = x.Id, text = x.Name }).ToList();
-                ViewBag.IdLast = _dbContext.ShopItems.Select(x => x.Id).Last();
+
+                ViewBag.IdLast = _dbContext.ShopItems.OrderByDescending(x => x.Id).Select(x => x.Id).FirstOrDefault();
                 ModelState.AddModelError("Thông tin sản phẩm lỗi. Vui lòng nhập lại.", "Error");
                 return RedirectToAction("CreateProduct", "Product", new { area = "Admin" });
             }
@@ -81,7 +86,8 @@ namespace TCVWeb.Areas.Admin.Controllers
                 }
                 ViewBag.Export = export;
                 ViewBag.SizeList = _dbContext.Sizes.Select(x => new SelectItemModel() { id = x.Id, text = x.Name }).ToList();
-                ViewBag.IdLast = _dbContext.ShopItems.Select(x => x.Id).Last();
+
+                ViewBag.IdLast = _dbContext.ShopItems.OrderByDescending(x => x.Id).Select(x => x.Id).FirstOrDefault();
                 ModelState.AddModelError("Thông tin sản phẩm lỗi. Vui lòng nhập lại.", "Error");
                 return RedirectToAction("CreateProduct", "Product", new { area = "Admin" });
             }
@@ -223,6 +229,7 @@ namespace TCVWeb.Areas.Admin.Controllers
             }
             ViewBag.Export = export;
             ViewBag.SizeList = _dbContext.Sizes.Select(x => new SelectItemModel() { id = x.Id, text = x.Name, selected = model.SizeProduct.Contains(x.Id) }).ToList();
+            ViewBag.IdLast = model.SKU.Substring(12, model.SKU.Length - 12);
             return View(model);
         }
 
@@ -854,19 +861,17 @@ namespace TCVWeb.Areas.Admin.Controllers
             return View(model);
         }
 
-        //public ActionResult AddOrderItem()
-        //{
-        //    OrderItem orderItem = _dbContext.OrderItems.Where(x => x.Id == id).Include(x => x.ShopItem).Include(x => x.ShopOrder).SingleOrDefault();
-        //    UpdateOrderItemModel orderItemModel = new UpdateOrderItemModel
-        //    {
-        //        Id = orderItem.Id,
-        //        ItemName = orderItem.ShopItem.Name,
-        //        CurrentPrice = orderItem.ShopItem.CurrentPrice,
-        //        Quantity = orderItem.Quantity,
-        //    };
-        //    Update
-        //    return View(new UpdateOrderItemModel());
-        //}
+        [HttpPost]
+        public ShopItem SearchItem(string id)
+        {
+            ShopItem model = _dbContext.ShopItems.Where(x => x.SKU == id).SingleOrDefault();
+            return model;
+        }
+
+        public ActionResult AddOrderItem()
+        {
+            return View(new ShopItem());
+        }
 
         [HttpPost]
         public ActionResult AddOrderItem(int id, string masp, int sl)
@@ -883,6 +888,7 @@ namespace TCVWeb.Areas.Admin.Controllers
 
                     ShopItem modelItem = _dbContext.ShopItems.Where(x => x.SKU == masp).FirstOrDefault();
                     ShopOrder shopOrder = _dbContext.ShopOrders.Include(x => x.Items).Where(x => x.Id == 42).SingleOrDefault();
+                    OrderItem orderItem = _dbContext.OrderItems.Where(x => x.ItemId == modelItem.Id).FirstOrDefault();
 
 
                     shopOrder.AdjustPrice = shopOrder.AdjustPrice + modelItem.CurrentPrice * sl;
@@ -892,7 +898,6 @@ namespace TCVWeb.Areas.Admin.Controllers
 
                     _dbContext.SaveChanges();
 
-                    OrderItem orderItem = _dbContext.OrderItems.Where(x => x.ItemId == modelItem.Id).FirstOrDefault();
                     if (orderItem != null)
                     {
                         orderItem.Quantity = orderItem.Quantity + sl;
@@ -949,7 +954,12 @@ namespace TCVWeb.Areas.Admin.Controllers
                         return View(model);
                     }
                     OrderItem orderItem = _dbContext.OrderItems.Where(x => x.Id == model.Id).Include(x => x.ShopItem).Include(x => x.ShopOrder).SingleOrDefault();
+                    var temp = orderItem.Quantity;
                     orderItem.Quantity = model.Quantity;
+                    orderItem.ShopOrder.AdjustPrice = orderItem.ShopOrder.AdjustPrice + orderItem.ShopItem.CurrentPrice * (model.Quantity-temp);
+                    orderItem.ShopOrder.CreateTime = DateTime.Now;
+                    orderItem.ShopOrder.ShippingFee = 30000;
+                    orderItem.ShopOrder.GrandTotalPrice = orderItem.ShopOrder.AdjustPrice + orderItem.ShopOrder.ShippingFee;
                     _dbContext.SaveChanges();
                     return Json(new ModalFormResult() { Code = 1 });
                 }
@@ -959,17 +969,6 @@ namespace TCVWeb.Areas.Admin.Controllers
                 }
             }
             return View(model);
-        }
-
-        public ActionResult SearchItem()
-        {
-            return View(new ShopItem());
-        }
-        [HttpPost]
-        public ShopItem SearchItem(string id)
-        {
-            ShopItem model = _dbContext.ShopItems.Where(x => x.SKU == id).SingleOrDefault();
-            return model;
         }
 
         #endregion

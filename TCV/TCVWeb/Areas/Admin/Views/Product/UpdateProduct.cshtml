@@ -90,7 +90,8 @@
             });
 
             $("#ItemCats, #Exports, #ExportsPlace, #SizeProduct").change(function () {
-                var idLast = @Model.Id;
+                var idLast = parseInt(@ViewBag.IdLast);
+                console.log(idLast);
                 var itemCat = $("#ItemCats").val();
                 var exportPlace = $("#ExportsPlace").val();
                 var size = $("#SizeProduct").val();
