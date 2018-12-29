@@ -43,8 +43,8 @@ namespace TCVWeb.Areas.Admin.Controllers
         public ActionResult CreateProduct()
         {
             ViewBag.ItemCats = _dbContext.ItemCats.Select(x => new SelectItemModel() { id = x.Id, text = x.Name }).ToList();
-            var export = _dbContext.Exports.Where(x => x.ParentId!=null).Select(x => new SelectExportModel() { id = x.Id, text = x.Name, parentId = x.ParentId, parentText = x.ParentName }).ToList();
-            foreach(var item in export)
+            var export = _dbContext.Exports.Where(x => x.ParentId != null).Select(x => new SelectExportModel() { id = x.Id, text = x.Name, parentId = x.ParentId, parentText = x.ParentName }).ToList();
+            foreach (var item in export)
             {
                 item.parentText = _dbContext.Taxonomies.FirstOrDefault(x => x.Id == item.parentId).Name;
             }
@@ -194,17 +194,17 @@ namespace TCVWeb.Areas.Admin.Controllers
                               where y.ItemId == id && x.Type == TaxoType.ItemCat
                               select x.Id).ToArray();
             model.Exports = (from x in _dbContext.Taxonomies
-                              join y in _dbContext.ShopItemTaxoes on x.Id equals y.TaxoId
-                              where y.ItemId == id && x.Type == TaxoType.Export
-                             select x.Id).ToArray();
-            model.ExportsPlace = (from x in _dbContext.Taxonomies
                              join y in _dbContext.ShopItemTaxoes on x.Id equals y.TaxoId
                              where y.ItemId == id && x.Type == TaxoType.Export
                              select x.Id).ToArray();
+            model.ExportsPlace = (from x in _dbContext.Taxonomies
+                                  join y in _dbContext.ShopItemTaxoes on x.Id equals y.TaxoId
+                                  where y.ItemId == id && x.Type == TaxoType.Export
+                                  select x.Id).ToArray();
             model.SizeProduct = (from x in _dbContext.Taxonomies
-                             join y in _dbContext.ShopItemTaxoes on x.Id equals y.TaxoId
-                             where y.ItemId == id && x.Type == TaxoType.Size
-                             select x.Id).ToArray();
+                                 join y in _dbContext.ShopItemTaxoes on x.Id equals y.TaxoId
+                                 where y.ItemId == id && x.Type == TaxoType.Size
+                                 select x.Id).ToArray();
 
             var itemTags = (from x in _dbContext.Taxonomies
                             join y in _dbContext.ShopItemTaxoes on x.Id equals y.TaxoId
@@ -390,7 +390,7 @@ namespace TCVWeb.Areas.Admin.Controllers
                 try
                 {
                     model.Type = TaxoType.ItemCat;
-                    if(model.Parent!=null)
+                    if (model.Parent != null)
                         model.Parent.Name = _dbContext.Taxonomies.Find(model.ParentId).Name;
                     _dbContext.Taxonomies.Add(model);
                     _dbContext.SaveChanges();
@@ -470,7 +470,7 @@ namespace TCVWeb.Areas.Admin.Controllers
                 try
                 {
                     model.Type = TaxoType.Export;
-                    if(model.Parent!=null)
+                    if (model.Parent != null)
                         model.Parent.Name = _dbContext.Taxonomies.Find(model.ParentId).Name;
                     _dbContext.Taxonomies.Add(model);
                     _dbContext.SaveChanges();
@@ -683,7 +683,7 @@ namespace TCVWeb.Areas.Admin.Controllers
                 item1.FileLink = Path.Combine("https://localhost:44336/media", item1.FullPath);
 
             ViewBag.MediaAlbum = mediaAlbum;
-            
+
             ShopItemAttrib model = new ShopItemAttrib() { ItemId = item.Id, Values = "[]" };
 
             ViewBag.AttrId = new SelectList(_dbContext.ShopAttribs, "Id", "Title");
@@ -794,10 +794,10 @@ namespace TCVWeb.Areas.Admin.Controllers
         {
             var filterQuery = _dbContext.ShopOrders.Where(x => model.Search == null || x.AppUser.UserName.Contains(model.Search));
             var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
-            
+
             model.TotalRows = filterQuery.Count();
             model.Content = selectQuery.ToList();
-            foreach(var user in model.Content)
+            foreach (var user in model.Content)
             {
                 user.AppUser = _dbContext.Users.FirstOrDefault(x => x.Id == user.UserId);
             }
@@ -809,7 +809,7 @@ namespace TCVWeb.Areas.Admin.Controllers
         {
             ShopOrder model = _dbContext.ShopOrders.Where(x => x.Id == id).Include(y => y.Items).Include(x => x.AppUser).SingleOrDefault();
             var orderItem = _dbContext.OrderItems.Include(x => x.ShopItem).Include(x => x.ShopOrder).ToString();
-            foreach(var item in model.Items)
+            foreach (var item in model.Items)
             {
                 var item1 = _dbContext.OrderItems.Include(x => x.ShopItem).Where(x => x.Id == item.Id).SingleOrDefault();
                 item.ShopItem = item1.ShopItem;
@@ -854,10 +854,80 @@ namespace TCVWeb.Areas.Admin.Controllers
             return View(model);
         }
 
+        //public ActionResult AddOrderItem()
+        //{
+        //    OrderItem orderItem = _dbContext.OrderItems.Where(x => x.Id == id).Include(x => x.ShopItem).Include(x => x.ShopOrder).SingleOrDefault();
+        //    UpdateOrderItemModel orderItemModel = new UpdateOrderItemModel
+        //    {
+        //        Id = orderItem.Id,
+        //        ItemName = orderItem.ShopItem.Name,
+        //        CurrentPrice = orderItem.ShopItem.CurrentPrice,
+        //        Quantity = orderItem.Quantity,
+        //    };
+        //    Update
+        //    return View(new UpdateOrderItemModel());
+        //}
+
+        [HttpPost]
+        public ActionResult AddOrderItem(int id, string masp, int sl)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (sl <= 0)
+                    {
+                        ModelState.AddModelError("", "Số lượng không hợp lệ");
+                        return View();
+                    }
+
+                    ShopItem modelItem = _dbContext.ShopItems.Where(x => x.SKU == masp).FirstOrDefault();
+                    ShopOrder shopOrder = _dbContext.ShopOrders.Include(x => x.Items).Where(x => x.Id == 42).SingleOrDefault();
+
+
+                    shopOrder.AdjustPrice = shopOrder.AdjustPrice + modelItem.CurrentPrice * sl;
+                    shopOrder.CreateTime = DateTime.Now;
+                    shopOrder.ShippingFee = 30000;
+                    shopOrder.GrandTotalPrice = shopOrder.AdjustPrice + shopOrder.ShippingFee;
+
+                    _dbContext.SaveChanges();
+
+                    OrderItem orderItem = _dbContext.OrderItems.Where(x => x.ItemId == modelItem.Id).FirstOrDefault();
+                    if (orderItem != null)
+                    {
+                        orderItem.Quantity = orderItem.Quantity + sl;
+                        _dbContext.OrderItems.Update(orderItem);
+                    }
+                    else
+                    {
+                        OrderItem orderItemNew = new OrderItem
+                        {
+                            Quantity = sl,
+                            ItemId = modelItem.Id,
+                            OrderId = id,
+                            ShopItem = modelItem,
+                            ShopOrder = shopOrder,
+                        };
+                        _dbContext.OrderItems.Add(orderItemNew);
+                    }
+
+                    _dbContext.SaveChanges();
+
+                    return View();
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            return View();
+        }
+
         public ActionResult UpdateOrderItem(int id)
         {
             OrderItem orderItem = _dbContext.OrderItems.Where(x => x.Id == id).Include(x => x.ShopItem).Include(x => x.ShopOrder).SingleOrDefault();
-            UpdateOrderItemModel orderItemModel = new UpdateOrderItemModel {
+            UpdateOrderItemModel orderItemModel = new UpdateOrderItemModel
+            {
                 Id = orderItem.Id,
                 ItemName = orderItem.ShopItem.Name,
                 CurrentPrice = orderItem.ShopItem.CurrentPrice,
@@ -873,7 +943,7 @@ namespace TCVWeb.Areas.Admin.Controllers
             {
                 try
                 {
-                    if(model.Quantity <=0)
+                    if (model.Quantity <= 0)
                     {
                         ModelState.AddModelError("", "Số lượng không hợp lệ");
                         return View(model);
@@ -891,10 +961,15 @@ namespace TCVWeb.Areas.Admin.Controllers
             return View(model);
         }
 
-        public ActionResult SearchItem(int id)
+        public ActionResult SearchItem()
         {
-            ShopItem model = _dbContext.ShopItems.Where(x => x.Id == id).SingleOrDefault();
-            return View(model);
+            return View(new ShopItem());
+        }
+        [HttpPost]
+        public ShopItem SearchItem(string id)
+        {
+            ShopItem model = _dbContext.ShopItems.Where(x => x.SKU == id).SingleOrDefault();
+            return model;
         }
 
         #endregion

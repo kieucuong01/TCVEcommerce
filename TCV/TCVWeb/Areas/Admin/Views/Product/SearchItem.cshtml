@@ -1,0 +1,80 @@
+﻿@model ShopItem
+@{
+    Layout = null;
+}
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title"><i class="fa fa-windows"></i> Cập nhật thông tin</h3>
+    </div>
+    <div class="modal-body">
+        <a class="btn btn-warning" onclick="Search();"><i class="fa fa-search"></i> Tìm sản phẩm</a>
+        <div class="col-sm-4">
+            <input id="idItem" class="form-control" style="width:240px;" placeholder="Tìm mã sản phẩm" />
+        </div>
+        <div id="popupItem" style="display: none; text-align:center;">
+            <hr />
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Tên sản phẩm</label>
+                    <div class="col-sm-8">
+                        <input id="SKU" class="form-control" , readonly="" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Tên sản phẩm</label>
+                    <div class="col-sm-8">
+                        <input id="ItemName" class="form-control" , readonly="" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Số lượng</label>
+                    <div class="col-sm-8">
+                        <input id="Quantity" min="1" value="1" class="form-control" type="number" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <span id="progress" class="text-center" style="display: none;"><img src="~/img/wait.gif" alt="waiting..." />Saving...</span>
+        <button class="btn btn-primary" type="button" onclick="AddItem();"><i class="fa fa-save"></i> Lưu lại</button>
+        <button class="btn btn-warning" data-dismiss="modal"><i class="fa fa-undo"></i> Hủy bỏ</button>
+    </div>
+<script>
+    function Search() {
+        var id = $("#idItem").val();
+        $.ajax(
+            {
+                url: "/Admin/Product/SearchItem/" + id,
+                type: 'POST',
+                success: function (data) {
+                    $("#popupItem").css("display", "block");
+                    $("#ItemName").val(data.name);
+                    $("#SKU").val(data.sku);
+                },
+                //error {
+                //    console.log("Không tìm thấy sản phẩm!")
+                //}
+            });
+        return false;
+    }
+    function AddItem() {
+        console.log("asdasd");
+        var sku = $("#SKU").val();
+        var quanlity = $("#Quantity").val();
+        $.ajax(
+            {
+                url: "/Admin/Product/AddOrderItem/",
+                data: { id: 47, masp: sku, sl: quanlity },
+                type: 'POST',
+                success: function (data) {
+                    console.log(data);
+                },
+                //error {
+                //    console.log("Không tìm thấy sản phẩm!")
+                //}
+            });
+        return false;
+    }
+</script>

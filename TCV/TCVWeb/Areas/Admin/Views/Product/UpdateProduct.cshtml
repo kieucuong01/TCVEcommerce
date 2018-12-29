@@ -90,7 +90,6 @@
             });
 
             $("#ItemCats, #Exports, #ExportsPlace, #SizeProduct").change(function () {
-                console.log( @Model.Id);
                 var idLast = @Model.Id;
                 var itemCat = $("#ItemCats").val();
                 var exportPlace = $("#ExportsPlace").val();
@@ -100,8 +99,8 @@
                 var stringLengExportPlace = 0;
                 var stringLengthSize = 0;
                 if (itemCat != null) {
-                    stringLengthCat = itemCat[0].length;
-                    if (stringLengthCat === 1) {
+                    stringLengthCat = itemCat.length;
+                    if (stringLengthCat == 1) {
                         itemCat = '00' + $("#ItemCats").val();
                     }
                     else if (stringLengthCat == 2) {
@@ -110,8 +109,8 @@
                 }
                 if (exportPlace != null)
                 {
-                    stringLengExportPlace = exportPlace[0].length;
-                    if (stringLengExportPlace === 1) {
+                    stringLengExportPlace = exportPlace.length;
+                    if (stringLengExportPlace == 1) {
                         exportPlace = '00' + $("#ExportsPlace").val();
                     }
                     else if (stringLengExportPlace == 2) {
@@ -119,8 +118,8 @@
                     }
                 }
                 if (size != null) {
-                    stringLengthSize = size[0].length;
-                    if (stringLengthSize === 1) {
+                    stringLengthSize = size.length;
+                    if (stringLengthSize == 1) {
                         size = '0' + $("#SizeProduct").val();
                     }
                     else if (stringLengthSize == 2) {
@@ -133,8 +132,6 @@
                     $("#SKU").val('');
                 }
             });
-            
-
         });
         
     </script>
