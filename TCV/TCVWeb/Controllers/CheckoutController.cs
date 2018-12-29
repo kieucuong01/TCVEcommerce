@@ -99,9 +99,10 @@ namespace TCVWeb.Controllers
             model.CreateTime = DateTime.Now;
 
             var userID = _userManager.GetUserId(HttpContext.User);
+            AppUser appUser = _dbContext.Users.FirstOrDefault(x => x.Id == int.Parse(userID));
             if (userID != null)
             {
-                model.UserId = int.Parse(userID);
+                model.UserId = appUser.Id;
             }
             else
             {
