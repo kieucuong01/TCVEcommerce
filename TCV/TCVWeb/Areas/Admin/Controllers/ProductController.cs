@@ -893,7 +893,6 @@ namespace TCVWeb.Areas.Admin.Controllers
 
                     shopOrder.AdjustPrice = shopOrder.AdjustPrice + modelItem.CurrentPrice * sl;
                     shopOrder.CreateTime = DateTime.Now;
-                    shopOrder.ShippingFee = 30000;
                     shopOrder.GrandTotalPrice = shopOrder.AdjustPrice + shopOrder.ShippingFee;
 
                     _dbContext.SaveChanges();
@@ -958,7 +957,6 @@ namespace TCVWeb.Areas.Admin.Controllers
                     orderItem.Quantity = model.Quantity;
                     orderItem.ShopOrder.AdjustPrice = orderItem.ShopOrder.AdjustPrice + orderItem.ShopItem.CurrentPrice * (model.Quantity-temp);
                     orderItem.ShopOrder.CreateTime = DateTime.Now;
-                    orderItem.ShopOrder.ShippingFee = 30000;
                     orderItem.ShopOrder.GrandTotalPrice = orderItem.ShopOrder.AdjustPrice + orderItem.ShopOrder.ShippingFee;
                     _dbContext.SaveChanges();
                     return Json(new ModalFormResult() { Code = 1 });
