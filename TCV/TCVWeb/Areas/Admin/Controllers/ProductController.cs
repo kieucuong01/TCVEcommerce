@@ -814,7 +814,7 @@ namespace TCVWeb.Areas.Admin.Controllers
 
         public ActionResult DetailsOrder(int? id)
         {
-            ShopOrder model = _dbContext.ShopOrders.Where(x => x.Id == id).Include(y => y.Items).Include(x => x.AppUser).SingleOrDefault();
+            ShopOrder model = _dbContext.ShopOrders.Where(x => x.Id == id).Include(y => y.Items).Include(x => x.AppUser).Include(x => x.ShippingAddress).Include(x => x.Deliver).SingleOrDefault();
             var orderItem = _dbContext.OrderItems.Include(x => x.ShopItem).Include(x => x.ShopOrder).ToString();
             foreach (var item in model.Items)
             {
