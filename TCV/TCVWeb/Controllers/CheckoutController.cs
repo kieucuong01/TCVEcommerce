@@ -97,16 +97,20 @@ namespace TCVWeb.Controllers
             model.OrderStatus = 0;
             model.ShippingFee = cart.ShippingFee;
             model.CreateTime = DateTime.Now;
+            model.DeliverId = 1; 
 
             var userID = _userManager.GetUserId(HttpContext.User);
-            AppUser appUser = _dbContext.Users.FirstOrDefault(x => x.Id == int.Parse(userID));
             if (userID != null)
             {
+                AppUser appUser = _dbContext.Users.FirstOrDefault(x => x.Id == int.Parse(userID));
+
                 model.UserId = appUser.Id;
             }
             else
             {
-                model.UserId = 0;
+                AppUser appUser = _dbContext.Users.FirstOrDefault(x => x.Id == 1);
+
+                model.UserId = appUser.Id;
             }
 
             _dbContext.ShopOrders.Add(model);
