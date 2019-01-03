@@ -82,7 +82,7 @@
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#productList" aria-controls="productList" role="tab" data-toggle="tab">Danh sách sản phẩm</a></li>
             <li role="presentation"><a href="#infoUser" aria-controls="infoUser" role="tab" data-toggle="tab">Thông tin khách hàng</a></li>
-            <li role="presentation"><a href="#infoDelivery" aria-controls="infoDelivery" role="tab" data-toggle="tab">Thông tin người giao hàng</a></li>
+            <li role="presentation"><a href="#infoDelivery" aria-controls="infoDelivery" role="tab" data-toggle="tab">Thông tin giao nhận</a></li>
         </ul>
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="productList">
@@ -161,13 +161,13 @@
                         <th>Thao tác</th>
                     </tr>
                     <tr>
-                        <td>@Html.DisplayFor(m => Model.Deliver.Id)</td>
-                        <td>@Html.DisplayFor(m => Model.Deliver.Phone)</td>
-                        <td>@Html.DisplayFor(m => Model.Deliver.Address)</td>
-                        <td>@Html.DisplayFor(m => Model.Deliver.State)</td>
-                        <td>@Html.DisplayFor(m => Model.Deliver.City)</td>
-                        <td>@Html.DisplayFor(m => Model.Deliver.Country)</td>
-                        <td>@Html.DisplayFor(m => Model.Deliver.ZipCode)</td>
+                        <td>@Html.DisplayFor(m => Model.ShippingAddress.Id)</td>
+                        <td>@Html.DisplayFor(m => Model.ShippingAddress.Phone)</td>
+                        <td>@Html.DisplayFor(m => Model.ShippingAddress.Address)</td>
+                        <td>@Html.DisplayFor(m => Model.ShippingAddress.State)</td>
+                        <td>@Html.DisplayFor(m => Model.ShippingAddress.City)</td>
+                        <td>@Html.DisplayFor(m => Model.ShippingAddress.Country)</td>
+                        <td>@Html.DisplayFor(m => Model.ShippingAddress.ZipCode)</td>
                     </tr>
                 </table>
                 <div class="row" style="margin-top:10px;">
