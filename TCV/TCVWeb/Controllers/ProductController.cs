@@ -117,6 +117,27 @@ namespace TCVWeb.Controllers
             {
                 selectQuery = filterQuery.Where(x => x.SKU.Substring(4, 3) == "004").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
             }
+            else if (origin == "US")
+            {
+                selectQuery = filterQuery.Where(x => x.SKU.Substring(4, 3) == "019").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+            else if (origin == "AU")
+            {
+                selectQuery = filterQuery.Where(x => x.SKU.Substring(4, 3) == "021").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+            else if (origin == "CA")
+            {
+                selectQuery = filterQuery.Where(x => x.SKU.Substring(4, 3) == "020").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+            else if (origin == "JP")
+            {
+                selectQuery = filterQuery.Where(x => x.SKU.Substring(4, 3) == "022").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+            else if (origin == "GE")
+            {
+                selectQuery = filterQuery.Where(x => x.SKU.Substring(4, 3) == "023").Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            }
+
             // Filter product by prices 
 
             if (maxPrice != 0){
