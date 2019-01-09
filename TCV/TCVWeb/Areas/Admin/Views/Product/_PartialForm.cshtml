@@ -409,7 +409,7 @@ button:focus {
                     <select id="Exports" name="Exports" class="form-control" , required>
                         @if (exportList != null)
                         {
-                            @foreach (var item in exportList)
+                            @foreach (var item in exportList.Select(x=> new { x.selectedParent, x.parentId, x.parentText}).Distinct())
                             {
                                 if (item.selectedParent)
                                 {

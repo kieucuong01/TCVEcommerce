@@ -101,6 +101,7 @@ namespace TCVWeb
             });
 
 
+            app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
             app.UseStaticFiles();
             app.UseAuthentication();
             app.InitAppSettings();
