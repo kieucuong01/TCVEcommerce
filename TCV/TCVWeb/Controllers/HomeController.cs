@@ -42,7 +42,7 @@ namespace TCVWeb.Controllers
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo("vi");
             }
 
-            model.PageSize = pageSize != 0 ? pageSize : 18;
+            model.PageSize = pageSize != 0 ? pageSize : 20;
 
             var filterQuery = _dbContext.ShopItems.Where(x => model.Search == null);
             var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);

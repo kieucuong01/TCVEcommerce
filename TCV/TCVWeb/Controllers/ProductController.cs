@@ -56,6 +56,7 @@ namespace TCVWeb.Controllers
             ViewData["otherSizeProduct"] = otherSizeProduct;
 
             int productId = int.Parse(currentProduct.SKU.Substring(12, currentProduct.SKU.Length - 12));
+
             if (_dbContext.ShopItems.Any(o => int.Parse(o.SKU.Substring(12, o.SKU.Length - 12)) == productId + 1) == true) {
                 ViewData["nextProduct"] = _dbContext.ShopItems.FirstOrDefault(o => int.Parse(o.SKU.Substring(12, o.SKU.Length - 12)) == productId + 1);
             }
