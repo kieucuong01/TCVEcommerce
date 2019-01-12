@@ -44,8 +44,8 @@ namespace TCVWeb.Controllers
 
             model.PageSize = pageSize != 0 ? pageSize : 20;
 
-            var filterQuery = _dbContext.ShopItems.Where(x => model.Search == null);
-            var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
+            var filterQuery = _dbContext.ShopItems.Where(x => x.Status == EntityStatus.Enabled);
+            var selectQuery = filterQuery.OrderBy(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
 
             model.TotalRows = filterQuery.Count();
             model.Content = selectQuery.ToList();
