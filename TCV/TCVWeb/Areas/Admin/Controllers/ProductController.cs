@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using TCVShared.Data;
 using TCVShared.Helpers;
 using TCVWeb.Areas.Admin.Models;
+using TCVWeb.Models;
 
 namespace TCVWeb.Areas.Admin.Controllers
 {
@@ -31,7 +32,17 @@ namespace TCVWeb.Areas.Admin.Controllers
         }
         public IActionResult Index(PagedList<ShopItem> model)
         {
-            var filterQuery = _dbContext.ShopItems.Where(x => model.Search == null || x.Name.Contains(model.Search));
+            var filterQuery = _dbContext.ShopItems.Where(x => model.Search == null || x.SKU.Contains(model.Search));
+            if (model.Filter == null)
+                filterQuery = filterQuery.Where(x => x.Status != EntityStatus.Disabled);
+            else
+            {
+                if (int.TryParse(model.Filter, out int status))
+                {
+                    EntityStatus etStatus = (EntityStatus)status;
+                    filterQuery = filterQuery.Where(x => x.Status == etStatus);
+                }
+            }
             var selectQuery = filterQuery.OrderByDescending(x => x.Id).Skip((model.CurPage - 1) * model.PageSize).Take(model.PageSize);
 
             model.TotalRows = filterQuery.Count();
@@ -970,5 +981,64 @@ namespace TCVWeb.Areas.Admin.Controllers
         }
 
         #endregion
+
+        #region Search
+        public IActionResult Search()
+        {
+            ShopItemSearchModel model = new ShopItemSearchModel() { FindMode = 1 };
+            return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public IActionResult Search(ShopItemSearchModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                bool doSearch = false;
+                IQueryable<ShopItem> shopItemQuery = _dbContext.ShopItems.Include(x=> x.Taxonomies);
+
+                if (!string.IsNullOrEmpty(model.SKU))
+                {
+                    doSearch = true;
+                    if (model.FindMode == 1)
+                        shopItemQuery = shopItemQuery.Where(u => u.SKU.Equals(model.SKU));
+                    else if (model.FindMode == 2)
+                        shopItemQuery = shopItemQuery.Where(u => u.SKU.StartsWith(model.SKU));
+                    else
+                        shopItemQuery = shopItemQuery.Where(u => u.SKU.Contains(model.SKU));
+                }
+                //foreach(var item in model.ItemCats)
+                //{
+                //    if (!string.IsNullOrEmpty(item))
+                //    {
+                //        doSearch = true;
+                //        if (model.FindMode == 1)
+                //            shopItemQuery = shopItemQuery.Where(u => u.Taxonomies.Where(x=>x.ItemId == model.I).Equals(model.Email));
+                //        else if (model.FindMode == 2)
+                //            shopItemQuery = shopItemQuery.Where(u => u.Email.StartsWith(model.Email));
+                //        else
+                //            shopItemQuery = shopItemQuery.Where(u => u.Email.Contains(model.Email));
+                //    }
+                //}
+
+                //if (!string.IsNullOrEmpty(model.PhoneNumber))
+                //{
+                //    doSearch = true;
+                //    if (model.FindMode == 1)
+                //        shopItemQuery = shopItemQuery.Where(u => u.PhoneNumber.Equals(model.PhoneNumber));
+                //    else if (model.FindMode == 2)
+                //        shopItemQuery = shopItemQuery.Where(u => u.PhoneNumber.StartsWith(model.PhoneNumber));
+                //    else
+                //        shopItemQuery = shopItemQuery.Where(u => u.PhoneNumber.Contains(model.PhoneNumber));
+                //}
+
+                model.Results = doSearch ? shopItemQuery.OrderBy(x => x.Name).Take(200).ToList() : null;
+            }
+
+            return View(model);
+        }
+        #endregion
+
+
     }
 }

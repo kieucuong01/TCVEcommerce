@@ -124,8 +124,6 @@ namespace TCVWeb.Areas.Admin.Controllers
             return View(model);
         }
 
-        
-
         public IActionResult Search()
         {
             MemberSearchModel model = new MemberSearchModel() { FindMode = 1 };

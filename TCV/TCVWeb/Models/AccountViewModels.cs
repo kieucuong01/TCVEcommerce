@@ -218,5 +218,30 @@ namespace TCVWeb.Models
         [Display(Name = "Kết quả")]
         public List<AppUser> Results { get; set; }
     }
+    public class ShopItemSearchModel
+    {
+        [Display(Name = "Mã hàng")]
+        public string SKU { get; set; }
 
+        [Display(Name = "Tên gọi")]
+        public string Name { get; set; }
+
+        [Display(Name = "Phân loại")]
+        public int[] ItemCats { get; set; }
+
+        [Display(Name = "Xuất xứ")]
+        public int[] Exports { get; set; }
+
+        [Display(Name = "Nước sản xuất")]
+        public int[] ExportsPlace { get; set; }
+
+        [Display(Name = "Kích thước sản phẩm")]
+        public int[] SizeProduct { get; set; }
+
+        [Display(Name = "Phương thức")]
+        public int FindMode { get; set; }
+
+        [Display(Name = "Kết quả")]
+        public List<ShopItem> Results { get; set; }
+    }
 }

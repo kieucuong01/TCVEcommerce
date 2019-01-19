@@ -30,7 +30,7 @@
     <div class="row">
         <div class="col-sm-4">
             <a class="btn btn-primary" href="@Url.Action("CreateProduct")"><i class="fa fa-plus"></i> Tạo mới</a>
-            <a class="btn btn-warning" href="@Url.Action("Search")"><i class="fa fa-search"></i> Tìm nâng cao...</a>
+            @*<a class="btn btn-warning" href="@Url.Action("Search")"><i class="fa fa-search"></i> Tìm nâng cao...</a>*@
         </div>
         <div class="col-sm-8 text-right">
             <form method="get" class="form-horizontal">
@@ -44,8 +44,8 @@
                                 <option value="">== Trạng thái ==</option>
                             </select>
                         </td>
-                        <td><input asp-for="Search" class="form-control" @style="width:240px;" @placeholder="Search" /></td>
-                        <td><button class="btn btn-default" type="submit"><i class="fa fa-search"></i> Search</button></td>
+                        <td><input asp-for="Search" class="form-control" @style="width:240px;" placeholder = "SKU" /></td>
+                        <td><button class="btn btn-default" type="submit"><i class="fa fa-search"></i> Search SKU</button></td>
                     </tr>
                 </table>
             </form>
@@ -83,7 +83,7 @@
                     <td>@Html.DisplayFor(m => item.Name)</td>
                     <td>@Html.DisplayFor(m => item.RegularPrice)</td>
                     <td>@Html.DisplayFor(m => item.SalePrice)</td>
-                    <td>@Html.DisplayFor(m => item.Status)</td>
+                    <td>@Html.EnumStatusFor(m => item.Status)</td>
                     <td>@Html.DisplayFor(m => item.CreateTime)</td>
                     <td>@Html.DisplayFor(m => item.LastUpdate)</td>
                     <td>
