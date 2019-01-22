@@ -83,6 +83,12 @@
                             </ul>
                         </li>
                     }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="@(Html.IsActive("Reports", "General") ? "nav-active" : "")">
+                            <a href="@Url.Action("General", "Reports")"><i class="fa fa-line-chart"></i> Đơn hàng</a>
+                        </li>
+                    }
                     @*@if (User.IsInRole("Admin"))
         {
             <li class="@(Html.IsActive("Settings") ? "nav-parent nav-expanded nav-active" : "nav-parent")">
