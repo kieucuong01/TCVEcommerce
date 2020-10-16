@@ -14,7 +14,7 @@ namespace TCVWeb.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -524,7 +524,6 @@ namespace TCVWeb.Migrations
                         .HasMaxLength(64);
 
                     b.Property<string>("NameEn")
-                        .IsRequired()
                         .HasMaxLength(64);
 
                     b.Property<string>("Packaging");
